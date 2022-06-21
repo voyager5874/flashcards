@@ -1,4 +1,4 @@
-import { useState, FC, ReactElement, ChangeEvent } from 'react';
+import { useState, FC, ReactElement, ChangeEvent, useEffect, useRef } from 'react';
 
 import { FIRST_ITEM_INDEX, SECOND_ITEM_INDEX } from 'const';
 import { DEFAULT_MIN, HUNDRED_PERCENTS } from 'features/ui/Range/const';
@@ -24,7 +24,12 @@ export const SuperDoubleRange: FC<SuperDoubleRangePropsType> = ({
   // min, max, step, disable, ...
 }): ReactElement => {
   const colorTheme = '';
+  const rangeLeftPartRef = useRef<HTMLInputElement>(null);
+  const rangeRightPartRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    // some
+  }, []);
   const getBarFillPercent = (leftThumbPos: number, rightThumbPos: number) => {
     const barFillLeftShift = ((leftThumbPos - min) / (max - min)) * HUNDRED_PERCENTS;
     const barFillWidth =
@@ -65,20 +70,22 @@ export const SuperDoubleRange: FC<SuperDoubleRangePropsType> = ({
       <input
         min={min}
         max={max}
-        value={value[FIRST_ITEM_INDEX]}
+        // value={value[FIRST_ITEM_INDEX]}
         onChange={handleLeftThumbMove}
         className={leftThumbClassName}
         {...restProps}
         type="range"
+        ref={rangeLeftPartRef}
       />
       <input
         min={min || DEFAULT_MIN}
         max={max}
-        value={value[SECOND_ITEM_INDEX]}
+        // value={value[SECOND_ITEM_INDEX]}
         onChange={handleRightThumbMove}
         className={`${styles.thumb} ${styles.thumbZindex4} ${styles[colorTheme]}`}
         {...restProps}
         type="range"
+        ref={rangeRightPartRef}
       />
       <div className={`${styles.slider} ${styles[colorTheme]}`}>
         <div className={styles.sliderTrack} />

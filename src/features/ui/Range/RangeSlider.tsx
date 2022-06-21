@@ -32,6 +32,7 @@ export const RangeSlider: FC<SuperRangePropsType> = ({
     rangeRef.current.style.backgroundSize = `${
       (Number(rangeRef.current.value) * HUNDRED_PERCENTS) / max
     }% 100%`;
+    rangeRef.current.setAttribute('data-value', rangeRef.current.value);
   };
 
   const finalRangeClassName = `${styles.slider} ${className}`;
@@ -39,7 +40,8 @@ export const RangeSlider: FC<SuperRangePropsType> = ({
   return (
     <div className={styles.wrapper}>
       <input
-        // value={value}
+        // for displaying current value without rerender
+        data-value={value}
         // less renders but kind of violation of flux
         min={min || DEFAULT_MIN}
         max={max}
@@ -50,7 +52,7 @@ export const RangeSlider: FC<SuperRangePropsType> = ({
         type="range"
         ref={rangeRef}
       />
-      <span>{value}</span>
+      {/* <span>{value}</span> */}
     </div>
   );
 };
