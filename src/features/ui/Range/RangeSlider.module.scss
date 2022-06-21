@@ -1,0 +1,60 @@
+$pink: #d46a6a;
+$grayishPink: #d46a6a50;
+$colorThemeMainColor: $pink;
+$colorThemeSecondaryColor: $grayishPink;
+
+
+.wrapper {
+ position: relative;
+  border: 1px solid #e52376;
+  input{
+    width: 100%;
+    -webkit-appearance: none;
+    height: 7px;
+    border-radius: 5px;
+    //background: grey linear-gradient(#d46a6a, #d46a6a) no-repeat;
+    background-color: grey;
+    background-image: linear-gradient($colorThemeMainColor, $colorThemeMainColor);
+    background-repeat: no-repeat;
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 20px;
+      width: 20px;
+      border-radius: 50%;
+      background: $colorThemeMainColor;
+      cursor: pointer;
+      box-shadow: 0 0 3px 0 #525252;
+      //transition: background 0.3s ease-in-out;
+
+    }
+
+    &::-webkit-slider-runnable-track {
+      -webkit-appearance: none;
+      box-shadow: none;
+      border: none;
+      background: transparent;
+    }
+
+    &::-webkit-slider-thumb:hover {
+      box-shadow: $colorThemeSecondaryColor 0 0 0 8px;
+      transition: box-shadow 400ms cubic-bezier(0.2, 0.3, 0.5, 1) 50ms;
+
+    }
+
+    &::-webkit-slider-thumb:active {
+      box-shadow: $colorThemeSecondaryColor 0 0 0 12px;
+      transition: box-shadow 800ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+      left 350ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+      bottom 350ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    }
+  }
+  span{
+    font-weight: 600;
+    font-size: 16px;
+    font-family: "Droid Sans", sans-serif;
+  }
+
+}
+
+

@@ -1,0 +1,22 @@
+.select{
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    min-width: 80px;
+    padding: 4px;
+    margin-bottom: 10px;
+    height: 28px;
+    font-weight: bold;
+}
+
+
+
+.select option{
+    font-weight: bold;
+}
+
+
+.dark {
+    background-color: #330b0b;
+    color: #e52376;
+}
