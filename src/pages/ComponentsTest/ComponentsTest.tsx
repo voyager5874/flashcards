@@ -24,7 +24,7 @@ const GAP = 48;
 
 export const ComponentsTest = (): ReactElement => {
   const [value, onChangeOption] = useState(arr[FIRST_ITEM_INDEX]);
-  const [value1, setValue1] = useState(MIN_VALUE);
+  const [value1, setValue1] = useState(GAP);
   const [value2, setValue2] = useState(MAX_VALUE);
   const doubleRangeChangeHandler = (values: [number, number]): void => {
     setValue1(values[FIRST_ITEM_INDEX]);

@@ -1,4 +1,4 @@
-import { ChangeEvent, CSSProperties, FC, ReactElement, useEffect, useRef } from 'react';
+import { ChangeEvent, FC, ReactElement, useEffect, useRef } from 'react';
 
 import { DEFAULT_MIN, HUNDRED_PERCENTS } from 'features/ui/Range/const';
 import styles from 'features/ui/Range/RangeSlider.module.scss';
@@ -14,38 +14,41 @@ export const RangeSlider: FC<SuperRangePropsType> = ({
   ...restProps // все остальные пропсы попадут в объект restProps
 }): ReactElement => {
   const rangeRef = useRef<HTMLInputElement>(null);
-
-  const onChangeCallback = (e: ChangeEvent<HTMLInputElement>): void => {
-    if (onChange) onChange(e);
-
-    if (onChangeRange) onChangeRange(Number(e.currentTarget.value));
+  useEffect(() => {
+    if (!rangeRef.current) return;
+    rangeRef.current.value = `${value}`;
+    rangeRef.current.style.backgroundSize = `${
+      (Number(rangeRef.current.value) * HUNDRED_PERCENTS) / max
+    }% 100%`;
+  }, [value]);
+  const setNewRange = (): void => {
+    if (!rangeRef.current) return;
+    if (onChangeRange) onChangeRange(Number(rangeRef.current.value));
   };
 
-  const getUnfilledRangeTrackPercents = (): number =>
-    (Number(value) * HUNDRED_PERCENTS) / max;
-  const getUnfilledRangeTrackCSSProperty = (): CSSProperties => ({
-    backgroundSize: `${getUnfilledRangeTrackPercents()}% 100%`,
-  });
-
-  // useEffect(() => {
-  //   if (!rangeRef.current) return;
-  //   rangeRef.current.style.backgroundSize = `${getUnfilledRangeTrackPercents()}% 100%`;
-  // }, [value, max, getUnfilledRangeTrackPercents]);
+  const handleInputOnChangeEvent = (event: ChangeEvent<HTMLInputElement>) => {
+    if (onChange) onChange(event);
+    if (!rangeRef.current) return;
+    rangeRef.current.style.backgroundSize = `${
+      (Number(rangeRef.current.value) * HUNDRED_PERCENTS) / max
+    }% 100%`;
+  };
 
   const finalRangeClassName = `${styles.slider} ${className}`;
 
   return (
     <div className={styles.wrapper}>
       <input
-        value={value}
+        // value={value}
+        // less renders but kind of violation of flux
         min={min || DEFAULT_MIN}
         max={max}
-        onChange={onChangeCallback}
+        onMouseUp={setNewRange}
+        onChange={handleInputOnChangeEvent}
         className={finalRangeClassName}
         {...restProps}
         type="range"
         ref={rangeRef}
-        style={getUnfilledRangeTrackCSSProperty()}
       />
       <span>{value}</span>
     </div>
