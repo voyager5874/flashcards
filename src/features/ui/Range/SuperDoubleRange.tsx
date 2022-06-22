@@ -1,4 +1,4 @@
-import { useState, FC, ReactElement, ChangeEvent, useEffect, useRef } from 'react';
+import { ChangeEvent, FC, ReactElement, useRef, useState } from 'react';
 
 import { FIRST_ITEM_INDEX, SECOND_ITEM_INDEX } from 'const';
 import { DEFAULT_MIN, HUNDRED_PERCENTS } from 'features/ui/Range/const';
@@ -27,16 +27,13 @@ export const SuperDoubleRange: FC<SuperDoubleRangePropsType> = ({
   const rangeLeftPartRef = useRef<HTMLInputElement>(null);
   const rangeRightPartRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    // some
-  }, []);
   const getBarFillPercent = (leftThumbPos: number, rightThumbPos: number) => {
     const barFillLeftShift = ((leftThumbPos - min) / (max - min)) * HUNDRED_PERCENTS;
     const barFillWidth =
       ((rightThumbPos - min) / (max - min)) * HUNDRED_PERCENTS - barFillLeftShift;
     return [barFillLeftShift, barFillWidth];
   };
-
+  // this is redundant - two local states -> x2 renders
   const [barFillState, setBarFillState] = useState(
     getBarFillPercent(value[FIRST_ITEM_INDEX], value[SECOND_ITEM_INDEX]),
   );
@@ -68,9 +65,9 @@ export const SuperDoubleRange: FC<SuperDoubleRangePropsType> = ({
   return (
     <div className={styles.wrapper}>
       <input
-        min={min}
+        min={min || DEFAULT_MIN}
         max={max}
-        // value={value[FIRST_ITEM_INDEX]}
+        value={value[FIRST_ITEM_INDEX]}
         onChange={handleLeftThumbMove}
         className={leftThumbClassName}
         {...restProps}
@@ -80,7 +77,7 @@ export const SuperDoubleRange: FC<SuperDoubleRangePropsType> = ({
       <input
         min={min || DEFAULT_MIN}
         max={max}
-        // value={value[SECOND_ITEM_INDEX]}
+        value={value[SECOND_ITEM_INDEX]}
         onChange={handleRightThumbMove}
         className={`${styles.thumb} ${styles.thumbZindex4} ${styles[colorTheme]}`}
         {...restProps}

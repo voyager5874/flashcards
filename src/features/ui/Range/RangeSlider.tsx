@@ -14,6 +14,7 @@ export const RangeSlider: FC<SuperRangePropsType> = ({
   ...restProps // все остальные пропсы попадут в объект restProps
 }): ReactElement => {
   const rangeRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     if (!rangeRef.current) return;
     rangeRef.current.value = `${value}`;
@@ -21,6 +22,7 @@ export const RangeSlider: FC<SuperRangePropsType> = ({
       (Number(rangeRef.current.value) * HUNDRED_PERCENTS) / max
     }% 100%`;
   }, [value]);
+
   const setNewRange = (): void => {
     if (!rangeRef.current) return;
     if (onChangeRange) onChangeRange(Number(rangeRef.current.value));
@@ -33,6 +35,7 @@ export const RangeSlider: FC<SuperRangePropsType> = ({
       (Number(rangeRef.current.value) * HUNDRED_PERCENTS) / max
     }% 100%`;
     rangeRef.current.setAttribute('data-value', rangeRef.current.value);
+    // rangeRef.current.setAttribute('data-value', event.currentTarget.value);
   };
 
   const finalRangeClassName = `${styles.slider} ${className}`;

@@ -10,6 +10,7 @@ import { CustomCheckbox } from 'features/ui/Checkbox/CustomCheckbox';
 import { IconsRadioButtons } from 'features/ui/Radio/IconsRadioButtons';
 import { Radio } from 'features/ui/Radio/Radio';
 import { RadioButtonJelly } from 'features/ui/Radio/RadioButtonJelly';
+import { RangeDoubleSlider } from 'features/ui/Range';
 import { RangeSlider } from 'features/ui/Range/RangeSlider';
 import { SuperDoubleRange } from 'features/ui/Range/SuperDoubleRange';
 import { SuperRange } from 'features/ui/Range/SuperRange';
@@ -20,12 +21,14 @@ import styles from 'pages/ComponentsTest/ComponentsTest.module.scss';
 const arr = ['redux', 'saga', 'redux-toolkit'];
 const MIN_VALUE = 0;
 const MAX_VALUE = 500;
-const GAP = 48;
+const GAP = 2;
+const INITIAL_VALUE_LOWER = 20;
+const INITIAL_VALUE_UPPER = 300;
 
 export const ComponentsTest = (): ReactElement => {
   const [value, onChangeOption] = useState(arr[FIRST_ITEM_INDEX]);
-  const [value1, setValue1] = useState(GAP);
-  const [value2, setValue2] = useState(MAX_VALUE);
+  const [value1, setValue1] = useState(INITIAL_VALUE_LOWER);
+  const [value2, setValue2] = useState(INITIAL_VALUE_UPPER);
   const doubleRangeChangeHandler = (values: [number, number]): void => {
     setValue1(values[FIRST_ITEM_INDEX]);
     setValue2(values[SECOND_ITEM_INDEX]);
@@ -78,6 +81,7 @@ export const ComponentsTest = (): ReactElement => {
         {/* </div> */}
       </div>
       <div className={styles.elementTypeContainer}>
+        <h2>Range</h2>
         <SuperRange
           value={value1}
           onChangeRange={setValue1}
@@ -91,6 +95,13 @@ export const ComponentsTest = (): ReactElement => {
           onChangeRange={setValue1}
         />
         <SuperDoubleRange
+          value={[value1, value2]}
+          gap={GAP}
+          max={MAX_VALUE}
+          min={MIN_VALUE}
+          onChangeRange={doubleRangeChangeHandler}
+        />
+        <RangeDoubleSlider
           value={[value1, value2]}
           gap={GAP}
           max={MAX_VALUE}
