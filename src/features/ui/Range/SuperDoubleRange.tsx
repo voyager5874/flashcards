@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, ReactElement, useRef, useState } from 'react';
+import { ChangeEvent, FC, ReactElement, useRef } from 'react';
 
 import { FIRST_ITEM_INDEX, SECOND_ITEM_INDEX } from 'const';
 import { DEFAULT_MIN, HUNDRED_PERCENTS } from 'features/ui/Range/const';
@@ -27,23 +27,20 @@ export const SuperDoubleRange: FC<SuperDoubleRangePropsType> = ({
   const rangeLeftPartRef = useRef<HTMLInputElement>(null);
   const rangeRightPartRef = useRef<HTMLInputElement>(null);
 
-  const getBarFillPercent = (leftThumbPos: number, rightThumbPos: number) => {
-    const barFillLeftShift = ((leftThumbPos - min) / (max - min)) * HUNDRED_PERCENTS;
+  const getBarFillPercent = (range: [number, number]) => {
+    const barFillLeftShift =
+      ((range[FIRST_ITEM_INDEX] - min) / (max - min)) * HUNDRED_PERCENTS;
     const barFillWidth =
-      ((rightThumbPos - min) / (max - min)) * HUNDRED_PERCENTS - barFillLeftShift;
+      ((range[SECOND_ITEM_INDEX] - min) / (max - min)) * HUNDRED_PERCENTS -
+      barFillLeftShift;
     return [barFillLeftShift, barFillWidth];
   };
-  // this is redundant - two local states -> x2 renders
-  const [barFillState, setBarFillState] = useState(
-    getBarFillPercent(value[FIRST_ITEM_INDEX], value[SECOND_ITEM_INDEX]),
-  );
 
   // make sure minVal does not exceed maxVal
   const handleLeftThumbMove = (event: ChangeEvent<HTMLInputElement>) => {
     const newLeftThumbPos = Number(event.currentTarget.value);
     if (newLeftThumbPos < value[SECOND_ITEM_INDEX] - gap) {
       if (onChangeRange) onChangeRange([newLeftThumbPos, value[SECOND_ITEM_INDEX]]);
-      setBarFillState(getBarFillPercent(newLeftThumbPos, value[SECOND_ITEM_INDEX]));
     }
   };
 
@@ -52,7 +49,6 @@ export const SuperDoubleRange: FC<SuperDoubleRangePropsType> = ({
     const newRightThumbValue = Number(event.currentTarget.value);
     if (newRightThumbValue > value[FIRST_ITEM_INDEX] + gap) {
       if (onChangeRange) onChangeRange([value[FIRST_ITEM_INDEX], newRightThumbValue]);
-      setBarFillState(getBarFillPercent(value[FIRST_ITEM_INDEX], newRightThumbValue));
     }
   };
 
@@ -88,8 +84,8 @@ export const SuperDoubleRange: FC<SuperDoubleRangePropsType> = ({
         <div className={styles.sliderTrack} />
         <div
           style={{
-            left: `${barFillState[FIRST_ITEM_INDEX]}%`,
-            width: `${barFillState[SECOND_ITEM_INDEX]}%`,
+            left: `${getBarFillPercent(value)[FIRST_ITEM_INDEX]}%`,
+            width: `${getBarFillPercent(value)[SECOND_ITEM_INDEX]}%`,
           }}
           className={`${styles.sliderRange} ${styles[colorTheme]}`}
         />
