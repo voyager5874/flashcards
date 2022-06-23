@@ -2,9 +2,9 @@ import { ChangeEvent, FC, ReactElement, useEffect, useRef } from 'react';
 
 import { DEFAULT_MIN, HUNDRED_PERCENTS } from 'features/ui/Range/const';
 import styles from 'features/ui/Range/RangeSlider.module.scss';
-import { SuperRangePropsType } from 'features/ui/Range/types';
+import { RangePropsType } from 'features/ui/Range/types';
 
-export const RangeSlider: FC<SuperRangePropsType> = ({
+export const RangeSlider: FC<RangePropsType> = ({
   onChange,
   onChangeRange,
   className,
@@ -55,7 +55,6 @@ export const RangeSlider: FC<SuperRangePropsType> = ({
         type="range"
         ref={rangeRef}
       />
-      {/* <span>{value}</span> */}
     </div>
   );
 };

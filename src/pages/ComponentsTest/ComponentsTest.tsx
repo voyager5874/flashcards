@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useCallback, useState } from 'react';
 
 import { faBiking, faDumbbell, faHiking } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,6 +14,7 @@ import { RangeDoubleSlider } from 'features/ui/Range';
 import { RangeSlider } from 'features/ui/Range/RangeSlider';
 import { SuperDoubleRange } from 'features/ui/Range/SuperDoubleRange';
 import { SuperRange } from 'features/ui/Range/SuperRange';
+import { SelectBox } from 'features/ui/Select';
 import { Select } from 'features/ui/Select/Select';
 import TextInputField from 'features/ui/TextInputField/TextInputField';
 import styles from 'pages/ComponentsTest/ComponentsTest.module.scss';
@@ -29,10 +30,14 @@ export const ComponentsTest = (): ReactElement => {
   const [value, onChangeOption] = useState(arr[FIRST_ITEM_INDEX]);
   const [value1, setValue1] = useState(INITIAL_VALUE_LOWER);
   const [value2, setValue2] = useState(INITIAL_VALUE_UPPER);
-  const doubleRangeChangeHandler = (values: [number, number]): void => {
-    setValue1(values[FIRST_ITEM_INDEX]);
-    setValue2(values[SECOND_ITEM_INDEX]);
-  };
+
+  const doubleRangeChangeHandler = useCallback(
+    (values: [number, number]): void => {
+      setValue1(values[FIRST_ITEM_INDEX]);
+      setValue2(values[SECOND_ITEM_INDEX]);
+    },
+    [value1, value2],
+  );
 
   return (
     <div className={styles.page}>
@@ -48,8 +53,16 @@ export const ComponentsTest = (): ReactElement => {
           <UniversalCheckbox>checkbox-transformer</UniversalCheckbox>
           <UniversalCheckbox slider>checkbox-transformer</UniversalCheckbox>
         </div>
-
-        <Select options={arr} value={value} onChangeOption={onChangeOption} />
+        <div className={styles.elementTypeContainer}>
+          <h2>Select</h2>
+          <Select options={arr} value={value} onChangeOption={onChangeOption} />
+          <SelectBox
+            options={arr}
+            value={value}
+            onChangeOption={onChangeOption}
+            name="select-box"
+          />
+        </div>
         <div className={styles.elementTypeContainer}>
           <h2>Radio</h2>
           <Radio
@@ -102,7 +115,8 @@ export const ComponentsTest = (): ReactElement => {
           onChangeRange={doubleRangeChangeHandler}
         />
         <RangeDoubleSlider
-          value={[value1, value2]}
+          lowerValue={value1}
+          upperValue={value2}
           gap={GAP}
           max={MAX_VALUE}
           min={MIN_VALUE}

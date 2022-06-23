@@ -2,9 +2,9 @@ import { ChangeEvent, FC, ReactElement } from 'react';
 
 import { DEFAULT_MIN } from 'features/ui/Range/const';
 import styles from 'features/ui/Range/SuperRange.module.scss';
-import { SuperRangePropsType } from 'features/ui/Range/types';
+import { RangePropsType } from 'features/ui/Range/types';
 
-export const SuperRange: FC<SuperRangePropsType> = ({
+export const SuperRange: FC<RangePropsType> = ({
   onChange,
   onChangeRange,
   className,

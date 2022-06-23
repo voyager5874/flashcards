@@ -6,7 +6,8 @@ import styles from 'features/ui/Range/RangeDoubleSlider.module.scss';
 
 type SuperDoubleRangePropsType = {
   onChangeRange?: (value: [number, number]) => void;
-  value: [number, number];
+  lowerValue: number;
+  upperValue: number;
   gap: number;
   max: number;
   min: number;
@@ -18,7 +19,8 @@ const INDENT_FROM_BOUND = 100; // arbitrary value (two thumbs overlap and presse
 
 export const RangeDoubleSlider: FC<SuperDoubleRangePropsType> = ({
   onChangeRange,
-  value,
+  lowerValue,
+  upperValue,
   min,
   max,
   gap,
@@ -41,10 +43,10 @@ export const RangeDoubleSlider: FC<SuperDoubleRangePropsType> = ({
 
   useEffect(() => {
     if (!rangeLeftPartRef.current || !rangeRightPartRef.current) return;
-    rangeLeftPartRef.current.value = String(value[FIRST_ITEM_INDEX]);
-    rangeRightPartRef.current.value = String(value[SECOND_ITEM_INDEX]);
-    changeTrackFillState(value[FIRST_ITEM_INDEX], value[SECOND_ITEM_INDEX]);
-  }, [value]);
+    rangeLeftPartRef.current.value = String(lowerValue);
+    rangeRightPartRef.current.value = String(upperValue);
+    changeTrackFillState(lowerValue, upperValue);
+  }, [lowerValue, upperValue]);
 
   const setNewRange = () => {
     if (!rangeLeftPartRef.current || !rangeRightPartRef.current) return;
@@ -102,7 +104,7 @@ export const RangeDoubleSlider: FC<SuperDoubleRangePropsType> = ({
       <input
         min={min}
         max={max}
-        data-value={value[FIRST_ITEM_INDEX]}
+        data-value={lowerValue}
         onChange={handleLeftThumbMove}
         onMouseUp={setNewRange}
         // className={styles.thumb}
@@ -114,7 +116,7 @@ export const RangeDoubleSlider: FC<SuperDoubleRangePropsType> = ({
       <input
         min={min || DEFAULT_MIN}
         max={max}
-        data-value={value[SECOND_ITEM_INDEX]}
+        data-value={upperValue}
         onChange={handleRightThumbMove}
         onMouseUp={setNewRange}
         className={`${styles.thumb} ${styles.rangeRightPart} ${styles[colorTheme]}`}

@@ -5,7 +5,7 @@ type DefaultInputPropsType = DetailedHTMLProps<
   HTMLInputElement
 >;
 
-export type SuperRangePropsType = DefaultInputPropsType & {
+export type RangePropsType = DefaultInputPropsType & {
   onChangeRange?: (value: number) => void;
   max: number;
   min?: number;
