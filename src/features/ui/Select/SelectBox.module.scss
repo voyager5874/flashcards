@@ -33,7 +33,7 @@ $menuButtonHoverTextColor: #f1e8e6;
     outline: none;
   }
 
-  .buttonText {
+  .menuButton {
     position: relative;
     text-align: left;
     padding-left: 20px;
@@ -57,12 +57,17 @@ $menuButtonHoverTextColor: #f1e8e6;
       right: 0;
       width: 18%;
       height: 100%;
-      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       font-size: 26px;
-      line-height: 38px;
+      //line-height: 38px;
       color: $arrowIconColor;
       //background-color: rgba(255, 255, 255, 0.1);
       cursor: pointer;
+      transition: transform 0.3s ease-in;
+
 
     }
 
@@ -70,20 +75,25 @@ $menuButtonHoverTextColor: #f1e8e6;
       background-color: $menuButtonHoverColor;
       //color: $menuButtonHoverTextColor;
       &::after {
-        transform: scale(1.04);
+        //transform: scale(1.04);
         color: $menuButtonHoverTextColor;
       }
 
       //& + .optionsBox {
-      //  height: 120px; // no px -> no animation -> keyFrames?
+      //  height: 120px; // no px -> no animation -> keyframes?
       //}
     }
   }
 
+  .menuExpanded {
+    &::after {
+      transform: rotateZ(180deg);
+    }
+  }
 
   .optionsBox {
     //border: 1px solid;
-    height: 0;
+    //height: 0;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -137,4 +147,5 @@ $menuButtonHoverTextColor: #f1e8e6;
 .normalHeight {
   height: fit-content;
   //height: max-content;
+  //height: unset;
 }

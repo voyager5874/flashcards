@@ -26,20 +26,20 @@ export const SelectBox: FC<RadioPropsType> = ({
   ...restProps
 }): ReactElement => {
   const id = useId();
-  const optionsBoxRef = useRef<HTMLDivElement>(null);
+  // const optionsBoxRef = useRef<HTMLDivElement>(null);
   const elementContainerRef = useRef<HTMLDivElement>(null);
   const [collapsed, setCollapsed] = useState(true);
   // const colorTheme = 'dark';
 
   const hideOptions = (): void => {
-    if (!optionsBoxRef.current) return;
-    optionsBoxRef.current.style.height = '0';
+    // if (!optionsBoxRef.current) return;
+    // optionsBoxRef.current.style.height = '0';
     setCollapsed(true);
   };
 
   const showOptions = (): void => {
-    if (!optionsBoxRef.current) return;
-    optionsBoxRef.current.style.height = `${options && options.length * OPTION_HEIGHT}px`;
+    // if (!optionsBoxRef.current) return;
+    // optionsBoxRef.current.style.height = `${options && options.length * OPTION_HEIGHT}px`;
     // unset -> no animation
     setCollapsed(false);
   };
@@ -73,16 +73,25 @@ export const SelectBox: FC<RadioPropsType> = ({
     hideOptions();
   };
 
-  // const collapsedOptionsBoxStyle: CSSProperties = {
-  //   height: `${options && options.length * OPTION_HEIGHT}px`,
-  // };
+  const expandedOptionsBoxStyle: CSSProperties = {
+    height: `${options && options.length * OPTION_HEIGHT}px`,
+  };
+
+  const collapsedOptionsBoxStyle: CSSProperties = {
+    height: `0`,
+  };
+
+  const buttonClassName = `${styles.menuButton} ${collapsed ? '' : styles.menuExpanded}`;
 
   return (
     <div className={styles.wrapper} ref={elementContainerRef}>
-      <button type="button" className={styles.buttonText} onClick={toggleShowOptions}>
+      <button type="button" className={buttonClassName} onClick={toggleShowOptions}>
         {value}
       </button>
-      <div className={styles.optionsBox} ref={optionsBoxRef}>
+      <div
+        className={styles.optionsBox}
+        style={collapsed ? collapsedOptionsBoxStyle : expandedOptionsBoxStyle}
+      >
         {options
           ? options.map(option => (
               <label htmlFor={`${option}-${id}`} key={`${option}-${id}`}>
