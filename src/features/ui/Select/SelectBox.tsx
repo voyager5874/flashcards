@@ -3,7 +3,7 @@ import {
   CSSProperties,
   FC,
   ReactElement,
-  useEffect,
+  useCallback,
   useId,
   useRef,
   useState,
@@ -12,8 +12,9 @@ import {
 import styles from './SelectBox.module.scss';
 
 import { RadioPropsType } from 'features/ui/Radio/types';
+import { useOutsideClickDetect } from 'hooks';
 
-const OPTION_HEIGHT = 40; // SSOT? not heard of it
+const OPTION_ITEM_HEIGHT = 40; // SSOT? not heard of it
 
 // this is radio buttons set actually due to native select element styling problems.
 // Particularly select 'option' look is almost unchangeable
@@ -26,46 +27,23 @@ export const SelectBox: FC<RadioPropsType> = ({
   ...restProps
 }): ReactElement => {
   const id = useId();
-  // const optionsBoxRef = useRef<HTMLDivElement>(null);
   const elementContainerRef = useRef<HTMLDivElement>(null);
   const [collapsed, setCollapsed] = useState(true);
   // const colorTheme = 'dark';
 
-  const hideOptions = (): void => {
-    // if (!optionsBoxRef.current) return;
-    // optionsBoxRef.current.style.height = '0';
+  const hideOptions = useCallback((): void => {
     setCollapsed(true);
-  };
+  }, [setCollapsed]);
 
-  const showOptions = (): void => {
-    // if (!optionsBoxRef.current) return;
-    // optionsBoxRef.current.style.height = `${options && options.length * OPTION_HEIGHT}px`;
-    // unset -> no animation
-    setCollapsed(false);
-  };
+  useOutsideClickDetect(elementContainerRef, hideOptions);
 
   const toggleShowOptions = (): void => {
     if (collapsed) {
-      showOptions();
+      setCollapsed(false);
     } else {
-      hideOptions();
+      setCollapsed(true);
     }
   };
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        elementContainerRef.current &&
-        !elementContainerRef.current.contains(event.target as Node)
-      ) {
-        hideOptions();
-      }
-    };
-    document.addEventListener('click', handleClickOutside, true);
-    return () => {
-      document.removeEventListener('click', handleClickOutside, true);
-    };
-  }, [hideOptions]);
 
   const onChangeCallback = (e: ChangeEvent<HTMLInputElement>): void => {
     if (onChange) onChange(e);
@@ -74,7 +52,8 @@ export const SelectBox: FC<RadioPropsType> = ({
   };
 
   const expandedOptionsBoxStyle: CSSProperties = {
-    height: `${options && options.length * OPTION_HEIGHT}px`,
+    // unset -> no animation
+    height: `${options && options.length * OPTION_ITEM_HEIGHT}px`,
   };
 
   const collapsedOptionsBoxStyle: CSSProperties = {
@@ -112,15 +91,3 @@ export const SelectBox: FC<RadioPropsType> = ({
     </div>
   );
 };
-
-// <div className={styles.wrapper}>
-//     <select
-//         className={combinedClassName}
-//         value={value}
-//         onChange={onChangeCallback}
-//         {...restProps}
-//     >
-//         {mappedOptions}
-//     </select>
-//     <span className={styles.focus} />
-// </div>

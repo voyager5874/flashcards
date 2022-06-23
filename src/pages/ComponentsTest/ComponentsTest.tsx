@@ -56,11 +56,15 @@ export const ComponentsTest = (): ReactElement => {
         <div className={styles.elementTypeContainer}>
           <h2>Select</h2>
           <Select options={arr} value={value} onChangeOption={onChangeOption} />
+          <h3>
+            this is actually radio button set. Native select element is hard to style. The
+            option part is practically impossible to restyle
+          </h3>
           <SelectBox
             options={arr}
             value={value}
             onChangeOption={onChangeOption}
-            name="select-box"
+            name="select-box-test"
           />
         </div>
         <div className={styles.elementTypeContainer}>
@@ -95,18 +99,23 @@ export const ComponentsTest = (): ReactElement => {
       </div>
       <div className={styles.elementTypeContainer}>
         <h2>Range</h2>
+        <h3>native element pure CSS restyling </h3>
         <SuperRange
           value={value1}
           onChangeRange={setValue1}
           max={MAX_VALUE}
           min={MIN_VALUE}
         />
+        <h3>onRangeChange callback only called when slider thumb released</h3>
         <RangeSlider
           value={value1}
           max={MAX_VALUE}
           min={MIN_VALUE}
           onChangeRange={setValue1}
         />
+        <h3>
+          callback runs many times while thumb being moved which causes a lot of renders
+        </h3>
         <SuperDoubleRange
           value={[value1, value2]}
           gap={GAP}
@@ -114,6 +123,7 @@ export const ComponentsTest = (): ReactElement => {
           min={MIN_VALUE}
           onChangeRange={doubleRangeChangeHandler}
         />
+        <h3>onRangeChange callback only called when slider thumb released (onMouseUp)</h3>
         <RangeDoubleSlider
           lowerValue={value1}
           upperValue={value2}
