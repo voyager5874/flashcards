@@ -14,7 +14,7 @@ import { RangeDoubleSlider } from 'features/ui/Range';
 import { RangeSlider } from 'features/ui/Range/RangeSlider';
 import { SuperDoubleRange } from 'features/ui/Range/SuperDoubleRange';
 import { SuperRange } from 'features/ui/Range/SuperRange';
-import { SelectBox } from 'features/ui/Select';
+import { BackSlidingSelect, DropdownSelect } from 'features/ui/Select';
 import { Select } from 'features/ui/Select/Select';
 import TextInputField from 'features/ui/TextInputField/TextInputField';
 import styles from 'pages/ComponentsTest/ComponentsTest.module.scss';
@@ -60,12 +60,22 @@ export const ComponentsTest = (): ReactElement => {
             this is actually radio button set. Native select element is hard to style. The
             option part is practically impossible to restyle
           </h3>
-          <SelectBox
+          <DropdownSelect
             options={arr}
             value={value}
             onChangeOption={onChangeOption}
             name="select-box-test"
           />
+          <BackSlidingSelect
+            // name="backsliding-select-test"
+            value={value}
+            onChangeOption={onChangeOption}
+            options={arr}
+          >
+            <FontAwesomeIcon icon={faBiking} />
+            <FontAwesomeIcon icon={faHiking} />
+            <FontAwesomeIcon icon={faDumbbell} />
+          </BackSlidingSelect>
         </div>
         <div className={styles.elementTypeContainer}>
           <h2>Radio</h2>

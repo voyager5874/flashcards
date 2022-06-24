@@ -9,16 +9,15 @@ import {
   useState,
 } from 'react';
 
-import styles from './SelectBox.module.scss';
-
 import { RadioPropsType } from 'features/ui/Radio/types';
+import styles from 'features/ui/Select/DropdownSelect.module.scss';
 import { useOutsideClickDetect } from 'hooks';
 
 const OPTION_ITEM_HEIGHT = 40; // SSOT? not heard of it
 
 // this is radio buttons set actually due to native select element styling problems.
 // Particularly select 'option' look is almost unchangeable
-export const SelectBox: FC<RadioPropsType> = ({
+export const DropdownSelect: FC<RadioPropsType> = ({
   name,
   options,
   onChange,

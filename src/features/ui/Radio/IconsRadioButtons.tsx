@@ -2,9 +2,8 @@ import { ChangeEvent, Children, FC, ReactElement, useId } from 'react';
 
 import styles from './IconsRadioButtons.module.scss';
 
+import { STEP_TO_NEXT } from 'const';
 import { RadioPropsType } from 'features/ui/Radio/types';
-
-const STEP_TO_NEXT = 1;
 
 export const IconsRadioButtons: FC<RadioPropsType> = ({
   name,
