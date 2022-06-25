@@ -1,0 +1,39 @@
+$checkMarkColor: #5E5D58;
+
+.wrapper {
+  input[type="checkbox"], input[type="radio"] {
+    background: rgba(191, 185, 169, .2);
+    height: 16px;
+    cursor: pointer;
+    border-radius: 3px;
+    width: 16px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .44) inset;
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .44) inset;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .44) inset;
+    vertical-align: middle;
+
+    &:checked {
+      background: $checkMarkColor;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .44);
+      -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .44);
+      -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .44);
+    }
+  }
+  &::-webkit-input-placeholder {
+    color: white;
+  }
+
+  &:-moz-placeholder { /* Firefox 18- */
+    color: white;
+  }
+
+  &::-moz-placeholder {  /* Firefox 19+ */
+    color: white;
+  }
+
+  &:-ms-input-placeholder {
+    color: white;
+  }
+}

@@ -1,0 +1,36 @@
+.page{
+  box-sizing: border-box;
+  background-color: #FDA37E;;
+  width: 100%;
+  min-height: 100vh;
+  padding: 40px;
+  font-weight: 700;
+  font-family: 'Josefin Sans', sans-serif;
+  h1{
+    margin: 0;
+    padding: 0;
+  }
+  .componentsContainer{
+    border: 1px solid;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    overflow-y: hidden;
+
+  }
+}
+
+.vertical{
+  display: flex;
+  flex-direction: column;
+}
+
+.elementTypeContainer{
+  border: 1px solid #e52376;
+  display: flex;
+  //flex-direction: column;
+  justify-content: flex-start;
+  gap: 40px;
+}

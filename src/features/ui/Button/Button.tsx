@@ -1,24 +1,16 @@
-import { ButtonHTMLAttributes, DetailedHTMLProps, FC, ReactElement } from 'react';
+import { FC, ReactElement } from 'react';
 
 import styles from 'features/ui/Button/Button.module.scss';
-
-type DefaultButtonPropsType = DetailedHTMLProps<
-  ButtonHTMLAttributes<HTMLButtonElement>,
-  HTMLButtonElement
->;
-
-type ButtonPropsType = DefaultButtonPropsType & {
-  red?: boolean;
-};
+import { ButtonPropsType } from 'features/ui/Button/types';
 
 export const Button: FC<ButtonPropsType> = ({
-  red,
+  color,
   className,
   ...restProps
 }): ReactElement => {
   const colorTheme = 'greenButton';
   const shapeConfig = '';
-  const elementStyle = `${styles.default} ${className}  ${red ? styles.redButton : ''} ${
+  const elementStyle = `${styles.default} ${className}  ${color ? styles[color] : ''} ${
     styles[colorTheme]
   } ${styles[shapeConfig]}`;
 

@@ -1,4 +1,13 @@
+
 .app {
     padding: 0;
     margin: 0;
 }
+
+/*@font-face {*/
+/*    font-family: 'Josefin Sans';*/
+/*    !*src: local("JosefinSans"),*!*/
+/*    src: url('assets/fonts/JosefinSans-VariableFont_wght.ttf') format('truetype');*/
+/*    font-weight: normal;*/
+/*    font-style: normal;*/
+/*}*/

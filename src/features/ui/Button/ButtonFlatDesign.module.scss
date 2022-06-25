@@ -1,0 +1,42 @@
+.button {
+  border: none;
+  color: white;
+  display: inline-block;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 20px 50px;
+  border-radius: 3px;
+  margin:5px;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  transition: text-shadow 0.3s ease;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+.button:active {
+  position: relative;
+  top: 1px;
+  border-bottom-width: 2px;
+}
+
+.button:hover {
+  text-shadow: 2px 2px 0 rgba(0,0,0,.3)
+}
+
+.red {
+  background-color: salmon;
+  border-color: rgb(150,120,120);
+}
+
+
+.green {
+  background-color: #4CDF78;
+  border-color: #53A574;
+}
+
+.blue {
+  background-color: #19698C;
+  border-color: #384B64;
+}

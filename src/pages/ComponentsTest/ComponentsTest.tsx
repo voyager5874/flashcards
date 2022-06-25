@@ -4,6 +4,7 @@ import { faBiking, faDumbbell, faHiking } from '@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { FIRST_ITEM_INDEX, SECOND_ITEM_INDEX } from 'const';
+import { ButtonGlitchEffect } from 'features/ui/Button';
 import { Button } from 'features/ui/Button/Button';
 import { CheckboxSwitch, UniversalCheckbox } from 'features/ui/Checkbox';
 import { CustomCheckbox } from 'features/ui/Checkbox/CustomCheckbox';
@@ -44,7 +45,11 @@ export const ComponentsTest = (): ReactElement => {
       <h1>TestPage</h1>
       <div className={styles.componentsContainer}>
         <TextInputField placeholder="super input" type="button" />
-        <Button>eat me</Button>
+        <div className={styles.elementTypeContainer}>
+          <Button>eat me</Button>
+          <ButtonGlitchEffect>2077</ButtonGlitchEffect>
+        </div>
+
         <div className={styles.elementTypeContainer}>
           <h2>Checkbox</h2>
           <CustomCheckbox slider> something switched</CustomCheckbox>

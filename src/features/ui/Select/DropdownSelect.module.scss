@@ -36,9 +36,11 @@ $collapsedHeight: 40px;
   }
 
   .menuButton {
+    //z-index: 8;
     position: relative;
     text-align: left;
     padding-left: 20px;
+    padding-right: 20px;
     height: $collapsedHeight;
     background-color: $menuButtonColor;
     width: 100%;
@@ -49,15 +51,15 @@ $collapsedHeight: 40px;
 
     &::after {
       content: "\f13a";
-      font-family: 'Font Awesome 6 Free';
+      font-family: 'Font Awesome 6 Free', FontAwesome, sans-serif;
       //font: var(--fa-font-solid);
       //content: "\f13a";
       font-weight: 900;
       position: absolute;
-      z-index: 10;
+      //z-index: 10;
       top: 0;
-      right: 0;
-      width: 18%;
+      right: 11px;
+      //width: 18%;
       height: 100%;
       display: flex;
       flex-direction: column;
@@ -70,7 +72,6 @@ $collapsedHeight: 40px;
       cursor: pointer;
       transition: all 0.3s ease-in, color 0.1s linear;
 
-
     }
 
     &:hover {
@@ -78,12 +79,27 @@ $collapsedHeight: 40px;
       //color: $menuButtonHoverTextColor;
       &::after {
         //transform: scale(1.04);
-        color: $menuButtonHoverTextColor;
+        //color: $menuButtonHoverTextColor;
       }
 
       //& + .optionsBox {
       //  height: 120px; // no px -> no animation -> keyframes?
       //}
+      & .pulse {
+        position: absolute;
+        height: $collapsedHeight;
+        //z-index: 9;
+        top: 0;
+        right: 5px;
+        width: $collapsedHeight;
+        border-radius: 50%;
+        border: 9px solid $arrowIconColor;
+
+        :global {
+          animation: pulse 1.2s ease infinite;
+        }
+
+      }
     }
   }
 
@@ -153,4 +169,17 @@ $collapsedHeight: 40px;
   height: fit-content;
   //height: max-content;
   //height: unset;
+}
+
+@keyframes:global(pulse) {
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
 }
