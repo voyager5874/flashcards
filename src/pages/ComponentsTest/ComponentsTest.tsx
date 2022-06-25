@@ -3,7 +3,16 @@ import { ReactElement, useCallback, useState } from 'react';
 import { faBiking, faDumbbell, faHiking } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { FIRST_ITEM_INDEX, SECOND_ITEM_INDEX } from 'const';
+import {
+  arr,
+  FIRST_ITEM_INDEX,
+  GAP,
+  INITIAL_VALUE_LOWER,
+  INITIAL_VALUE_UPPER,
+  MAX_VALUE,
+  MIN_VALUE,
+  SECOND_ITEM_INDEX,
+} from 'const';
 import { ButtonGlitchEffect } from 'features/ui/Button';
 import { Button } from 'features/ui/Button/Button';
 import { CheckboxSwitch, UniversalCheckbox } from 'features/ui/Checkbox';
@@ -19,13 +28,6 @@ import { BackSlidingSelect, DropdownSelect } from 'features/ui/Select';
 import { Select } from 'features/ui/Select/Select';
 import TextInputField from 'features/ui/TextInputField/TextInputField';
 import styles from 'pages/ComponentsTest/ComponentsTest.module.scss';
-
-const arr = ['redux', 'saga', 'redux-toolkit'];
-const MIN_VALUE = 0;
-const MAX_VALUE = 500;
-const GAP = 2;
-const INITIAL_VALUE_LOWER = 20;
-const INITIAL_VALUE_UPPER = 300;
 
 export const ComponentsTest = (): ReactElement => {
   const [value, onChangeOption] = useState(arr[FIRST_ITEM_INDEX]);

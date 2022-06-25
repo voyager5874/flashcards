@@ -1,9 +1,9 @@
 import React, { ChangeEvent, KeyboardEvent } from 'react';
 
-import s from 'features/ui/TextInputField/TextInputField.module.scss';
+import styles from 'features/ui/TextInputField/TextInputFlatDesign.module.scss';
 import { TextInputPropsType } from 'features/ui/TextInputField/types';
 
-const TextInputField: React.FC<TextInputPropsType> = ({
+export const TextInputFLatDesign: React.FC<TextInputPropsType> = ({
   onChange,
   onChangeText,
   onKeyPress,
@@ -24,13 +24,13 @@ const TextInputField: React.FC<TextInputPropsType> = ({
     if (onEnter && event.key === 'Enter') onEnter();
   };
 
-  const finalSpanStyle = `${s.error} ${spanClassName}`;
-  const finalInputStyle = `${s.input} ${onEnter ? s.superInput : ''} ${
-    error ? s.errorInput : ''
+  const finalSpanStyle = `${styles.error} ${spanClassName}`;
+  const finalInputStyle = `${styles.input} ${onEnter ? styles.superInput : ''} ${
+    error ? styles.errorInput : ''
   } ${className}`;
 
   return (
-    <div className={s.componentContainer}>
+    <div className={styles.wrapper}>
       <input
         onChange={onChangeCallback}
         onKeyPress={onKeyPressCallback}
@@ -42,5 +42,3 @@ const TextInputField: React.FC<TextInputPropsType> = ({
     </div>
   );
 };
-
-export default TextInputField;

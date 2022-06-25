@@ -1,16 +1,30 @@
-.page{
+@import 'src/styles/flat-design-colors';
+
+.page {
   box-sizing: border-box;
-  background-color: #FDA37E;;
+  background-color: $backgroundColorDefault;
   width: 100%;
   min-height: 100vh;
   padding: 40px;
   font-weight: 700;
   font-family: 'Josefin Sans', sans-serif;
-  h1{
+  color: white;
+
+  h1 {
     margin: 0;
     padding: 0;
   }
-  .componentsContainer{
+
+  h1, h2::before {
+    content: "";
+    width: 100%;
+    margin: 12px;
+    display: block;
+    text-align: left;
+    border-bottom: 1px solid #ffffff;
+  }
+
+  .componentsContainer {
     border: 1px solid;
     min-height: 80vh;
     display: flex;
@@ -22,15 +36,17 @@
   }
 }
 
-.vertical{
+.vertical {
   display: flex;
   flex-direction: column;
 }
 
-.elementTypeContainer{
+.elementTypeContainer {
   border: 1px solid #e52376;
+  min-height: 10vh;
   display: flex;
   //flex-direction: column;
   justify-content: flex-start;
+  align-items: center;
   gap: 40px;
 }
