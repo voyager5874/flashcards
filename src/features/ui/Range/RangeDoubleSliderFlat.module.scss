@@ -78,7 +78,7 @@ $rangeFillColor: $elementsColorDefault;
 .thumb::-webkit-slider-thumb {
   background-color: $thumbColor;
   border: none;
-  //box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
   cursor: pointer;
   height: 20px;
   width: 20px;
@@ -87,8 +87,6 @@ $rangeFillColor: $elementsColorDefault;
   position: relative;
 }
 
-
-/* For Firefox browsers */
 .thumb::-moz-range-thumb {
   background-color: #f1f5f7;
   border: none;
