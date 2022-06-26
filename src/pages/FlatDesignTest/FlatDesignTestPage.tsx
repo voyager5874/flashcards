@@ -8,11 +8,13 @@ import {
   INITIAL_VALUE_LOWER,
   INITIAL_VALUE_UPPER,
   MAX_VALUE,
+  MIN_VALUE,
   SECOND_ITEM_INDEX,
 } from 'const';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { CheckboxFlatDesign } from 'features/ui/Checkbox/CheckboxFlatDesign';
 import { RadioGroupFlatDesign } from 'features/ui/Radio/RadioGroupFlatDesign';
+import { RangeDoubleSliderFlat } from 'features/ui/Range/RangeDoubleSliderFlat';
 import { RangeFlatDesign } from 'features/ui/Range/RangeFlatDesign';
 import { TextInputFLatDesign } from 'features/ui/TextInputField/TextInputFlatDesign';
 
@@ -68,6 +70,15 @@ export const FlatDesignTestPage = () => {
           name="range-flat-test"
           max={MAX_VALUE}
           onChangeRange={setValue1}
+        />
+        <RangeDoubleSliderFlat
+          lowerValue={value1}
+          upperValue={value2}
+          gap={20}
+          step={10}
+          max={MAX_VALUE}
+          min={MIN_VALUE}
+          onChangeRange={doubleRangeChangeHandler}
         />
       </div>
     </div>

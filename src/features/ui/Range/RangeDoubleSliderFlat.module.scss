@@ -1,0 +1,173 @@
+@import 'src/styles/flat-design-colors';
+
+$thumbColor: $checkMarkColor;
+$trackColor: $elementsColorThemeRed;
+$rangeFillColor: $elementsColorDefault;
+
+@mixin currentValueDisplay {
+  content: attr(data-value);
+  position: absolute;
+  font-weight: 600;
+  font-size: 16px;
+  z-index: 10;
+  top: 15px;
+}
+
+
+.wrapper {
+  position: relative;
+  //border: 1px solid;
+  width: 400px;
+  height: 45px;
+
+  .rangeLeftPart::before {
+    @include currentValueDisplay;
+  }
+
+  .rangeRightPart::after {
+    @include currentValueDisplay;
+    right: 10px;
+  }
+
+
+}
+
+.slider {
+  position: relative;
+  width: 100%;
+
+  .sliderTrack,
+  .sliderRange {
+    position: absolute;
+    border-radius: 3px;
+    height: 5px;
+  }
+
+  .sliderTrack {
+    background-color: $trackColor;
+    height: 15px;
+    width: 100%;
+    z-index: 1;
+  }
+  .sliderRange {
+    height: 15px;
+    background-color: $rangeFillColor;
+    z-index: 2;
+  }
+}
+
+.thumb,
+.thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.thumb {
+  pointer-events: none;
+  position: absolute;
+  height: 0;
+  width: 100%;
+  outline: none;
+  z-index: 3;
+  top: 4px;
+  left: -2px;
+}
+
+
+/* For Chrome browsers */
+.thumb::-webkit-slider-thumb {
+  background-color: $thumbColor;
+  border: none;
+  //box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  margin-top: 2px;
+  pointer-events: all;
+  position: relative;
+}
+
+
+/* For Firefox browsers */
+.thumb::-moz-range-thumb {
+  background-color: #f1f5f7;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 0 1px 1px #ced4da;
+  cursor: pointer;
+  height: 18px;
+  width: 18px;
+  margin-top: 4px;
+  pointer-events: all;
+  position: relative;
+}
+
+
+//.wrapper {
+//  box-sizing: border-box;
+//  border: 1px solid;
+//  padding: 7px 0 0;
+//  position: relative;
+//  width: 400px;
+//  height: 55px;
+//
+//  * {
+//    box-sizing: border-box;
+//  }
+//
+//
+//  input {
+//    -webkit-appearance: none;
+//    width: 99%; // why?
+//    height: 15px;
+//    position: absolute;
+//    top: 7px;
+//    left: 0;
+//    right: 0;
+//    background: $trackColor no-repeat center;
+//    pointer-events: none;
+//
+//    &::-webkit-slider-thumb {
+//      -webkit-appearance: none;
+//      width: 20px;
+//      height: 20px;
+//      background: $thumbColor;
+//      box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
+//      pointer-events: all;
+//      cursor: pointer;
+//    }
+//  }
+//
+//  .rangeLeftPart {
+//    z-index: 3;
+//
+//    &::before {
+//      @include currentValueDisplay;
+//    }
+//  }
+//
+//  .rangeRightPart {
+//    z-index: 4;
+//    //height: 0px;
+//    background-color: transparent;
+//    //top: 40px;
+//    &::after {
+//      @include currentValueDisplay;
+//      right: 1px;
+//      //top: -10px;
+//    }
+//
+//    &::-webkit-slider-thumb {
+//      position: relative;
+//      //top:-26px;
+//    }
+//  }
+//}
+
+.onTop {
+  background-color: $trackColor;
+}
+
+.under {
+  background-color: transparent;
+}
