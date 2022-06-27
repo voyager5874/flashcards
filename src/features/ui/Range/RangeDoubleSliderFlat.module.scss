@@ -13,6 +13,20 @@ $rangeFillColor: $elementsColorDefault;
   top: 15px;
 }
 
+@mixin input-thumb-override {
+  background-color: $thumbColor;
+  border: none;
+  //border-radius: 50%;
+  border-radius: 3px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  margin-top: 2px;
+  pointer-events: all;
+  position: relative;
+}
+
 
 .wrapper {
   position: relative;
@@ -49,6 +63,7 @@ $rangeFillColor: $elementsColorDefault;
     width: 100%;
     z-index: 1;
   }
+
   .sliderRange {
     height: 15px;
     background-color: $rangeFillColor;
@@ -71,34 +86,19 @@ $rangeFillColor: $elementsColorDefault;
   z-index: 3;
   top: 4px;
   left: -2px;
+
+  &::-webkit-slider-thumb {
+    @include input-thumb-override;
+
+  }
+
+  &::-moz-range-thumb {
+    @include input-thumb-override;
+  }
 }
 
 
 /* For Chrome browsers */
-.thumb::-webkit-slider-thumb {
-  background-color: $thumbColor;
-  border: none;
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  height: 20px;
-  width: 20px;
-  margin-top: 2px;
-  pointer-events: all;
-  position: relative;
-}
-
-.thumb::-moz-range-thumb {
-  background-color: #f1f5f7;
-  border: none;
-  border-radius: 50%;
-  box-shadow: 0 0 1px 1px #ced4da;
-  cursor: pointer;
-  height: 18px;
-  width: 18px;
-  margin-top: 4px;
-  pointer-events: all;
-  position: relative;
-}
 
 
 //.wrapper {

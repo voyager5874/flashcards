@@ -1,0 +1,80 @@
+@import 'src/styles/flat-design-colors';
+
+.wrapper {
+  position: relative;
+
+  input {
+    border-radius: 5px;
+    background-color: $backgroundColorSecondary;
+    border: 0;
+    border-bottom: solid 5px rgb(150, 120, 120);
+    float: left;
+    width: 346px;
+    height: 55px;
+    text-indent: 14px;
+    font-size: 17px;
+    font-family: "Josefin Sans", sans-serif;
+    font-weight: 700;
+    color: #34495e;
+    margin: 10px 0 10px 10px;
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
+
+
+    &:focus {
+      box-shadow: 0 0 0px rgba(0, 0, 0, 0.2);
+      outline: none;
+    }
+    &::-webkit-input-placeholder {
+      position: absolute;
+      right: 10px;
+      top: 3px;
+    }
+
+    &:-moz-placeholder { /* Firefox 18- */
+    }
+
+    &::-moz-placeholder { /* Firefox 19+ */
+    }
+
+    &:-ms-input-placeholder {
+    }
+
+  }
+
+  .errorInput {
+    border-bottom: solid 5px $elementsColorThemeRed;
+    //background-color: $elementsColorThemeRed;
+    //color: $elementsColorThemeRed;
+    &::-webkit-input-placeholder {
+      color: red;
+    }
+
+    &:-moz-placeholder {
+      color: red;
+
+    }
+
+    &::-moz-placeholder {
+      color: red;
+
+    }
+
+    &:-ms-input-placeholder {
+      color: red;
+
+    }
+  }
+
+  .helperText {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    color: #34495e;
+  }
+
+  .errorText {
+    color: $elementsColorThemeRed;
+
+  }
+}
+

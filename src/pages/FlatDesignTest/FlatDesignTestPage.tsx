@@ -13,6 +13,7 @@ import {
 } from 'const';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { CheckboxFlatDesign } from 'features/ui/Checkbox/CheckboxFlatDesign';
+import { TextInput } from 'features/ui/flat-design/TextInput';
 import { RadioGroupFlatDesign } from 'features/ui/Radio/RadioGroupFlatDesign';
 import { RangeDoubleSliderFlat } from 'features/ui/Range/RangeDoubleSliderFlat';
 import { RangeFlatDesign } from 'features/ui/Range/RangeFlatDesign';
@@ -44,6 +45,7 @@ export const FlatDesignTestPage = () => {
       <h3>Design 1</h3>
       <div className={styles.elementTypeContainer}>
         <CheckboxFlatDesign>check it</CheckboxFlatDesign>
+        <CheckboxFlatDesign checked>check it</CheckboxFlatDesign>
       </div>
       <h2>Radio</h2>
       <h3>Design 1</h3>
@@ -61,6 +63,8 @@ export const FlatDesignTestPage = () => {
       <h3>Design 1</h3>
       <div className={styles.elementTypeContainer}>
         <TextInputFLatDesign placeholder="flat design input test" />
+        <TextInput placeholder="helper" error="something wrong" />
+        <TextInput placeholder="helper" />
       </div>
       <h2>Range Input</h2>
       <h3>Design 1</h3>
