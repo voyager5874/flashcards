@@ -13,6 +13,7 @@ import {
 } from 'const';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { CheckboxFlatDesign } from 'features/ui/Checkbox/CheckboxFlatDesign';
+import { DropdownSelect } from 'features/ui/flat-design';
 import { TextInput } from 'features/ui/flat-design/TextInput';
 import { RadioGroupFlatDesign } from 'features/ui/Radio/RadioGroupFlatDesign';
 import { RangeDoubleSliderFlat } from 'features/ui/Range/RangeDoubleSliderFlat';
@@ -39,13 +40,14 @@ export const FlatDesignTestPage = () => {
       <div className={styles.elementTypeContainer}>
         <ButtonFlatDesign>start new</ButtonFlatDesign>
         <ButtonFlatDesign color="green">start new</ButtonFlatDesign>
+        <ButtonFlatDesign color="salmon">start new</ButtonFlatDesign>
         <ButtonFlatDesign color="red">start new</ButtonFlatDesign>
       </div>
       <h2>Checkbox</h2>
       <h3>Design 1</h3>
       <div className={styles.elementTypeContainer}>
         <CheckboxFlatDesign>check it</CheckboxFlatDesign>
-        <CheckboxFlatDesign checked>check it</CheckboxFlatDesign>
+        <CheckboxFlatDesign checked>checked</CheckboxFlatDesign>
       </div>
       <h2>Radio</h2>
       <h3>Design 1</h3>
@@ -59,12 +61,26 @@ export const FlatDesignTestPage = () => {
       </div>
       <h2>Dropdown</h2>
       <h3>Design 1</h3>
+      <div className={styles.elementTypeContainer}>
+        <div style={{ width: '300px' }}>
+          <DropdownSelect
+            value={value}
+            options={arr}
+            onChangeOption={onChangeOption}
+            name="dropdown-select-flat-test"
+          />
+          <ButtonFlatDesign>start new</ButtonFlatDesign>
+        </div>
+      </div>
       <h2>Text Input</h2>
       <h3>Design 1</h3>
       <div className={styles.elementTypeContainer}>
         <TextInputFLatDesign placeholder="flat design input test" />
-        <TextInput placeholder="helper" error="something wrong" />
-        <TextInput placeholder="helper" />
+      </div>
+      <h3>Design 2</h3>
+      <div className={styles.elementTypeContainer}>
+        <TextInput placeholder="placeholder" error="error message" />
+        <TextInput placeholder="placeholder" />
       </div>
       <h2>Range Input</h2>
       <h3>Design 1</h3>

@@ -1,3 +1,5 @@
+@import 'src/styles/flat-design-colors';
+
 .button {
   border: none;
   color: white;
@@ -25,7 +27,7 @@
   text-shadow: 2px 2px 0 rgba(0,0,0,.3)
 }
 
-.red {
+.salmon {
   background-color: salmon;
   border-color: rgb(150,120,120);
 }
@@ -39,4 +41,9 @@
 .blue {
   background-color: #19698C;
   border-color: #384B64;
+}
+
+.red {
+  background-color: rgb( 231, 76, 60 );
+  border-color: rgb( 192, 57, 43 );
 }

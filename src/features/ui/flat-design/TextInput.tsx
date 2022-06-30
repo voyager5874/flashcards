@@ -1,4 +1,4 @@
-import React, { ChangeEvent, KeyboardEvent, useRef } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useId, useRef } from 'react';
 
 import styles from './TextInput.module.scss';
 
@@ -16,8 +16,8 @@ export const TextInput: React.FC<TextInputPropsType> = ({
   ...restProps
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
-
-  // let helperText = error || placeholder || '';
+  const id = useId();
+  const helperText = error || '';
 
   const onChangeCallback = (event: ChangeEvent<HTMLInputElement>): void => {
     if (inputRef.current) {
@@ -33,25 +33,26 @@ export const TextInput: React.FC<TextInputPropsType> = ({
     if (onEnter && event.key === 'Enter') onEnter();
   };
 
-  // const finalSpanStyle = `${styles.helperText} ${spanClassName} ${
-  //   error ? styles.errorText : ''
-  // }`;
+  const finalSpanStyle = `${styles.helperText} ${spanClassName} ${
+    error ? styles.errorText : ''
+  }`;
   const finalInputStyle = `${styles.input} ${onEnter ? styles.superInput : ''} ${
     error ? styles.errorInput : ''
   } ${className}`;
 
   return (
-    <div className={styles.wrapper}>
+    <label htmlFor={id} className={styles.wrapper}>
       <input
+        id={id}
         ref={inputRef}
-        placeholder={error || placeholder}
+        placeholder={error ? '' : placeholder}
         onChange={onChangeCallback}
         onKeyPress={onKeyPressCallback}
         className={finalInputStyle}
         {...restProps}
         type="text"
       />
-      {/* {helperText && <span className={finalSpanStyle}>{helperText}</span>} */}
-    </div>
+      {helperText && <span className={finalSpanStyle}>{helperText}</span>}
+    </label>
   );
 };
