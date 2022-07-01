@@ -40,8 +40,8 @@ export const FlatDesignTestPage = () => {
       <div className={styles.elementTypeContainer}>
         <ButtonFlatDesign>start new</ButtonFlatDesign>
         <ButtonFlatDesign color="green">start new</ButtonFlatDesign>
-        <ButtonFlatDesign color="salmon">start new</ButtonFlatDesign>
-        <ButtonFlatDesign color="red">start new</ButtonFlatDesign>
+        <ButtonFlatDesign color="salmon">friday awaits</ButtonFlatDesign>
+        <ButtonFlatDesign color="red">create single page apps</ButtonFlatDesign>
       </div>
       <h2>Checkbox</h2>
       <h3>Design 1</h3>
@@ -69,13 +69,13 @@ export const FlatDesignTestPage = () => {
             onChangeOption={onChangeOption}
             name="dropdown-select-flat-test"
           />
-          <ButtonFlatDesign>start new</ButtonFlatDesign>
         </div>
       </div>
       <h2>Text Input</h2>
       <h3>Design 1</h3>
       <div className={styles.elementTypeContainer}>
-        <TextInputFLatDesign placeholder="flat design input test" />
+        <TextInputFLatDesign placeholder="placeholder placeholder" />
+        <TextInputFLatDesign placeholder="placeholder" error="some error" />
       </div>
       <h3>Design 2</h3>
       <div className={styles.elementTypeContainer}>

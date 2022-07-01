@@ -1,6 +1,7 @@
 @import 'src/styles/flat-design-colors';
 
 .button {
+  position: relative;
   border: none;
   color: white;
   display: inline-block;
@@ -8,13 +9,31 @@
   text-decoration: none;
   padding: 20px 50px;
   border-radius: 5px;
-  margin:5px;
+  margin: 5px;
   border-bottom-style: solid;
   border-bottom-width: 3px;
   transition: text-shadow 0.3s ease;
   font-size: 18px;
   font-weight: 700;
   font-family: 'Josefin Sans', sans-serif;
+  cursor: pointer;
+
+  &::after {
+    content: "";
+    //width: 0;
+    width: calc(100% - 100px);
+
+    height: 3px;
+    background-color: $elementsBorderColorDefault;
+    position: absolute;
+    bottom: 15px;
+    transition: transform 0.2s;
+    //margin: 0;
+    left: 50px;
+    //transform: translateX(-50%, -50%);
+    transform: scaleX(0);
+    //right: 50px;
+  }
 }
 
 .button:active {
@@ -24,18 +43,32 @@
 }
 
 .button:hover {
-  text-shadow: 2px 2px 0 rgba(0,0,0,.3)
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, .3);
+
+  &::after {
+    //width: calc(100% - 100px);
+    transform: scaleX(1);
+    transition: transform 0.4s;
+  }
 }
 
 .salmon {
   background-color: salmon;
-  border-color: rgb(150,120,120);
+  border-color: rgb(150, 120, 120);
+
+  &::after {
+    background-color: $elementsBorderColorThemeRed;
+  }
 }
 
 
 .green {
   background-color: #4CDF78;
   border-color: #53A574;
+
+  &::after {
+    background-color: $elementsBorderColorSecondary;
+  }
 }
 
 .blue {
@@ -44,6 +77,10 @@
 }
 
 .red {
-  background-color: rgb( 231, 76, 60 );
-  border-color: rgb( 192, 57, 43 );
+  background-color: rgb(231, 76, 60);
+  border-color: rgb(192, 57, 43);
+
+  &::after {
+    background-color: rgb(192, 57, 43);
+  }
 }

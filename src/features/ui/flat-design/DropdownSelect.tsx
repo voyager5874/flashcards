@@ -69,7 +69,7 @@ export const DropdownSelect: FC<RadioPropsType> = ({
     <div className={styles.wrapper} ref={elementContainerRef}>
       <button type="button" className={buttonClassName} onClick={toggleShowOptions}>
         {value}
-        <span className={styles.pulse}>
+        <span>
           <FontAwesomeIcon icon={faAngleDown} />
         </span>
       </button>
