@@ -1,5 +1,6 @@
 import {
   ChangeEvent,
+  Children,
   CSSProperties,
   FC,
   ReactElement,
@@ -14,6 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import styles from './DropdownSelect.module.scss';
 
+import { STEP_TO_NEXT } from 'const';
 import { RadioPropsType } from 'features/ui/Radio/types';
 import { useOutsideClickDetect } from 'hooks';
 
@@ -23,16 +25,22 @@ const OPTION_ITEM_HEIGHT = 40; // SSOT? not heard of it
 // Particularly select 'option' look is almost unchangeable
 export const DropdownSelect: FC<RadioPropsType> = ({
   name,
-  options,
+  options = [],
   onChange,
   onChangeOption,
   value,
+  children,
   ...restProps
 }): ReactElement => {
   const id = useId();
   const elementContainerRef = useRef<HTMLDivElement>(null);
   const [collapsed, setCollapsed] = useState(true);
-  // const colorTheme = 'dark';
+  const childrenArray = Children.toArray(children);
+  if (childrenArray.length < options.length) {
+    for (let i = childrenArray.length; i < options.length; i += STEP_TO_NEXT) {
+      childrenArray.push(<span />);
+    }
+  }
 
   const hideOptions = useCallback((): void => {
     setCollapsed(true);
@@ -78,7 +86,7 @@ export const DropdownSelect: FC<RadioPropsType> = ({
         style={collapsed ? collapsedOptionsBoxStyle : expandedOptionsBoxStyle}
       >
         {options
-          ? options.map(option => (
+          ? options.map((option, index) => (
               <label htmlFor={`${option}-${id}`} key={`${option}-${id}`}>
                 <input
                   id={`${option}-${id}`}
@@ -89,6 +97,7 @@ export const DropdownSelect: FC<RadioPropsType> = ({
                   {...restProps}
                   type="radio"
                 />
+                {childrenArray.slice(index, index + STEP_TO_NEXT)}
                 {option}
               </label>
             ))

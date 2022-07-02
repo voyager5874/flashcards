@@ -3,7 +3,7 @@
 $menuButtonColor: $elementsColorDefault;
 $optionsBoxColor: $elementsBorderColorDefault;
 
-$optionHoverColor: $elementsColorThemeRed;
+$optionHoverColor: $elementsColorDefault;
 $menuButtonHoverColor: $elementsColorDefault;
 
 $arrowIconColor: white;
@@ -121,6 +121,14 @@ $collapsedHeight: 50px;
       position: relative;
       cursor: pointer;
       padding: 7px 7px 7px 20px;
+      //display: flex;
+      //justify-content: flex-start;
+      //gap: 40px;
+      svg{
+        display: inline-block;
+        min-width: 20px;
+        margin-right: 20px;
+      }
 
 
       &:hover {

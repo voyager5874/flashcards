@@ -1,5 +1,8 @@
 import { useCallback, useState } from 'react';
 
+import { faBiking, faDumbbell, faHiking } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import styles from './FlatDesignTestPage.module.scss';
 
 import {
@@ -68,7 +71,11 @@ export const FlatDesignTestPage = () => {
             options={arr}
             onChangeOption={onChangeOption}
             name="dropdown-select-flat-test"
-          />
+          >
+            <FontAwesomeIcon icon={faBiking} />
+            <FontAwesomeIcon icon={faHiking} />
+            <FontAwesomeIcon icon={faDumbbell} />
+          </DropdownSelect>
         </div>
       </div>
       <h2>Text Input</h2>
