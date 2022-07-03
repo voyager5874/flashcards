@@ -1,0 +1,1 @@
+export { PasswordCreateNew } from './PasswordCreateNew';

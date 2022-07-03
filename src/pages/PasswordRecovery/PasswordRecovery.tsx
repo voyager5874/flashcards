@@ -1,24 +1,23 @@
 import { useNavigate } from 'react-router-dom';
 
+import styles from './PasswordRecovery.module.scss';
+
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { TextInput } from 'features/ui/flat-design';
-import styles from 'pages/Register/Register.module.scss';
 
-export const Register = () => {
+export const PasswordRecovery = () => {
   const navigate = useNavigate();
-  const handleRegister = () => {
+  const handleClick = () => {
     navigate('../profile', { replace: true });
   };
   return (
     <div className={styles.wrapper}>
       <form action="">
-        <h1>Register</h1>
-        <TextInput placeholder="login" />
-        <TextInput placeholder="password" />
-        <TextInput placeholder="confirm password" />
+        <h1>Forgot your password?</h1>
+        <TextInput placeholder="email" />
         <div>
           <ButtonFlatDesign>Cancel</ButtonFlatDesign>
-          <ButtonFlatDesign onClick={handleRegister}>Register</ButtonFlatDesign>
+          <ButtonFlatDesign onClick={handleClick}>Send instructions</ButtonFlatDesign>
         </div>
       </form>
     </div>

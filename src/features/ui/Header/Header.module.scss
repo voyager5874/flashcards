@@ -1,11 +1,12 @@
 @use 'src/styles/layout-variables';
 
-.wrapper{
+.wrapper {
   background-color: #f49536;
   height: layout-variables.$headerHeight;
   margin: 0;
-  padding: 0;
-  a{
+  padding: 0 50px;
+
+  a {
     text-decoration: none;
     margin-right: 20px;
   }

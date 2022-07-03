@@ -1,3 +1,5 @@
+@use 'src/styles/layout-variables';
+
 @import 'src/styles/flat-design-colors';
 
 .button {
@@ -8,7 +10,7 @@
   text-transform: uppercase;
   text-decoration: none;
   padding: 20px 50px;
-  border-radius: 5px;
+  border-radius: layout-variables.$elementsBorderRadius;
   margin: 5px;
   border-bottom-style: solid;
   border-bottom-width: 3px;

@@ -2,9 +2,8 @@ import { ReactElement } from 'react';
 
 import { Outlet } from 'react-router-dom';
 
-import styles from './Layout.module.scss';
-
 import { Header } from 'features/ui/Header/Header';
+import styles from 'features/ui/Layout/Layout.module.scss';
 
 export const Layout = (): ReactElement => (
   <>

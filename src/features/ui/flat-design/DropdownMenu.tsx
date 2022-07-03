@@ -17,19 +17,16 @@ import styles from './DropdownMenu.module.scss';
 
 import { useOutsideClickDetect } from 'hooks';
 
-const OPTION_ITEM_HEIGHT = 40; // SSOT? not heard of it
+const OPTION_ITEM_HEIGHT = 38; // SSOT? not heard of it
+const OPTION_BOX_HEIGHT_GUTTER = 50;
 
 type DropdownMenuPropsType = {
-  // options: string[];
   expandOnHover?: boolean;
   placeholder: string;
   children: Array<ReturnType<typeof NavLink>>;
-  // children: ReactElement[];
-  // children: any;
 };
 
 export const DropdownMenu: FC<DropdownMenuPropsType> = ({
-  // options = [],
   expandOnHover = false,
   children,
   placeholder,
@@ -37,7 +34,6 @@ export const DropdownMenu: FC<DropdownMenuPropsType> = ({
   const id = useId();
   const elementContainerRef = useRef<HTMLDivElement>(null);
   const [collapsed, setCollapsed] = useState(true);
-  // const childrenArray = Children.toArray(children);
 
   const hideOptions = useCallback((): void => {
     setCollapsed(true);
@@ -56,12 +52,11 @@ export const DropdownMenu: FC<DropdownMenuPropsType> = ({
       setCollapsed(true);
     }
   };
-  // @ts-ignore
-  // Children.map(children, option => console.dir(option.props));
 
   const expandedOptionsBoxStyle: CSSProperties = {
-    // unset -> no animation
-    height: `${children && children.length * OPTION_ITEM_HEIGHT}px`,
+    height: `${
+      children && children.length * OPTION_ITEM_HEIGHT + OPTION_BOX_HEIGHT_GUTTER
+    }px`,
   };
 
   const collapsedOptionsBoxStyle: CSSProperties = {
@@ -91,7 +86,11 @@ export const DropdownMenu: FC<DropdownMenuPropsType> = ({
         >
           {children
             ? Children.map(children, child => (
-                <li className={styles.menuItem} key={`${child!.props.to}-${id}`}>
+                <li
+                  className={styles.menuItem}
+                  key={`${child!.props.to}-${id}`}
+                  style={{ height: `${OPTION_ITEM_HEIGHT}px` }}
+                >
                   {child}
                 </li>
               ))
