@@ -30,6 +30,7 @@ export const DropdownSelect: FC<RadioPropsType> = ({
   onChangeOption,
   value,
   children,
+  placeholder,
   ...restProps
 }): ReactElement => {
   const id = useId();
@@ -76,7 +77,7 @@ export const DropdownSelect: FC<RadioPropsType> = ({
   return (
     <div className={styles.wrapper} ref={elementContainerRef}>
       <button type="button" className={buttonClassName} onClick={toggleShowOptions}>
-        {value}
+        {placeholder || value}
         <span>
           <FontAwesomeIcon icon={faAngleDown} />
         </span>

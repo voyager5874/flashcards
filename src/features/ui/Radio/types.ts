@@ -9,4 +9,5 @@ export type RadioPropsType = DefaultRadioPropsType & {
   options?: string[];
   onChangeOption?: (option: any) => void;
   // children?: ReactElement[];
+  buttonText?: string;
 };

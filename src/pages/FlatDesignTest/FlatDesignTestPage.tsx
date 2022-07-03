@@ -65,14 +65,16 @@ export const FlatDesignTestPage = () => {
       <h2>Dropdown</h2>
       <h3>Design 1</h3>
       <div className={styles.elementTypeContainer}>
-        <div style={{ width: '300px' }}>
+        <div style={{ width: '350px' }}>
           <DropdownSelect
             value={value}
             options={arr}
             onChangeOption={onChangeOption}
             name="dropdown-select-flat-test"
+            // buttonText="custom dropdown"
+            placeholder="dropdown"
           >
-            <FontAwesomeIcon icon={faBiking} />
+            <FontAwesomeIcon icon={faBiking} color="yellow" />
             <FontAwesomeIcon icon={faHiking} />
             <FontAwesomeIcon icon={faDumbbell} />
           </DropdownSelect>

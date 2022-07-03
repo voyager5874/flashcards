@@ -1,0 +1,157 @@
+@import 'src/styles/flat-design-colors';
+
+$menuButtonColor: $elementsColorDefault;
+$optionsBoxColor: $elementsBorderColorDefault;
+
+$optionHoverColor: $elementsColorDefault;
+$menuButtonHoverColor: $elementsColorDefault;
+
+$arrowIconColor: white;
+
+$menuButtonTextColor: white;
+$optionTextColor: white;
+
+$buttonHoverTextColor: #f1e8e6;
+$optionHoverTextColor: #f1e8e6;
+$menuButtonHoverTextColor: #f1e8e6;
+
+$collapsedHeight: 50px;
+
+.wrapper {
+  display: inline-block;
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    border: none;
+    outline: none;
+  }
+
+  .menuButton {
+    position: relative;
+    text-align: left;
+    //height: $collapsedHeight;
+    background-color: $menuButtonColor;
+    width: 100%;
+    //line-height: 10px;
+    border: none;
+    color: white;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 20px 50px;
+    border-radius: 5px;
+    margin: 5px;
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+    border-color: #384B64;
+    transition: text-shadow 0.3s ease;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Josefin Sans', sans-serif;
+
+    span {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background-color: #2f7796;
+      font-size: 26px;
+      font-weight: 900;
+      padding-right: 20px;
+      padding-left: 20px;
+      display: flex;
+      align-items: center;
+      border-radius: 0 5px 0 0;
+    }
+
+    &:hover {
+      text-shadow: 2px 2px 0 rgba(0, 0, 0, .3);
+
+      svg {
+        :global {
+          animation: jump 0.5s infinite;
+        }
+      }
+    }
+  }
+
+  .menuExpanded {
+    &:hover {
+      svg {
+        animation: none;
+      }
+
+    }
+
+    & > span > svg {
+      transform: rotateZ(180deg);
+    }
+  }
+
+  .optionsBox {
+    position: absolute;
+    top: calc(95%);
+    left: 5px;
+    z-index: 100;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    row-gap: 5px;
+    background-color: $optionsBoxColor;
+    width: 100%;
+    font-weight: 600;
+    font-size: 16px;
+    color: $optionTextColor;
+    transition: height 0.3s ease-out;
+    border-radius: 5px;
+
+    .menuItem {
+      width: 100%;
+      color: $optionTextColor;
+      cursor: pointer;
+      padding: 7px 7px 7px 20px;
+
+      &:hover {
+        background-color: $optionHoverColor;
+        color: $optionHoverTextColor;
+
+      }
+
+      a {
+        color: $optionTextColor;
+        text-decoration: none;
+        position: relative;
+
+
+        svg {
+          display: inline-block;
+          min-width: 20px;
+          margin-right: 20px;
+        }
+
+      }
+    }
+
+
+  }
+
+
+}
+
+@keyframes:global(jump) {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+  100% {
+    transform: translateY(2px);
+
+  }
+}
