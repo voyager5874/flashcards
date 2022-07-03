@@ -23,6 +23,8 @@ export const Header: FC<RadioPropsType> = ({ height }): ReactElement => {
       <NavLink to="/login">Login</NavLink>
       <NavLink to="/flat-test">Test Page 1</NavLink>
       <NavLink to="/password-set">Set password</NavLink>
+      <NavLink to="/password-reset">Set password</NavLink>
+      <NavLink to="/heap-test">Components heap</NavLink>
       <div style={{ display: 'inline-block', width: '300px', marginRight: '20px' }}>
         <DropdownMenu placeholder="onHover nav" expandOnHover>
           <NavLink to="/profile">
@@ -41,6 +43,13 @@ export const Header: FC<RadioPropsType> = ({ height }): ReactElement => {
           <NavLink to="/flat-test">
             <FontAwesomeIcon icon={faBiking} /> Test page 1
           </NavLink>
+          <NavLink to="/profile">Profile</NavLink>
+          <NavLink to="/packs">Packs</NavLink>
+          {/* <NavLink to="/login">Login</NavLink> */}
+          <NavLink to="/flat-test">Test Page 1</NavLink>
+          <NavLink to="/password-set">Set password</NavLink>
+          <NavLink to="/password-reset">Reset password</NavLink>
+          <NavLink to="/heap-test">Components heap</NavLink>
         </DropdownMenu>
       </div>
     </div>

@@ -22,6 +22,8 @@ $collapsedHeight: 50px;
   box-sizing: border-box;
   position: relative;
   width: 100%;
+  padding: 0;
+  margin: 0;
 
   * {
     box-sizing: border-box;
@@ -34,10 +36,8 @@ $collapsedHeight: 50px;
   .menuButton {
     position: relative;
     text-align: left;
-    //height: $collapsedHeight;
     background-color: $menuButtonColor;
     width: 100%;
-    //line-height: 10px;
     border: none;
     color: white;
     text-transform: uppercase;
@@ -94,9 +94,9 @@ $collapsedHeight: 50px;
 
   .optionsBox {
     position: absolute;
-    top: calc(95%);
-    left: 5px;
-    z-index: 100;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 10;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -109,23 +109,27 @@ $collapsedHeight: 50px;
     color: $optionTextColor;
     transition: height 0.3s ease-out;
     border-radius: 5px;
+    list-style: none;
+
 
     .menuItem {
       width: 100%;
       color: $optionTextColor;
-      cursor: pointer;
-      padding: 7px 7px 7px 20px;
-
-      &:hover {
-        background-color: $optionHoverColor;
-        color: $optionHoverTextColor;
-
-      }
+      pointer-events: none;
 
       a {
+        display: inline-block;
+        pointer-events: all;
+        cursor: pointer;
+        width: 100%;
+        padding: 7px 7px 7px 20px;
         color: $optionTextColor;
         text-decoration: none;
         position: relative;
+        &:hover {
+          background-color: $optionHoverColor;
+          color: $optionHoverTextColor;
+        }
 
 
         svg {

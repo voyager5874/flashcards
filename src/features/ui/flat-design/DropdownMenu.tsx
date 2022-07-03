@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
   Children,
   CSSProperties,
@@ -58,7 +57,7 @@ export const DropdownMenu: FC<DropdownMenuPropsType> = ({
     }
   };
   // @ts-ignore
-  Children.map(children, option => console.log(option.props.to));
+  // Children.map(children, option => console.dir(option.props));
 
   const expandedOptionsBoxStyle: CSSProperties = {
     // unset -> no animation
@@ -86,18 +85,18 @@ export const DropdownMenu: FC<DropdownMenuPropsType> = ({
         <span>
           <FontAwesomeIcon icon={faAngleDown} />
         </span>
-        <div
+        <ul
           className={styles.optionsBox}
           style={collapsed ? collapsedOptionsBoxStyle : expandedOptionsBoxStyle}
         >
           {children
             ? Children.map(children, child => (
-                <div className={styles.menuItem} key={`${child?.props.to}-${id}`}>
+                <li className={styles.menuItem} key={`${child!.props.to}-${id}`}>
                   {child}
-                </div>
+                </li>
               ))
             : []}
-        </div>
+        </ul>
       </button>
     </div>
   );
