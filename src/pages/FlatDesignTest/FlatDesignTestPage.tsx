@@ -17,6 +17,7 @@ import {
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { CheckboxFlatDesign } from 'features/ui/Checkbox/CheckboxFlatDesign';
 import { DropdownSelect } from 'features/ui/flat-design';
+import { RangeDoubleSlider } from 'features/ui/flat-design/RangeDoubleSlider';
 import { TextInput } from 'features/ui/flat-design/TextInput';
 import { RadioGroupFlatDesign } from 'features/ui/Radio/RadioGroupFlatDesign';
 import { RangeDoubleSliderFlat } from 'features/ui/Range/RangeDoubleSliderFlat';
@@ -105,6 +106,18 @@ export const FlatDesignTestPage = () => {
           upperValue={value2}
           gap={20}
           step={10}
+          max={MAX_VALUE}
+          min={MIN_VALUE}
+          onChangeRange={doubleRangeChangeHandler}
+        />
+      </div>
+      <h3>Design 2</h3>
+      <div className={styles.elementTypeContainer}>
+        <RangeDoubleSlider
+          lowerValue={value1}
+          upperValue={value2}
+          gap={20}
+          step={5}
           max={MAX_VALUE}
           min={MIN_VALUE}
           onChangeRange={doubleRangeChangeHandler}

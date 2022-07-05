@@ -1,22 +1,31 @@
-@import 'src/styles/flat-design-colors';
+@use 'src/styles/flat-design-colors';
 
 .wrapper {
+  //border: 1px solid;
   position: relative;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+
+  *{
+    box-sizing: border-box;
+  }
 
   input {
+    width: 100%;
     border-radius: 5px;
-    background-color: $backgroundColorSecondary;
+    background-color: flat-design-colors.$textColorMain;
     border: 0;
-    border-bottom: solid 5px rgb(150, 120, 120);
+    border-bottom: solid 5px rgb(119, 118, 118);
     float: left;
-    width: 346px;
-    height: 55px;
+    height: 60px;
     text-indent: 14px;
     font-size: 17px;
     font-family: "Josefin Sans", sans-serif;
     font-weight: 700;
     color: #34495e;
-    margin: 10px 0 10px 10px;
+    //margin: 10px 0 10px 10px;
     box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
 
 
@@ -42,38 +51,38 @@
   }
 
   .errorInput {
-    border-bottom: solid 5px $elementsColorThemeRed;
+    border-bottom: solid 5px flat-design-colors.$elementErrorBorder;
     //background-color: $elementsColorThemeRed;
     //color: $elementsColorThemeRed;
     &::-webkit-input-placeholder {
-      color: red;
+      color: flat-design-colors.$elementErrorBorder;
     }
 
     &:-moz-placeholder {
-      color: red;
+      color: flat-design-colors.$elementErrorBorder;
 
     }
 
     &::-moz-placeholder {
-      color: red;
+      color: flat-design-colors.$elementErrorBorder;
 
     }
 
     &:-ms-input-placeholder {
-      color: red;
+      color: flat-design-colors.$elementErrorBorder;
 
     }
   }
 
   .helperText {
     position: absolute;
-    top: 15px;
+    top: 5px;
     right: 10px;
     color: #34495e;
   }
 
   .errorText {
-    color: $elementsColorThemeRed;
+    color: flat-design-colors.$elementError;
 
   }
 }

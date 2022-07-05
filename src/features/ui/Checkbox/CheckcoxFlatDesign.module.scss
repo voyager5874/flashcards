@@ -11,6 +11,9 @@ $checkMarkColor: #5E5D58;
 }
 
 .wrapper {
+  //border: 1px solid;
+  display: flex;
+  align-items: flex-end;
   input {
     position: relative;
     height: 20px;

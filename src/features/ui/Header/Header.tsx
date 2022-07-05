@@ -20,18 +20,8 @@ export const Header: FC<HeaderPropsType> = ({ height }): ReactElement => {
     <div className={styles.wrapper} style={dynamicStyle}>
       <NavLink to="/profile">Profile</NavLink>
       <NavLink to="/packs-list">Packs</NavLink>
-      {/* <div style={{ display: 'inline-block', width: '300px', marginRight: '20px' }}> */}
-      {/*  <DropdownMenu placeholder="onHover nav" expandOnHover> */}
-      {/*    <NavLink to="/profile"> */}
-      {/*      <FontAwesomeIcon icon={faBiking} color="yellow" /> Profile */}
-      {/*    </NavLink> */}
-      {/*    <NavLink to="/flat-test"> */}
-      {/*      <FontAwesomeIcon icon={faBiking} /> Test page 1 */}
-      {/*    </NavLink> */}
-      {/*  </DropdownMenu> */}
-      {/* </div> */}
-      <div style={{ display: 'inline-block', width: '320px' }}>
-        <DropdownMenu placeholder="no onHover nav">
+      <div style={{ display: 'inline-block', width: '250px' }}>
+        <DropdownMenu placeholder="navigation">
           <NavLink to="/login">
             <FontAwesomeIcon icon={faBiking} color="yellow" /> Login
           </NavLink>

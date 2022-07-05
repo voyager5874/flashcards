@@ -24,7 +24,6 @@
     content: "";
     //width: 0;
     width: calc(100% - 100px);
-
     height: 3px;
     background-color: $elementsBorderColorDefault;
     position: absolute;
@@ -74,8 +73,8 @@
 }
 
 .blue {
-  background-color: #19698C;
-  border-color: #384B64;
+  background-color: $elementsColorDefault;
+  border-color: $elementsBorderColorDefault;
 }
 
 .red {

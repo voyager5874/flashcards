@@ -16,10 +16,8 @@ export const PasswordCreateNew = () => {
         <h1>Create new password</h1>
         <TextInput placeholder="new password" />
         <TextInput placeholder="confirm password" />
-        <div>
-          <ButtonFlatDesign>Cancel</ButtonFlatDesign>
-          <ButtonFlatDesign onClick={handleClick}>Create new password</ButtonFlatDesign>
-        </div>
+        <p>Enter new password and we will send you further instructions</p>
+        <ButtonFlatDesign onClick={handleClick}>Create new password</ButtonFlatDesign>
       </form>
     </div>
   );

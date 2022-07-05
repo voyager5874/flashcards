@@ -12,7 +12,7 @@ export const Register = () => {
   return (
     <div className={styles.wrapper}>
       <form action="">
-        <h1>Register</h1>
+        <h1>Sign Up</h1>
         <TextInput placeholder="login" />
         <TextInput placeholder="password" />
         <TextInput placeholder="confirm password" />
