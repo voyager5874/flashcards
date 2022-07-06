@@ -3,10 +3,12 @@ import thunkMiddleware from 'redux-thunk';
 
 import { appReducer } from 'store/reducers/app';
 import { login } from 'store/reducers/login';
+import { profile } from 'store/reducers/profile';
 
 const rootReducer = combineReducers({
   login,
   appReducer,
+  profile,
 });
 
 export const store = configureStore({
