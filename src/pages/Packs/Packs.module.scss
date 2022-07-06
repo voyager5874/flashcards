@@ -1,0 +1,14 @@
+@use 'src/styles/flat-design-colors';
+
+.wrapper {
+  box-sizing: border-box;
+  padding: 40px;
+  color: white;
+  background-color: flat-design-colors.$secondaryColor;
+  width: 90%;
+  min-height: 50vh;
+
+  * {
+    box-sizing: border-box;
+  }
+}

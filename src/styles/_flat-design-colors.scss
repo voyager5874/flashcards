@@ -28,3 +28,46 @@ $textColorMain: white;
 $textColorInverse: #4b6584;
 
 
+//palette
+//https://flatuicolors.com/palette/de
+$desire: #eb3b5a;
+$fusionRed: #fc5c65;
+$beniukonBronze: #fa8231;
+$orangeHibiscus: #fd9644;
+$nycTaxi: #f7b731;
+$flirtatious: #fed330;
+$algalFuel: #20bf6b;
+$reptileGreen: #26de81;
+$turquoiseTopaz: #0fb9b1;
+$maximumBlueGreen: #2bcbba;
+$twinkleBlue: #d1d8e0;
+$blueGrey: #778ca3;
+$innuendo: #a5b1c2;
+$blueHorizon: #4b6584;
+$highBlue: #45aaf2;
+$c64NTSC: #4b7bec;
+$boyZone: #2d98da;
+$royalBlue: #3867d6;
+//weren't in the palette
+$white: white;
+$chicago: #5E5D58;
+
+
+
+//colors by purpose
+
+$pageBackground: $turquoiseTopaz;
+$pageFormsBackground: $nycTaxi;
+$pageFormsBorder: darken($pageFormsBackground, 20%);
+
+$normalButtonBackground: $algalFuel;
+$normalButtonBorder: darken($normalButtonBackground, 20%);
+$error: $desire;
+$danger: $desire;
+$normalText: $white;
+$darkText: black;
+$notHoveredLink: $white;
+$hoveredLink: $white;
+$rangeFill: $algalFuel;
+$rangeThumbInactive: $blueHorizon;
+$rangeThumbActive: $blueHorizon;

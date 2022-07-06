@@ -43,9 +43,9 @@ export const FlatDesignTestPage = () => {
       <h3>Design 1</h3>
       <div className={styles.elementTypeContainer}>
         <ButtonFlatDesign>start new</ButtonFlatDesign>
-        <ButtonFlatDesign color="green">start new</ButtonFlatDesign>
+        <ButtonFlatDesign color="normal">start new</ButtonFlatDesign>
         <ButtonFlatDesign color="salmon">friday awaits</ButtonFlatDesign>
-        <ButtonFlatDesign color="red">create single page apps</ButtonFlatDesign>
+        <ButtonFlatDesign color="danger">create single page apps</ButtonFlatDesign>
       </div>
       <h2>Checkbox</h2>
       <h3>Design 1</h3>

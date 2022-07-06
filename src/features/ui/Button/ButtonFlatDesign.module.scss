@@ -1,17 +1,28 @@
 @use 'src/styles/layout-variables';
 
-@import 'src/styles/flat-design-colors';
+@use 'src/styles/flat-design-colors';
+
+.wrapper {
+  //border: 1px solid;
+  display: inline-block;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  height: 70px;
+  box-sizing: border-box;
+
+}
 
 .button {
-  position: relative;
+  box-sizing: border-box;
+  width: 100%;
   border: none;
-  color: white;
-  display: inline-block;
+  color: flat-design-colors.$normalText;
   text-transform: uppercase;
   text-decoration: none;
   padding: 20px 50px;
   border-radius: layout-variables.$elementsBorderRadius;
-  margin: 5px;
+  //margin: 5px;
   border-bottom-style: solid;
   border-bottom-width: 3px;
   transition: text-shadow 0.3s ease;
@@ -20,20 +31,27 @@
   font-family: 'Josefin Sans', sans-serif;
   cursor: pointer;
 
-  &::after {
+  //* {
+  //  box-sizing: border-box;
+  //}
+
+  span {
+    //border: 1px solid;
+    position: relative;
+  }
+
+  span::after {
     content: "";
-    //width: 0;
-    width: calc(100% - 100px);
+    width: calc(100% + 10px);
     height: 3px;
-    background-color: $elementsBorderColorDefault;
+    background-color: flat-design-colors.$normalButtonBorder;
     position: absolute;
-    bottom: 15px;
+    bottom: -5px;
     transition: transform 0.2s;
-    //margin: 0;
-    left: 50px;
+    left: -5px;
+    right: 5px;
     //transform: translateX(-50%, -50%);
     transform: scaleX(0);
-    //right: 50px;
   }
 }
 
@@ -46,7 +64,7 @@
 .button:hover {
   text-shadow: 2px 2px 0 rgba(0, 0, 0, .3);
 
-  &::after {
+  span::after {
     //width: calc(100% - 100px);
     transform: scaleX(1);
     transition: transform 0.4s;
@@ -58,7 +76,7 @@
   border-color: rgb(150, 120, 120);
 
   &::after {
-    background-color: $elementsBorderColorThemeRed;
+    background-color: flat-design-colors.$elementsBorderColorThemeRed;
   }
 }
 
@@ -68,16 +86,16 @@
   border-color: #53A574;
 
   &::after {
-    background-color: $elementsBorderColorSecondary;
+    background-color: flat-design-colors.$elementsBorderColorSecondary;
   }
 }
 
-.blue {
-  background-color: $elementsColorDefault;
-  border-color: $elementsBorderColorDefault;
+.normal {
+  background-color: flat-design-colors.$elementsColorDefault;
+  border-color: flat-design-colors.$elementsBorderColorDefault;
 }
 
-.red {
+.danger {
   background-color: rgb(231, 76, 60);
   border-color: rgb(192, 57, 43);
 

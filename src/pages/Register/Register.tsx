@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { TextInput } from 'features/ui/flat-design';
@@ -16,10 +16,8 @@ export const Register = () => {
         <TextInput placeholder="login" />
         <TextInput placeholder="password" />
         <TextInput placeholder="confirm password" />
-        <div>
-          <ButtonFlatDesign>Cancel</ButtonFlatDesign>
-          <ButtonFlatDesign onClick={handleRegister}>Register</ButtonFlatDesign>
-        </div>
+        <ButtonFlatDesign onClick={handleRegister}>Sign up</ButtonFlatDesign>
+        <NavLink to="/login">Sign in</NavLink>
       </form>
     </div>
   );

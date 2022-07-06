@@ -4,11 +4,18 @@ import styles from 'features/ui/Button/ButtonFlatDesign.module.scss';
 import { ButtonPropsType } from 'features/ui/Button/types';
 
 export const ButtonFlatDesign: FC<ButtonPropsType> = ({
-  color = 'blue',
+  color = 'normal',
   className,
+  children,
   ...restProps
 }): ReactElement => {
   const elementStyle = `${styles.button} ${styles[color]} ${className}`;
 
-  return <button className={elementStyle} {...restProps} type="button" />;
+  return (
+    <div className={styles.wrapper}>
+      <button className={elementStyle} {...restProps} type="button">
+        <span>{children}</span>
+      </button>
+    </div>
+  );
 };

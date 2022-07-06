@@ -9,6 +9,7 @@ import { FlatDesignTestPage } from 'pages/FlatDesignTest/FlatDesignTestPage';
 import { InfoOnPasswordRecovery } from 'pages/InstructionsOnPasswordRecovery';
 import { Login } from 'pages/Login';
 import { NotFound } from 'pages/NotFound';
+import { Packs } from 'pages/Packs/Packs';
 import { PasswordCreateNew } from 'pages/PasswordCreateNew';
 import { PasswordRecovery } from 'pages/PasswordRecovery';
 import { Profile } from 'pages/Profile';
@@ -22,7 +23,7 @@ const App = (): ReactElement => (
         <Route path="/" element={<Layout />}>
           <Route index element={<Profile />} />
           <Route path="profile" element={<Profile />} />
-          {/* <Route path="pack-list" element={<PacksList />} /> */}
+          <Route path="packs" element={<Packs />} />
           <Route path="heap-test" element={<ComponentsTest />} />
           <Route path="flat-test" element={<FlatDesignTestPage />} />
           <Route path="*" element={<NotFound />} />

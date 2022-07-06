@@ -1,7 +1,8 @@
 @use 'src/styles/layout-variables';
+@use 'src/styles/flat-design-colors';
 
 .wrapper {
-  background-color: #f49536;
+  background-color: flat-design-colors.$mainColor;
   height: layout-variables.$headerHeight;
   margin: 0;
   padding: 0 50px;

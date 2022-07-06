@@ -5,8 +5,8 @@
   font-family: "Josefin Sans", sans-serif;
   font-weight: 700;
   font-size: 20px;
-  color: flat-design-colors.$textColorMain;
-  background-color: flat-design-colors.$mainColor;
+  color: flat-design-colors.$normalText;
+  background-color: flat-design-colors.$pageBackground;
   box-sizing: border-box;
   width: 100vw;
   min-height: 100vh;
@@ -18,8 +18,8 @@
 .form {
   position: relative;
   border-radius: layout-variables.$elementsBorderRadius;
-  background-color: flat-design-colors.$secondaryColor;
-  border-bottom: 3px solid flat-design-colors.$elementsBorderColorDefault;
+  background-color: flat-design-colors.$pageFormsBackground;
+  border-bottom: 3px solid flat-design-colors.$pageFormsBorder;
   display: flex;
   flex-direction: column;
   row-gap: 10px;
@@ -41,7 +41,7 @@
   }
 
   a {
-    text-align: right;
+    text-align: center;
     font-family: "Josefin Sans", sans-serif;
     font-weight: 700;
     font-size: 20px;

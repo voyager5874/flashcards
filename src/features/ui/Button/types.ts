@@ -6,5 +6,5 @@ type DefaultButtonPropsType = DetailedHTMLProps<
 >;
 
 export type ButtonPropsType = DefaultButtonPropsType & {
-  color?: 'red' | 'blue' | 'green' | 'salmon';
+  color?: 'danger' | 'normal' | 'green' | 'salmon';
 };
