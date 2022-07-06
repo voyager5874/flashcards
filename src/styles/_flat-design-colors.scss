@@ -70,4 +70,6 @@ $notHoveredLink: $white;
 $hoveredLink: $white;
 $rangeFill: $algalFuel;
 $rangeThumbInactive: $blueHorizon;
-$rangeThumbActive: $blueHorizon;
+$rangeThumbActive: lighten($rangeThumbInactive, 3%);
+//$rangeThumbActiveShadow: $flirtatious;
+$rangeThumbActiveShadow: $fusionRed;

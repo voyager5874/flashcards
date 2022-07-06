@@ -7,6 +7,8 @@
 
 //$thumbColor: flat-design-colors.$checkMarkColor;
 $thumbColor: flat-design-colors.$rangeThumbInactive;
+$thumbColorActive : flat-design-colors.$rangeThumbActive;
+$thumbActiveBacklight: flat-design-colors.$rangeThumbActiveShadow;
 $trackColor: none;
 $rangeFillColor: flat-design-colors.$rangeFill;
 
@@ -20,9 +22,9 @@ $rangeFillColor: flat-design-colors.$rangeFill;
   }
 }
 
-$roundThumb: false;
+$roundThumb: true;
 
-$trackHeight: 20px;
+$trackHeight: 18px;
 
 @mixin trackShape($round: true) {
   @if $round {
@@ -32,7 +34,7 @@ $trackHeight: 20px;
   }
 }
 
-$roundTrack: false;
+$roundTrack: true;
 
 
 //functionality mixins
@@ -54,9 +56,13 @@ $roundTrack: false;
   cursor: pointer;
   height: calc(#{$trackHeight} + 8px);
   width: calc(#{$trackHeight} + 8px);
-  margin-top: calc(#{$trackHeight} / 2);
+  margin-top: calc(#{$trackHeight} / 2 - 2px);
   pointer-events: all;
   position: relative;
+  &:active{
+    background-color: $thumbColorActive;
+    box-shadow: 0 0 10px 0 rgba($thumbActiveBacklight, 0.9);
+  }
 }
 
 
