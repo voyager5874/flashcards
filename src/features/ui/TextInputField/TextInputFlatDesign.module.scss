@@ -3,8 +3,9 @@ $textColor: white;
 
 .wrapper {
   padding: 5px;
-  border: 1px solid;
-position: relative;
+  //border: 1px solid;
+  position: relative;
+
   input {
     font-family: 'Josefin Sans', sans-serif;
     font-weight: 700;
@@ -41,7 +42,7 @@ position: relative;
     }
   }
 
-  .error{
+  .error {
     color: red;
     position: absolute;
     left: 10px;

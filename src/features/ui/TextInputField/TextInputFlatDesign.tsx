@@ -25,12 +25,12 @@ export const TextInputFLatDesign: React.FC<TextInputPropsType> = ({
   };
 
   const finalSpanStyle = `${styles.error} ${spanClassName}`;
-  const finalInputStyle = `${styles.input} ${onEnter ? styles.superInput : ''} ${
-    error ? styles.errorInput : ''
-  } ${className}`;
+  const finalInputStyle = `${styles.input} ${onEnter ? styles.superInput : ''}`;
+
+  const finalWrapperStyle = `${styles.wrapper} ${className}`;
 
   return (
-    <div className={styles.wrapper}>
+    <div className={finalWrapperStyle}>
       <input
         onChange={onChangeCallback}
         onKeyPress={onKeyPressCallback}

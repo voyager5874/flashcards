@@ -1,9 +1,15 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import thunkMiddleware from 'redux-thunk';
 
-import counterReducer from 'features/counter/counterSlice';
+import { appReducer } from 'store/reducers/app';
+import { login } from 'store/reducers/login';
+
+const rootReducer = combineReducers({
+  login,
+  appReducer,
+});
 
 export const store = configureStore({
-  reducer: {
-    counter: counterReducer,
-  },
+  reducer: rootReducer,
+  middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunkMiddleware),
 });

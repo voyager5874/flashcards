@@ -36,12 +36,11 @@ export const TextInput: React.FC<TextInputPropsType> = ({
   const finalSpanStyle = `${styles.helperText} ${spanClassName} ${
     error ? styles.errorText : ''
   }`;
-  const finalInputStyle = `${styles.input} ${onEnter ? styles.superInput : ''} ${
-    error ? styles.errorInput : ''
-  } ${className}`;
+  const finalInputStyle = `${styles.input} ${onEnter ? styles.superInput : ''}`;
+  const finalWrapperStyle = `${styles.wrapper} ${className}`;
 
   return (
-    <label htmlFor={id} className={styles.wrapper}>
+    <label htmlFor={id} className={finalWrapperStyle}>
       <input
         id={id}
         ref={inputRef}

@@ -7,8 +7,33 @@
   background-color: flat-design-colors.$secondaryColor;
   width: 90%;
   min-height: 50vh;
+  font-size: 18px;
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 700;
 
   * {
     box-sizing: border-box;
+    //border: 1px solid red;
+  }
+
+  .controls {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .form {
+    //border: 1px solid;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 50px;
+
+    .textInput {
+      width: 50%;
+      min-width: 300px;
+
+    }
   }
 }
