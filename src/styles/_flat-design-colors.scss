@@ -60,10 +60,15 @@ $pageBackground: $turquoiseTopaz;
 $pageFormsBackground: $nycTaxi;
 $pageFormsBorder: darken($pageFormsBackground, 20%);
 
+$messagePopupBackground: $nycTaxi;
+$messagePopupBorder: darken($nycTaxi, 20%);
+
 $normalButtonBackground: $algalFuel;
 $normalButtonBorder: darken($normalButtonBackground, 20%);
+
 $error: $desire;
 $danger: $desire;
+$errorPopupBorder: darken($error, 20%);
 $normalText: $white;
 $darkText: black;
 $notHoveredLink: $white;

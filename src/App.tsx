@@ -9,6 +9,7 @@ import { useAppSelector } from 'hooks';
 import { ComponentsTest } from 'pages/ComponentsTest';
 import { FlatDesignTestPage } from 'pages/FlatDesignTest/FlatDesignTestPage';
 import { InfoOnPasswordRecovery } from 'pages/InstructionsOnPasswordRecovery';
+import { Loader } from 'pages/Loader/Loader';
 import { Login } from 'pages/Login';
 import { NotFound } from 'pages/NotFound';
 import { Packs } from 'pages/Packs/Packs';
@@ -21,6 +22,7 @@ import { Register } from 'pages/Register';
 const App = (): ReactElement => {
   const error = useAppSelector(state => state.appReducer.error);
   const message = useAppSelector(state => state.appReducer.message);
+  const appIsBusy = useAppSelector(state => state.appReducer.isBusy);
   return (
     <div className="app">
       <BrowserRouter>
@@ -40,8 +42,9 @@ const App = (): ReactElement => {
           <Route path="register" element={<Register />} />
         </Routes>
       </BrowserRouter>
-      {error && <AppMessagesPopup message={message} error />}
+      {error && <AppMessagesPopup message={error} error />}
       {message && <AppMessagesPopup message={message} />}
+      {appIsBusy && <Loader />}
     </div>
   );
 };

@@ -10,7 +10,8 @@ type AppMessagesPopupPropsType = {
   error?: boolean;
 };
 
-// eslint-disable-next-line no-undef
+const POPUP_SHOW_DURATION = 2000;
+
 export const AppMessagesPopup: FC<AppMessagesPopupPropsType> = ({
   message,
   error = false,
@@ -20,7 +21,7 @@ export const AppMessagesPopup: FC<AppMessagesPopupPropsType> = ({
     // const timerId = setTimeout(() => {
     setTimeout(() => {
       dispatch(setAppError(''));
-    }, 2000);
+    }, POPUP_SHOW_DURATION);
     // return () => {
     //   clearTimeout(timerId);
     // };
