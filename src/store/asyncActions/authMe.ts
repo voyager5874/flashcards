@@ -1,31 +1,26 @@
 import { AxiosError } from 'axios';
 
 import { authAPI } from 'api';
-import { LoginDataType } from 'api/types';
 import { setAppBusyState, setAppError } from 'store/reducers/app';
-import { setLoginStatus } from 'store/reducers/login';
 import { profileDataReceived } from 'store/reducers/profile';
 import { AppDispatch } from 'store/types';
 
-export const login = (credentials: LoginDataType) => async (dispatch: AppDispatch) => {
+export const authMe = () => async (dispatch: AppDispatch) => {
   dispatch(setAppBusyState(true));
   try {
-    const response = await authAPI.login(credentials);
+    const response = await authAPI.authMe();
     if (!response.error) {
-      dispatch(setLoginStatus(true));
       dispatch(profileDataReceived(response));
     } else {
       dispatch(setAppError(response.error));
     }
   } catch (error) {
-    // console.log(error);
     if (error instanceof AxiosError) {
       const errorMessage = error?.response?.data?.error ?? error.message;
       dispatch(setAppError(errorMessage));
     } else {
-      dispatch(setAppError('some error during login'));
+      dispatch(setAppError('there was some error during authorization'));
     }
-    // console.dir(error);
   } finally {
     dispatch(setAppBusyState(false));
   }

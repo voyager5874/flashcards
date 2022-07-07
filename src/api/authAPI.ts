@@ -11,6 +11,8 @@ export const authAPI = {
   //   return axiosInstance.delete<LogoutResponseType>('auth/login');
   // },
   authMe() {
-    return axiosInstance.get<LoginResponseType>('auth/me');
+    return axiosInstance
+      .get<LoginResponseType>('auth/me')
+      .then(response => response.data);
   },
 };

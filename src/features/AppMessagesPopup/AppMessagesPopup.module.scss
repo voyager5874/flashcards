@@ -1,0 +1,19 @@
+@use 'src/styles/flat-design-colors';
+
+.wrapper{
+  position: absolute;
+  z-index: 1000;
+  top: calc(100vh - 120px);
+  left: 20px;
+  color: flat-design-colors.$normalText;
+  box-sizing: border-box;
+  padding: 40px;
+  min-width: 100px;
+  height: 100px;
+  opacity: 0.9;
+
+}
+
+.error{
+  background-color: flat-design-colors.$error;
+}
