@@ -7,7 +7,7 @@ const initialState = {
 
 type InitialStateType = typeof initialState;
 type AppActionType =
-  | ReturnType<typeof setAppBusyState>
+  | ReturnType<typeof appIsBusy>
   | ReturnType<typeof setAppError>
   | ReturnType<typeof setAppMessage>
   | ReturnType<typeof appInitialized>;
@@ -30,7 +30,7 @@ export const appReducer = (
   }
 };
 
-export const setAppBusyState = (isBusy: boolean) =>
+export const appIsBusy = (isBusy: boolean) =>
   ({
     type: 'APP/SET-BUSY-STATE',
     payload: {

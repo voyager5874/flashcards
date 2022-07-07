@@ -1,12 +1,23 @@
 @use 'src/styles/flat-design-colors';
 
-.wrapper{
+.wrapper {
   position: absolute;
   z-index: 1000;
-  top: calc(100vh - 60%);
-  left: calc(100vw - 60%);
+  top: calc(100vh - 50% - 50px);
+  left: calc(100vw - 50% - 150px);
   height: 100px;
   width: 300px;
-  text-align: center;
   background-color: flat-design-colors.$royalBlue;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+
+  h1 {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+
+  }
 }

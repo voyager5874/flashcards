@@ -69,12 +69,20 @@ $normalButtonBorder: darken($normalButtonBackground, 20%);
 $error: $desire;
 $danger: $desire;
 $errorPopupBorder: darken($error, 20%);
+
 $normalText: $white;
 $darkText: black;
+
 $notHoveredLink: $white;
 $hoveredLink: $white;
+
 $rangeFill: $algalFuel;
 $rangeThumbInactive: $blueHorizon;
 $rangeThumbActive: lighten($rangeThumbInactive, 3%);
 //$rangeThumbActiveShadow: $flirtatious;
 $rangeThumbActiveShadow: $fusionRed;
+
+$checkboxUncheckedBackground: $blueHorizon;
+//$checkboxUncheckedBackground: none;
+$checkboxCheckedBackground: $blueHorizon;
+$checkboxCheckmark: $white;

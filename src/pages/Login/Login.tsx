@@ -1,6 +1,6 @@
 import { ReactElement, useState } from 'react';
 
-import { Navigate, NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import styles from './Login.module.scss';
 
@@ -16,13 +16,12 @@ export const Login = (): ReactElement => {
   const isLoggedIn = useAppSelector(state => state.login.isLoggedIn);
   if (isLoggedIn) {
     navigate('../packs', { replace: true });
-    // return <Navigate to="/packs" />;
   }
 
   const dispatch = useAppDispatch();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState(process.env.REACT_APP_MY_EMAIL || '');
+  const [password, setPassword] = useState(process.env.REACT_APP_PASSWORD || '');
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleLogin = () => {

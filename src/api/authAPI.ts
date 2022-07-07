@@ -12,7 +12,7 @@ export const authAPI = {
   // },
   authMe() {
     return axiosInstance
-      .get<LoginResponseType>('auth/me')
+      .post<LoginResponseType>('auth/me')
       .then(response => response.data);
   },
 };

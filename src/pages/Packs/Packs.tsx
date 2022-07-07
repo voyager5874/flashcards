@@ -2,27 +2,30 @@ import { ReactElement } from 'react';
 
 import styles from './Packs.module.scss';
 
-import { PacksList } from 'features/PacksList';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { CheckboxFlatDesign } from 'features/ui/Checkbox/CheckboxFlatDesign';
 import { TextInput } from 'features/ui/flat-design';
 import { RangeDoubleSlider } from 'features/ui/flat-design/RangeDoubleSlider';
+import { useAppDispatch } from 'hooks';
+import { setPacksData } from 'store/asyncActions/packs';
 
-// eslint-disable-next-line no-undef
 export const Packs = (): ReactElement => {
-  const someFunc = () => {};
+  const dispatch = useAppDispatch();
+  const getPacks = () => {
+    dispatch(setPacksData());
+  };
   return (
     <div className={styles.wrapper}>
       <div className={styles.form}>
         <h1>Packs page</h1>
         <TextInput placeholder="enter a pack name" className={styles.textInput} />
-        <ButtonFlatDesign>create new pack</ButtonFlatDesign>
+        <ButtonFlatDesign onClick={getPacks}>create new pack</ButtonFlatDesign>
       </div>
 
       <div className={styles.controls}>
         <CheckboxFlatDesign>show only my packs</CheckboxFlatDesign>
         <RangeDoubleSlider
-          onChangeRange={someFunc}
+          onChangeRange={() => {}}
           lowerValue={0}
           upperValue={50}
           gap={1}

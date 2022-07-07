@@ -1,11 +1,11 @@
 import { AxiosError } from 'axios';
 
 import { authMe } from 'store/asyncActions/authMe';
-import { setAppBusyState, setAppError } from 'store/reducers/app';
+import { appInitialized, appIsBusy, setAppError } from 'store/reducers/app';
 import { AppDispatch } from 'store/types';
 
 export const initializeApp = () => async (dispatch: AppDispatch) => {
-  dispatch(setAppBusyState(true));
+  dispatch(appIsBusy(true));
   try {
     const list: Promise<any>[] = [dispatch(authMe())];
     await Promise.all(list);
@@ -17,6 +17,7 @@ export const initializeApp = () => async (dispatch: AppDispatch) => {
       dispatch(setAppError('there was some error during app initialization'));
     }
   } finally {
-    dispatch(setAppBusyState(false));
+    dispatch(appIsBusy(false));
+    dispatch(appInitialized(true));
   }
 };

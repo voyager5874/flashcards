@@ -7,6 +7,14 @@
     min-height: 100vh;
     box-sizing: border-box;
     background-color: rgba(59, 119, 180, 0.46);
+
+}
+
+* {
+    font-family: "Josefin Sans", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
 }
 
 h1, h2, h3 {
@@ -40,11 +48,6 @@ a:hover {
     text-shadow: 2px 2px 0 rgba(0, 0, 0, .3);
 }
 
-* {
-    font-family: "Josefin Sans", sans-serif;
-    font-size: 18px;
-    font-weight: 700;
-}
 
 /*a::after {*/
 /*    content: "";*/

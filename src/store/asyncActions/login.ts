@@ -2,13 +2,13 @@ import { AxiosError } from 'axios';
 
 import { authAPI } from 'api';
 import { LoginDataType } from 'api/types';
-import { setAppBusyState, setAppError } from 'store/reducers/app';
+import { appIsBusy, setAppError } from 'store/reducers/app';
 import { setLoginStatus } from 'store/reducers/login';
 import { profileDataReceived } from 'store/reducers/profile';
 import { AppDispatch } from 'store/types';
 
 export const login = (credentials: LoginDataType) => async (dispatch: AppDispatch) => {
-  dispatch(setAppBusyState(true));
+  dispatch(appIsBusy(true));
   try {
     const response = await authAPI.login(credentials);
     if (!response.error) {
@@ -27,6 +27,6 @@ export const login = (credentials: LoginDataType) => async (dispatch: AppDispatc
     }
     // console.dir(error);
   } finally {
-    dispatch(setAppBusyState(false));
+    dispatch(appIsBusy(false));
   }
 };

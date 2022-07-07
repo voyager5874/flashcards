@@ -2,7 +2,7 @@
 
 .page {
   //border: 1px solid #275EFE;
-  font-family: 'Work Sans', sans-serif;
+  font-family: 'Josefin Sans', sans-serif;
   background: #e74c3c;
   color: #fff;
   text-align: center;
@@ -75,7 +75,7 @@
   h1::after {
     display: block;
     content: 'Sorry, but the page you were trying to view does not exist.';
-    font: 600 21px/1.8 'Work Sans', sans-serif;
+    font: 700 22px/1.8 'Josefin Sans', sans-serif;
     text-shadow: rgb(180, 59, 47) 1px 1px,
     rgb(180, 59, 47) 2px 2px,
     rgb(180, 59, 47) 3px 3px,
