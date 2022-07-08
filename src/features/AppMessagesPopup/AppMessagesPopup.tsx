@@ -3,7 +3,7 @@ import { FC, ReactElement, useEffect } from 'react';
 import styles from './AppMessagesPopup.module.scss';
 
 import { useAppDispatch } from 'hooks';
-import { setAppError } from 'store/reducers/app';
+import { appErrorOccurred } from 'store/reducers/app';
 
 type AppMessagesPopupPropsType = {
   message: string;
@@ -20,7 +20,7 @@ export const AppMessagesPopup: FC<AppMessagesPopupPropsType> = ({
   useEffect(() => {
     // const timerId = setTimeout(() => {
     setTimeout(() => {
-      dispatch(setAppError(''));
+      dispatch(appErrorOccurred(''));
     }, POPUP_SHOW_DURATION);
     // return () => {
     //   clearTimeout(timerId);

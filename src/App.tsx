@@ -1,4 +1,4 @@
-import './App.css';
+import 'App.scss';
 import { ReactElement, useEffect } from 'react';
 
 import { Navigate, Route, Routes } from 'react-router-dom';
@@ -43,6 +43,7 @@ const App = (): ReactElement => {
     <div className="app">
       <Routes>
         <Route path="/" element={isLoggedIn ? <Layout /> : <Navigate to="login" />}>
+          {/* <Route path="/" element={<Layout />}> */}
           <Route index element={<Profile />} />
           <Route path="profile" element={<Profile />} />
           <Route path="packs" element={<Packs />} />

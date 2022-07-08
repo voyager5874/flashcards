@@ -1,6 +1,6 @@
 import { ReactElement, useState } from 'react';
 
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 
 import styles from './Login.module.scss';
 
@@ -11,11 +11,13 @@ import { useAppDispatch, useAppSelector } from 'hooks';
 import { login } from 'store/asyncActions/login';
 
 export const Login = (): ReactElement => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const isLoggedIn = useAppSelector(state => state.login.isLoggedIn);
   if (isLoggedIn) {
-    navigate('../packs', { replace: true });
+    // navigate('../packs', { replace: true });
+    // router.ts:11 You should call navigate() in a React.useEffect(), not when your component is first rendered.
+    return <Navigate to="/packs" />;
   }
 
   const dispatch = useAppDispatch();

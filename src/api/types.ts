@@ -54,7 +54,7 @@ export type PackDataOnServerType = {
   tokenDeathTime: number;
 };
 
-type SortParameterType =
+export type SortParameterType =
   | '0updated'
   | '1updated'
   | '0cardsCount'
@@ -63,7 +63,7 @@ type SortParameterType =
   | '1user_name';
 
 export type GetPacksRequestParametersType = {
-  packName?: 'english' | 'russian';
+  packName?: 'english' | 'russian'; // wtf?
   min?: number;
   max?: number;
   sortPacks?: SortParameterType;

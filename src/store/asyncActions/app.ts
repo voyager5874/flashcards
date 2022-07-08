@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 
 import { authMe } from 'store/asyncActions/authMe';
-import { appInitialized, appIsBusy, setAppError } from 'store/reducers/app';
+import { appInitialized, appIsBusy, appErrorOccurred } from 'store/reducers/app';
 import { AppDispatch } from 'store/types';
 
 export const initializeApp = () => async (dispatch: AppDispatch) => {
@@ -12,9 +12,9 @@ export const initializeApp = () => async (dispatch: AppDispatch) => {
   } catch (error) {
     if (error instanceof AxiosError) {
       const errorMessage = error?.response?.data?.error ?? error.message;
-      dispatch(setAppError(errorMessage));
+      dispatch(appErrorOccurred(errorMessage));
     } else {
-      dispatch(setAppError('there was some error during app initialization'));
+      dispatch(appErrorOccurred('there was some error during app initialization'));
     }
   } finally {
     dispatch(appIsBusy(false));

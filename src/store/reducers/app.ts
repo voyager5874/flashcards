@@ -8,7 +8,7 @@ const initialState = {
 type InitialStateType = typeof initialState;
 type AppActionType =
   | ReturnType<typeof appIsBusy>
-  | ReturnType<typeof setAppError>
+  | ReturnType<typeof appErrorOccurred>
   | ReturnType<typeof setAppMessage>
   | ReturnType<typeof appInitialized>;
 
@@ -38,7 +38,7 @@ export const appIsBusy = (isBusy: boolean) =>
     },
   } as const);
 
-export const setAppError = (error: string) =>
+export const appErrorOccurred = (error: string) =>
   ({
     type: 'APP/SET-ERROR',
     payload: {

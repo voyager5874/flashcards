@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 
 import { authAPI } from 'api';
-import { appIsBusy, setAppError } from 'store/reducers/app';
+import { appIsBusy, appErrorOccurred } from 'store/reducers/app';
 import { setLoginStatus } from 'store/reducers/login';
 import { profileDataReceived } from 'store/reducers/profile';
 import { AppDispatch } from 'store/types';
@@ -14,14 +14,14 @@ export const authMe = () => async (dispatch: AppDispatch) => {
       dispatch(profileDataReceived(response));
       dispatch(setLoginStatus(true));
     } else {
-      dispatch(setAppError(response.error));
+      dispatch(appErrorOccurred(response.error));
     }
   } catch (error) {
     if (error instanceof AxiosError) {
       const errorMessage = error?.response?.data?.error ?? error.message;
-      dispatch(setAppError(errorMessage));
+      dispatch(appErrorOccurred(errorMessage));
     } else {
-      dispatch(setAppError('there was some error during authorization'));
+      dispatch(appErrorOccurred('there was some error during authorization'));
     }
   } finally {
     dispatch(appIsBusy(false));
