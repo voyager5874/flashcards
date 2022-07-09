@@ -47,7 +47,7 @@ export const RangeDoubleSlider: FC<SuperDoubleRangePropsType> = ({
     rangeLeftPartRef.current.value = String(lowerValue);
     rangeRightPartRef.current.value = String(upperValue);
     changeTrackFillState(lowerValue, upperValue);
-  }, [lowerValue, upperValue]);
+  }, [lowerValue, upperValue, min, max]);
 
   const setNewRange = () => {
     if (!rangeLeftPartRef.current || !rangeRightPartRef.current) return;

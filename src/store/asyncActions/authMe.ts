@@ -15,6 +15,7 @@ export const authMe = () => async (dispatch: AppDispatch) => {
       dispatch(setLoginStatus(true));
     } else {
       dispatch(appErrorOccurred(response.error));
+      dispatch(setLoginStatus(false));
     }
   } catch (error) {
     if (error instanceof AxiosError) {
@@ -23,6 +24,7 @@ export const authMe = () => async (dispatch: AppDispatch) => {
     } else {
       dispatch(appErrorOccurred('there was some error during authorization'));
     }
+    dispatch(setLoginStatus(false));
   } finally {
     dispatch(appIsBusy(false));
   }

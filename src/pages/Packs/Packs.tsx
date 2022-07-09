@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ChangeEvent, ReactElement } from 'react';
 
 import styles from './Packs.module.scss';
 
@@ -9,6 +9,7 @@ import { TextInput } from 'features/ui/flat-design';
 import { RangeDoubleSlider } from 'features/ui/flat-design/RangeDoubleSlider';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import {
+  packsSetCurrentUserPacksFilter,
   packsSetMaxCardsCountFilter,
   packsSetMinCardsCountFilter,
 } from 'store/reducers/packs';
@@ -19,10 +20,21 @@ export const Packs = (): ReactElement => {
   const maxCardsCountFilter = useAppSelector(state => state.packs.maxCardsCountFilter);
   const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount);
   const minCardsCount = useAppSelector(state => state.packs.minCardsCount);
+  // eslint-disable-next-line no-underscore-dangle
+  const currentUserId = useAppSelector(state => state.profile._id);
+  const packsOfCurrentUserFilter = useAppSelector(
+    state => state.packs.packsOfCurrentUserFilter,
+  );
+
   const changePacksFilterValues = (newFilterValues: [number, number]) => {
     dispatch(packsSetMaxCardsCountFilter(newFilterValues[1]));
     dispatch(packsSetMinCardsCountFilter(newFilterValues[0]));
   };
+
+  const flipPacksOfCurrentUserFilter = (event: ChangeEvent<HTMLInputElement>) => {
+    dispatch(packsSetCurrentUserPacksFilter(event.currentTarget.checked));
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.form}>
@@ -32,18 +44,28 @@ export const Packs = (): ReactElement => {
       </div>
 
       <div className={styles.controls}>
-        <CheckboxFlatDesign>show only my packs</CheckboxFlatDesign>
+        <CheckboxFlatDesign
+          checked={packsOfCurrentUserFilter}
+          onChange={flipPacksOfCurrentUserFilter}
+        >
+          show only my packs
+        </CheckboxFlatDesign>
         <RangeDoubleSlider
           onChangeRange={changePacksFilterValues}
           lowerValue={minCardsCountFilter || 0}
           upperValue={maxCardsCountFilter || 10}
           gap={1}
-          step={5}
+          step={1}
           max={maxCardsCount || 100}
           min={minCardsCount || 0}
         />
       </div>
-      <PacksList min={minCardsCountFilter} max={maxCardsCountFilter} pageCount={20} />
+      <PacksList
+        min={minCardsCountFilter}
+        max={maxCardsCountFilter}
+        pageCount={20}
+        user_id={(packsOfCurrentUserFilter && currentUserId) || ''}
+      />
     </div>
   );
 };

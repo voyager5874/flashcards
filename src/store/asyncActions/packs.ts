@@ -3,16 +3,30 @@ import { AxiosError } from 'axios';
 import { dataAPI } from 'api';
 import { GetPacksRequestParametersType } from 'api/types';
 import { appIsBusy, appErrorOccurred } from 'store/reducers/app';
-import { packsDataReceived } from 'store/reducers/packs';
-import { AppDispatch } from 'store/types';
+import {
+  packsDataReceived,
+  packsSetMaxCardsCountFilter,
+  packsSetMinCardsCountFilter,
+} from 'store/reducers/packs';
+import { AppDispatch, RootState } from 'store/types';
 
 export const setPacksData =
-  (requestParameters: GetPacksRequestParametersType) => async (dispatch: AppDispatch) => {
+  (requestParameters: GetPacksRequestParametersType) =>
+  async (dispatch: AppDispatch, getState: () => RootState) => {
     dispatch(appIsBusy(true));
+    const currentMaxCardsCount = getState().packs.maxCardsCount;
+    const currentMinCardsCount = getState().packs.minCardsCount;
     try {
       const response = await dataAPI.getPacks(requestParameters);
-      if (response.cardPacksTotalCount) {
+      console.dir(response);
+      if (response.token) {
         dispatch(packsDataReceived(response));
+        if (response.minCardsCount !== currentMinCardsCount) {
+          dispatch(packsSetMinCardsCountFilter(response.minCardsCount));
+        }
+        if (response.maxCardsCount !== currentMaxCardsCount) {
+          dispatch(packsSetMaxCardsCountFilter(response.maxCardsCount));
+        }
       } else {
         dispatch(appErrorOccurred(JSON.stringify(response)));
       }

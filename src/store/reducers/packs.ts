@@ -14,6 +14,7 @@ type InitialStateType = {
   itemsPerPage: number;
   minCardsCountFilter: number;
   maxCardsCountFilter: number;
+  packsOfCurrentUserFilter: boolean;
 };
 
 const initialState: InitialStateType = {
@@ -28,6 +29,7 @@ const initialState: InitialStateType = {
   itemsPerPage: 10,
   minCardsCountFilter: 0,
   maxCardsCountFilter: 10,
+  packsOfCurrentUserFilter: false,
 };
 
 type PacksActionType =
@@ -36,7 +38,8 @@ type PacksActionType =
   | ReturnType<typeof packsSetItemsPerPage>
   | ReturnType<typeof packsSetMinCardsCountFilter>
   | ReturnType<typeof packsSetMaxCardsCountFilter>
-  | ReturnType<typeof packsCurrentPageChanged>;
+  | ReturnType<typeof packsCurrentPageChanged>
+  | ReturnType<typeof packsSetCurrentUserPacksFilter>;
 
 export const packs = (
   state: InitialStateType = initialState,
@@ -52,6 +55,10 @@ export const packs = (
     case 'PACKS/SET-MIN-CARDS-COUNT-FILTER':
       return { ...state, ...action.payload };
     case 'PACKS/SET-MAX-CARDS-COUNT-FILTER':
+      return { ...state, ...action.payload };
+    case 'PACKS/SET-CURRENT-USER-PACKS-FILTER':
+      return { ...state, ...action.payload };
+    case 'PACKS/CURRENT-PAGE-CHANGED':
       return { ...state, ...action.payload };
     default:
       return state;
@@ -101,5 +108,13 @@ export const packsCurrentPageChanged = (page: number) =>
     type: 'PACKS/CURRENT-PAGE-CHANGED',
     payload: {
       page,
+    },
+  } as const);
+
+export const packsSetCurrentUserPacksFilter = (packsOfCurrentUserFilter: boolean) =>
+  ({
+    type: 'PACKS/SET-CURRENT-USER-PACKS-FILTER',
+    payload: {
+      packsOfCurrentUserFilter,
     },
   } as const);
