@@ -13,20 +13,26 @@ export const PacksList: FC<PacksListPropsType> = ({
   max,
   // eslint-disable-next-line camelcase
   user_id,
+  pageCount,
+  page,
   ...restProps
 }): ReactElement => {
   const dispatch = useAppDispatch();
   useEffect(() => {
+    // eslint-disable-next-line no-debugger
+    debugger;
     const queryObject: GetPacksRequestParametersType = {
       max,
       min,
       // eslint-disable-next-line camelcase
       user_id,
+      pageCount,
+      page,
       ...restProps,
     };
     dispatch(setPacksData(queryObject));
     // eslint-disable-next-line camelcase
-  }, [min, max, user_id]);
+  }, [min, max, user_id, pageCount, page]);
 
   const packsList = useAppSelector(state => state.packs.cardPacks);
 

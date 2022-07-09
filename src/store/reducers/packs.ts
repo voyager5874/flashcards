@@ -5,13 +5,13 @@ import { Nullable } from 'types';
 type InitialStateType = {
   cardPacks: PackInAppType[];
   page: number;
-  pageCount: Nullable<number>;
+  pageCount: number;
   cardPacksTotalCount: Nullable<number>;
   minCardsCount: number;
   maxCardsCount: Nullable<number>;
   token: Nullable<string>;
   tokenDeathTime: Nullable<number>;
-  itemsPerPage: number;
+  // itemsPerPage: number;
   minCardsCountFilter: number;
   maxCardsCountFilter: number;
   packsOfCurrentUserFilter: boolean;
@@ -20,13 +20,13 @@ type InitialStateType = {
 const initialState: InitialStateType = {
   cardPacks: [],
   page: 1,
-  pageCount: null,
+  pageCount: 5,
   cardPacksTotalCount: null,
   minCardsCount: 0,
   maxCardsCount: null,
   token: null,
   tokenDeathTime: null,
-  itemsPerPage: 10,
+  // itemsPerPage: 10,
   minCardsCountFilter: 0,
   maxCardsCountFilter: 10,
   packsOfCurrentUserFilter: false,
@@ -51,6 +51,8 @@ export const packs = (
     case 'PACKS/NEW-PACK-CREATED':
       return { ...state, cardPacks: [...state.cardPacks, action.payload] };
     case 'PACKS/SET-ITEMS-PER-PAGE':
+      // eslint-disable-next-line no-debugger
+      debugger;
       return { ...state, ...action.payload };
     case 'PACKS/SET-MIN-CARDS-COUNT-FILTER':
       return { ...state, ...action.payload };
@@ -79,11 +81,11 @@ export const packsNewPackCreated = (pack: PackInAppType) =>
     },
   } as const);
 
-export const packsSetItemsPerPage = (itemsPerPage: number) =>
+export const packsSetItemsPerPage = (pageCount: number) =>
   ({
     type: 'PACKS/SET-ITEMS-PER-PAGE',
     payload: {
-      itemsPerPage,
+      pageCount,
     },
   } as const);
 

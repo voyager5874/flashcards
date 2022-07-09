@@ -7,15 +7,21 @@ import { ButtonFlatDesign } from 'features/ui/Button';
 import { CheckboxFlatDesign } from 'features/ui/Checkbox/CheckboxFlatDesign';
 import { TextInput } from 'features/ui/flat-design';
 import { RangeDoubleSlider } from 'features/ui/flat-design/RangeDoubleSlider';
+import { Pagination } from 'features/ui/Pagination';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import {
+  packsCurrentPageChanged,
   packsSetCurrentUserPacksFilter,
+  packsSetItemsPerPage,
   packsSetMaxCardsCountFilter,
   packsSetMinCardsCountFilter,
 } from 'store/reducers/packs';
 
 export const Packs = (): ReactElement => {
   const dispatch = useAppDispatch();
+  const currentPage = useAppSelector(state => state.packs.page);
+  const packsPerPage = useAppSelector(state => state.packs.pageCount);
+  const packsTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount);
   const minCardsCountFilter = useAppSelector(state => state.packs.minCardsCountFilter);
   const maxCardsCountFilter = useAppSelector(state => state.packs.maxCardsCountFilter);
   const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount);
@@ -33,6 +39,16 @@ export const Packs = (): ReactElement => {
 
   const flipPacksOfCurrentUserFilter = (event: ChangeEvent<HTMLInputElement>) => {
     dispatch(packsSetCurrentUserPacksFilter(event.currentTarget.checked));
+  };
+
+  const changePacksPerPageCount = (perPageCount: number) => {
+    // eslint-disable-next-line no-debugger
+    debugger;
+    dispatch(packsSetItemsPerPage(+perPageCount));
+  };
+
+  const changeCurrentPage = (page: number) => {
+    dispatch(packsCurrentPageChanged(page));
   };
 
   return (
@@ -59,12 +75,21 @@ export const Packs = (): ReactElement => {
           max={maxCardsCount || 100}
           min={minCardsCount || 0}
         />
+        <Pagination
+          name="packs-page-pagination"
+          currentPage={currentPage}
+          onPageChange={changeCurrentPage}
+          onItemsPerPageChange={changePacksPerPageCount}
+          currentItemsPerPageValue={packsPerPage}
+          totalItemsCount={packsTotalCount || 0}
+        />
       </div>
       <PacksList
         min={minCardsCountFilter}
         max={maxCardsCountFilter}
-        pageCount={20}
+        pageCount={packsPerPage}
         user_id={(packsOfCurrentUserFilter && currentUserId) || ''}
+        page={currentPage}
       />
     </div>
   );

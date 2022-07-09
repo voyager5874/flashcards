@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, InputHTMLAttributes, ReactElement } from 'react';
+import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 
 type DefaultRadioPropsType = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
@@ -6,7 +6,7 @@ type DefaultRadioPropsType = DetailedHTMLProps<
 >;
 
 export type RadioPropsType = DefaultRadioPropsType & {
-  options?: string[];
+  options?: string[] | number[];
   onChangeOption?: (option: any) => void;
   // children?: ReactElement[];
   buttonText?: string;

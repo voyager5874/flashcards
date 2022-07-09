@@ -1,0 +1,23 @@
+.wrapper {
+  border: 2px solid #f44336;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  //max-width: 500px;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+
+  * {
+    //border: 1px solid;
+  }
+
+  .page {
+    display: inline-block;
+    padding-right: 20px;
+    padding-left: 20px;
+    text-align: center;
+    font-size: 26px;
+  }
+}
