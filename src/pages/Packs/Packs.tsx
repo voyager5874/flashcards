@@ -19,6 +19,7 @@ import {
 
 export const Packs = (): ReactElement => {
   const dispatch = useAppDispatch();
+
   const currentPage = useAppSelector(state => state.packs.page);
   const packsPerPage = useAppSelector(state => state.packs.pageCount);
   const packsTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount);
@@ -31,6 +32,7 @@ export const Packs = (): ReactElement => {
   const packsOfCurrentUserFilter = useAppSelector(
     state => state.packs.packsOfCurrentUserFilter,
   );
+  const appIsBusy = useAppSelector(state => state.appReducer.isBusy);
 
   const changePacksFilterValues = (newFilterValues: [number, number]) => {
     dispatch(packsSetMaxCardsCountFilter(newFilterValues[1]));
@@ -82,6 +84,7 @@ export const Packs = (): ReactElement => {
           onItemsPerPageChange={changePacksPerPageCount}
           currentItemsPerPageValue={packsPerPage}
           totalItemsCount={packsTotalCount || 0}
+          disabled={appIsBusy}
         />
       </div>
       <PacksList

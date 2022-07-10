@@ -16,6 +16,7 @@ const initialState: InitialStateType = {
   __v: null,
   token: null,
   tokenDeathTime: null,
+  avatar: '',
 };
 
 type ProfileActionType = ReturnType<typeof profileDataReceived>;

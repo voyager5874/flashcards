@@ -18,6 +18,7 @@ export type LoginResponseType = {
   token: string;
   tokenDeathTime: number;
   error?: string;
+  avatar?: string;
 };
 
 export type LogoutResponseType = {

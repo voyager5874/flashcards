@@ -16,6 +16,7 @@ type PaginationPropsType = {
   currentItemsPerPageValue: number;
   onPageChange: (pageNumber: number) => void;
   onItemsPerPageChange: (itemsPerPage: number) => void;
+  disabled: boolean;
 };
 
 export const Pagination: FC<PaginationPropsType> = ({
@@ -25,6 +26,7 @@ export const Pagination: FC<PaginationPropsType> = ({
   currentItemsPerPageValue,
   onPageChange,
   onItemsPerPageChange,
+  disabled,
 }): ReactElement => {
   const pagesCount = Math.ceil(totalItemsCount / currentItemsPerPageValue);
   const changePageNext = () => {
@@ -41,11 +43,11 @@ export const Pagination: FC<PaginationPropsType> = ({
 
   return (
     <div className={styles.wrapper}>
-      <ButtonFlatDesign onClick={changePagePrevious}>
+      <ButtonFlatDesign onClick={changePagePrevious} disabled={disabled}>
         <FontAwesomeIcon icon={faChevronLeft} />
       </ButtonFlatDesign>
       <div className={styles.page}>{currentPage}</div>
-      <ButtonFlatDesign onClick={changePageNext}>
+      <ButtonFlatDesign onClick={changePageNext} disabled={disabled}>
         <FontAwesomeIcon icon={faChevronRight} />
       </ButtonFlatDesign>
       <div style={{ width: '150px' }}>
@@ -56,6 +58,7 @@ export const Pagination: FC<PaginationPropsType> = ({
           value={currentItemsPerPageValue}
         />
       </div>
+      <div>{pagesCount}</div>
     </div>
   );
 };

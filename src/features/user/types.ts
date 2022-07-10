@@ -13,4 +13,5 @@ export type UserType = {
   __v: Nullable<number>;
   token: Nullable<string>;
   tokenDeathTime: Nullable<number>;
+  avatar?: string;
 };
