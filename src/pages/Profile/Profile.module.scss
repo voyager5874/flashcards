@@ -1,6 +1,53 @@
+@use 'src/styles/flat-design-colors';
+@use 'src/styles/layout-variables';
+@import 'src/styles/flat-design-forms';
+
 .wrapper{
-  img{
-    width: 300px;
-    height: auto;
+  @extend .form;
+  height: 550px;
+  .avatar{
+    height: 350px;
+    //border: 1px solid;
+    position: relative;
+    overflow: hidden;
+    border-radius: layout-variables.$elementsBorderRadius;
+    &:hover{
+      label{
+        height: 40%;
+        *{
+          color: white;
+          transition: color 0.3s 0.5s;
+        }
+      }
+    }
+    label{
+      z-index: 10;
+      cursor: pointer;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: black;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 0;
+      width: 100%;
+      opacity: 60%;
+      transition: height 0.5s;
+      *{
+        color: transparent;
+      }
+      input{
+        //display: none;
+      }
+    }
+    img{
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: auto;
+    }
+
   }
 }

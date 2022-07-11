@@ -46,19 +46,21 @@ export const Pagination: FC<PaginationPropsType> = ({
       <ButtonFlatDesign onClick={changePagePrevious} disabled={disabled}>
         <FontAwesomeIcon icon={faChevronLeft} />
       </ButtonFlatDesign>
-      <div className={styles.page}>{currentPage}</div>
+      <div className={styles.page}>
+        {currentPage} of {pagesCount}
+      </div>
       <ButtonFlatDesign onClick={changePageNext} disabled={disabled}>
         <FontAwesomeIcon icon={faChevronRight} />
       </ButtonFlatDesign>
-      <div style={{ width: '150px' }}>
+      <div style={{ width: '400px' }}>
         <DropdownSelect
           options={[5, 10, 20, 50, 100]}
           name={name}
           onChangeOption={onItemsPerPageChange}
           value={currentItemsPerPageValue}
+          placeholder={`show ${currentItemsPerPageValue} on the page`}
         />
       </div>
-      <div>{pagesCount}</div>
     </div>
   );
 };

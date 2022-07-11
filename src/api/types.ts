@@ -1,3 +1,5 @@
+import { UserType } from 'features/user/types';
+
 export type LoginDataType = {
   email: string;
   password: string;
@@ -87,4 +89,30 @@ export type ServerErrorMessageType = {
   errorObject: boolean;
   in: string;
   info: string;
+};
+
+export type UpdateProfileParameterType = {
+  name?: string;
+  avatar?: string;
+};
+
+export type UpdateProfileResponseType = {
+  updatedUser: {
+    _id: string;
+    email: string;
+    rememberMe: boolean;
+    isAdmin: boolean;
+    name: string;
+    verified: boolean;
+    publicCardPacksCount: number;
+    created: string;
+    updated: string;
+    __v: number;
+    token: string;
+    tokenDeathTime: number;
+    avatar: string;
+  };
+  token: string;
+  tokenDeathTime: number;
+  error?: string;
 };

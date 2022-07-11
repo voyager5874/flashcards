@@ -1,5 +1,10 @@
 import { axiosInstance } from 'api/config';
-import { LoginDataType, LoginResponseType } from 'api/types';
+import {
+  LoginDataType,
+  LoginResponseType,
+  UpdateProfileParameterType,
+  UpdateProfileResponseType,
+} from 'api/types';
 
 export const authAPI = {
   login(authData: LoginDataType) {
@@ -13,6 +18,11 @@ export const authAPI = {
   authMe() {
     return axiosInstance
       .post<LoginResponseType>('auth/me')
+      .then(response => response.data);
+  },
+  updateProfile(data: UpdateProfileParameterType) {
+    return axiosInstance
+      .put<UpdateProfileResponseType>('auth/me', data)
       .then(response => response.data);
   },
 };

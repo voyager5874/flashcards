@@ -6,7 +6,7 @@ import { setLoginStatus } from 'store/reducers/login';
 import { profileDataReceived } from 'store/reducers/profile';
 import { AppDispatch } from 'store/types';
 
-export const authMe = () => async (dispatch: AppDispatch) => {
+export const auth = () => async (dispatch: AppDispatch) => {
   dispatch(appIsBusy(true));
   try {
     const response = await authAPI.authMe();

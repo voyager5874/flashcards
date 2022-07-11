@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 
-import { authMe } from 'store/asyncActions/authMe';
+import { auth } from 'store/asyncActions/auth';
 import { setPacksData } from 'store/asyncActions/packs';
 import { appErrorOccurred, appInitialized, appIsBusy } from 'store/reducers/app';
 import { AppDispatch, RootState } from 'store/types';
@@ -9,7 +9,7 @@ export const initializeApp =
   () => async (dispatch: AppDispatch, getState: () => RootState) => {
     dispatch(appIsBusy(true));
     try {
-      const list: Promise<any>[] = [dispatch(authMe()), dispatch(setPacksData({}))];
+      const list: Promise<any>[] = [dispatch(auth()), dispatch(setPacksData({}))];
       await Promise.all(list);
       // if (getState().packs.maxCardsCount !== null) {
       //   console.log(getState().packs.maxCardsCount);

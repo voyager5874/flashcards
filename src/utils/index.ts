@@ -1,1 +1,1 @@
-export { formatDateString } from './formatDateString';
+export { formatDate } from 'utils/formatDate';

@@ -3,8 +3,8 @@ type formatDateStringReturnType = {
   time: string;
 };
 
-export const formatDateString = (dateString: string): formatDateStringReturnType => {
-  const msec = Date.parse(dateString);
+export const formatDate = (rawDate: string | number): formatDateStringReturnType => {
+  const msec = typeof rawDate === 'string' ? Date.parse(rawDate) : rawDate;
   const date = new Date(msec);
   const stringTime = date.toLocaleTimeString();
   const stringDate = date.toLocaleDateString(undefined, {

@@ -1,3 +1,4 @@
+import { UpdateProfileParameterType } from 'api/types';
 import { UserType } from 'features/user/types';
 
 // type InitialStateType = Omit<UserType, "__v" | "rememberMe">
@@ -19,7 +20,9 @@ const initialState: InitialStateType = {
   avatar: '',
 };
 
-type ProfileActionType = ReturnType<typeof profileDataReceived>;
+type ProfileActionType =
+  | ReturnType<typeof profileDataReceived>
+  | ReturnType<typeof profileUpdated>;
 
 export const profile = (
   state: InitialStateType = initialState,
@@ -27,6 +30,8 @@ export const profile = (
 ): InitialStateType => {
   switch (action.type) {
     case 'PROFILE/DATA-RECEIVED':
+      return { ...state, ...action.payload };
+    case 'PROFILE/UPDATED':
       return { ...state, ...action.payload };
     default:
       return state;
@@ -36,6 +41,14 @@ export const profile = (
 export const profileDataReceived = (data: UserType) =>
   ({
     type: 'PROFILE/DATA-RECEIVED',
+    payload: {
+      ...data,
+    },
+  } as const);
+
+export const profileUpdated = (data: UpdateProfileParameterType) =>
+  ({
+    type: 'PROFILE/UPDATED',
     payload: {
       ...data,
     },
