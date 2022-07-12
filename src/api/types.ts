@@ -25,7 +25,7 @@ export type LoginResponseType = {
 
 export type LogoutResponseType = {
   info: string;
-  error: string;
+  error?: string;
 };
 
 type PackOnServerType = {
@@ -114,5 +114,26 @@ export type UpdateProfileResponseType = {
   };
   token: string;
   tokenDeathTime: number;
+  error?: string;
+};
+
+export type SignUpParameterType = {
+  email: string;
+  password: string;
+};
+
+export type SignUpResponseType = {
+  addedUser: {
+    _id: string;
+    email: string;
+    rememberMe: false;
+    isAdmin: false;
+    name: string;
+    verified: false;
+    publicCardPacksCount: number;
+    created: string;
+    updated: string;
+    __v: number;
+  };
   error?: string;
 };

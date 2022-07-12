@@ -4,22 +4,22 @@ const initialState = {
 
 type LoginReducerStateType = typeof initialState;
 
-export type LoginReducerActionType = ReturnType<typeof setLoginStatus>;
+export type LoginReducerActionType = ReturnType<typeof loginStateChanged>;
 
 export const login = (
   state: LoginReducerStateType = initialState,
   action: LoginReducerActionType,
 ) => {
   switch (action.type) {
-    case 'SET-LOGIN-STATE':
+    case 'LOGIN/LOGIN-STATE-CHANGED':
       return { ...state, isLoggedIn: action.loginStatus };
     default:
       return state;
   }
 };
 
-export const setLoginStatus = (loginStatus: boolean) =>
+export const loginStateChanged = (loginStatus: boolean) =>
   ({
-    type: 'SET-LOGIN-STATE',
+    type: 'LOGIN/LOGIN-STATE-CHANGED',
     loginStatus,
   } as const);

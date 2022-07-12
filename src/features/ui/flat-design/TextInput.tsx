@@ -36,7 +36,7 @@ export const TextInput: React.FC<TextInputPropsType> = ({
   const finalSpanStyle = `${styles.helperText} ${spanClassName} ${
     error ? styles.errorText : ''
   }`;
-  const finalInputStyle = `${styles.input} ${onEnter ? styles.superInput : ''}`;
+  const finalInputStyle = `${styles.input} ${error ? styles.errorInput : ''}`;
   const finalWrapperStyle = `${styles.wrapper} ${className}`;
 
   return (

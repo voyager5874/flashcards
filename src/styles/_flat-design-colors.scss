@@ -61,7 +61,7 @@ $pageFormsBackground: $nycTaxi;
 $pageFormsBorder: darken($pageFormsBackground, 20%);
 
 $messagePopupBackground: $nycTaxi;
-$messagePopupBorder: darken($nycTaxi, 20%);
+$messagePopupBorder: darken($messagePopupBackground, 20%);
 
 $normalButtonBackground: $algalFuel;
 $normalButtonBorder: darken($normalButtonBackground, 20%);
@@ -86,3 +86,11 @@ $checkboxUncheckedBackground: $blueHorizon;
 //$checkboxUncheckedBackground: none;
 $checkboxCheckedBackground: $blueHorizon;
 $checkboxCheckmark: $white;
+
+$normalTextInputBackground: $white;
+$normalTextInputText: $blueHorizon;
+$normalTextInputBorder: $blueHorizon;
+$errorTextInputText: $error;
+$errorTextInputBorder: darken($error, 5%);
+$errorTextInputBackground: lighten($error, 20%);
+$disabledTextInputBackground: $blueGrey;

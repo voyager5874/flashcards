@@ -7,6 +7,21 @@
   margin: 0;
   padding: 0 50px;
 
+  button{
+    background-color: transparent;
+    margin: 0;
+    margin-left: 40px;
+    padding: 0;
+    font-size: 18px;
+    font-weight: 700;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    &:hover {
+      text-shadow: 2px 2px 0 rgba(0, 0, 0, .3);
+    }
+  }
+
   a {
     text-decoration: none;
     margin-right: 20px;

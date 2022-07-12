@@ -69,7 +69,7 @@ $collapsedHeight: 50px;
     }
 
     &:hover {
-      text-shadow: 2px 2px 0 rgba(0, 0, 0, .3);
+      //  text-shadow: 2px 2px 0 rgba(0, 0, 0, .3);
 
       svg {
         :global {
@@ -122,7 +122,10 @@ $collapsedHeight: 50px;
       color: $optionTextColor;
       pointer-events: none;
 
-      a {
+      a, button {
+        text-transform: uppercase;
+
+        background-color: transparent;
         font-size: 14px;
         margin: 0;
         padding: 0 0 0 20px;
@@ -140,6 +143,8 @@ $collapsedHeight: 50px;
         &:hover {
           background-color: $optionHoverColor;
           color: $optionHoverTextColor;
+          text-shadow: 2px 2px 0 rgba(0, 0, 0, .3);
+
 
         }
 

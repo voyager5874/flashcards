@@ -13,7 +13,8 @@ export const ButtonFlatDesign: FC<ButtonPropsType> = ({
 
   return (
     <div className={styles.wrapper}>
-      <button className={elementStyle} {...restProps} type="button">
+      {/* type will be overwritten */}
+      <button className={elementStyle} type="button" {...restProps}>
         <span>{children}</span>
       </button>
     </div>

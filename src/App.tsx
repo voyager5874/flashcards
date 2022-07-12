@@ -8,6 +8,7 @@ import { Layout } from 'features/ui/Layout';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { ComponentsTest } from 'pages/ComponentsTest';
 import { FlatDesignTestPage } from 'pages/FlatDesignTest/FlatDesignTestPage';
+import { Register } from 'pages/FormikRegister/Register';
 import { InfoOnPasswordRecovery } from 'pages/InstructionsOnPasswordRecovery';
 import { Loader } from 'pages/Loader/Loader';
 import { Login } from 'pages/Login';
@@ -16,7 +17,6 @@ import { Packs } from 'pages/Packs/Packs';
 import { PasswordCreateNew } from 'pages/PasswordCreateNew';
 import { PasswordRecovery } from 'pages/PasswordRecovery';
 import { Profile } from 'pages/Profile';
-import { Register } from 'pages/Register';
 import { initializeApp } from 'store/asyncActions/app';
 
 const App = (): ReactElement => {

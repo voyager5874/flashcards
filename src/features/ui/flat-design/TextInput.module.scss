@@ -17,14 +17,14 @@
     border-radius: 5px;
     background-color: flat-design-colors.$textColorMain;
     border: 0;
-    border-bottom: solid 5px rgb(119, 118, 118);
-    float: left;
+    border-bottom: 3px solid flat-design-colors.$normalTextInputBorder;
+    //float: left;
     height: 60px;
     text-indent: 14px;
     font-size: 17px;
     font-family: "Josefin Sans", sans-serif;
     font-weight: 700;
-    color: #34495e;
+    color: flat-design-colors.$normalTextInputBorder;
     //margin: 10px 0 10px 10px;
     box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
 
@@ -37,6 +37,9 @@
       position: absolute;
       right: 10px;
       top: 3px;
+      font-size: 15px;
+      font-family: "Josefin Sans", sans-serif;
+      font-weight: 600;
     }
 
     &:-moz-placeholder { /* Firefox 18- */
@@ -51,25 +54,28 @@
   }
 
   .errorInput {
-    border-bottom: solid 5px flat-design-colors.$elementErrorBorder;
+    border-bottom: solid 3px flat-design-colors.$errorTextInputBorder;
     //background-color: $elementsColorThemeRed;
     //color: $elementsColorThemeRed;
     &::-webkit-input-placeholder {
-      color: flat-design-colors.$elementErrorBorder;
+      color: flat-design-colors.$errorTextInputText;
+      font-size: 15px;
+      font-family: "Josefin Sans", sans-serif;
+      font-weight: 600;
     }
 
     &:-moz-placeholder {
-      color: flat-design-colors.$elementErrorBorder;
+      color: flat-design-colors.$errorTextInputText;
 
     }
 
     &::-moz-placeholder {
-      color: flat-design-colors.$elementErrorBorder;
+      color: flat-design-colors.$errorTextInputText;
 
     }
 
     &:-ms-input-placeholder {
-      color: flat-design-colors.$elementErrorBorder;
+      color: flat-design-colors.$errorTextInputText;
 
     }
   }
@@ -78,11 +84,14 @@
     position: absolute;
     top: 5px;
     right: 10px;
-    color: #34495e;
+    color: flat-design-colors.$normalTextInputBorder;
+    font-size: 15px;
+    font-family: "Josefin Sans", sans-serif;
+    font-weight: 600;
   }
 
   .errorText {
-    color: flat-design-colors.$elementError;
+    color: flat-design-colors.$errorTextInputText;
 
   }
 }
