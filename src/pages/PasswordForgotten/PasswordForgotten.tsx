@@ -22,6 +22,8 @@ const initialValues: FormInitialValuesType = {
   // confirmPassword: 'validPass775',
 };
 
+const formValidationSchema = createValidationSchema(Object.keys(initialValues));
+
 export const PasswordForgotten = () => {
   const navigate = useNavigate();
 
@@ -29,21 +31,30 @@ export const PasswordForgotten = () => {
 
   const formik = useFormik({
     initialValues,
-    validationSchema: createValidationSchema(Object.keys(initialValues)),
+    validationSchema: formValidationSchema,
     validateOnChange: false,
-    onSubmit: (values, formikHelpers) =>
-      // { setSubmitting }: FormikHelpers<FormInitialValuesType>,
-      {
-        // eslint-disable-next-line no-debugger
-        debugger;
-        dispatch(
-          startPasswordRecovery(values.email, navigate, formikHelpers.setSubmitting),
-        );
-      },
+    onSubmit: (values, formikHelpers) => {
+      // eslint-disable-next-line no-debugger
+      debugger;
+      dispatch(
+        startPasswordRecovery(
+          {
+            email: values.email,
+            origin: window.location.origin,
+            senderName: 'alex',
+            senderEmail: values.email,
+          },
+          navigate,
+          formikHelpers.setSubmitting,
+        ),
+      );
+    },
   });
-
+  console.log('formik errors', formik.errors);
+  console.log(window.location);
   const checkData = () => {
-    console.log(formik.errors);
+    console.log('formik errors', formik.errors);
+    console.log(window.location);
   };
 
   return (

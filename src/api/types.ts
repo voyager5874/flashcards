@@ -136,10 +136,17 @@ export type SignUpResponseType = {
   error?: string;
 };
 
-export type PasswordForgottenParameterType = {
+export type PasswordForgottenRequestDataType = {
   email: string; // кому восстанавливать пароль
   from: string; // можно указать разработчика фронта)
   message: string; // хтмп-письмо, вместо $token$ бэк вставит токен
+};
+
+export type PasswordForgottenParameterType = {
+  email: string;
+  senderName: string;
+  senderEmail: string;
+  origin: string;
 };
 
 export type PasswordForgottenResponseType = {

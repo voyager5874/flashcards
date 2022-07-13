@@ -53,8 +53,11 @@ export const validationSchema = Yup.object({
 
 export const createValidationSchema = (formFields: string[]) => {
   const validationObject: any = {};
+  console.log('yupObject', Yup.object);
   console.dir(Yup.object);
+  console.log('yupObject with ({}) call', Yup.object({}));
   console.dir(Yup.object({}));
+  console.log('typeOf yupObject', typeof Yup.object);
   console.dir(typeof Yup.object);
   formFields.forEach(field => {
     switch (field) {

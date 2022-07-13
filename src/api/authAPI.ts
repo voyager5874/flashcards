@@ -4,6 +4,7 @@ import {
   LoginResponseType,
   LogoutResponseType,
   PasswordForgottenParameterType,
+  PasswordForgottenRequestDataType,
   ResetPasswordParameterType,
   ResetPasswordResponseType,
   SignUpParameterType,
@@ -38,17 +39,17 @@ export const authAPI = {
       .post<SignUpResponseType>('/auth/register', data)
       .then(response => response.data);
   },
-  passwordForgotten(email: string) {
-    const data: PasswordForgottenParameterType = {
-      email,
-      from: 'alex void<voyager5874@gmail.com>',
+  passwordForgotten(data: PasswordForgottenParameterType) {
+    const requestData: PasswordForgottenRequestDataType = {
+      email: data.email,
+      from: `${data.senderName}<${data.senderEmail}>`,
       message: `<div style="padding: 15px"> 
                         password recovery link: 
-                        <a href='http://localhost:3000/password-set/$token$'>link</a>
+                        <a href='${data.origin}/password-reset/$token$'>link</a>
                 </div>`,
     };
     return axiosInstance
-      .post<ResetPasswordResponseType>('/auth/forgot', data)
+      .post<ResetPasswordResponseType>('/auth/forgot', requestData)
       .then(response => response.data);
   },
   resetPassword(data: ResetPasswordParameterType) {

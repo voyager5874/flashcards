@@ -1,12 +1,13 @@
 import { AxiosError } from 'axios';
 
 import { authAPI } from 'api';
+import { PasswordForgottenParameterType } from 'api/types';
 import { appErrorOccurred, appIsBusy, setAppMessage } from 'store/reducers/app';
 import { AppDispatch } from 'store/types';
 
 export const startPasswordRecovery =
   (
-    email: string,
+    data: PasswordForgottenParameterType,
     redirectCallback: Function,
     changeFormSubmittingStateCallback: Function,
   ) =>
@@ -16,7 +17,7 @@ export const startPasswordRecovery =
     // eslint-disable-next-line no-debugger
     debugger;
     try {
-      const response = await authAPI.passwordForgotten(email);
+      const response = await authAPI.passwordForgotten(data);
 
       console.dir(response);
       if (!response.error) {
