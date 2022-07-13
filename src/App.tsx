@@ -8,14 +8,14 @@ import { Layout } from 'features/ui/Layout';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { ComponentsTest } from 'pages/ComponentsTest';
 import { FlatDesignTestPage } from 'pages/FlatDesignTest/FlatDesignTestPage';
+import { Login } from 'pages/FormikComponentLogin';
 import { Register } from 'pages/FormikRegister/Register';
 import { InfoOnPasswordRecovery } from 'pages/InstructionsOnPasswordRecovery';
 import { Loader } from 'pages/Loader/Loader';
-import { Login } from 'pages/Login';
 import { NotFound } from 'pages/NotFound';
 import { Packs } from 'pages/Packs/Packs';
 import { PasswordCreateNew } from 'pages/PasswordCreateNew';
-import { PasswordRecovery } from 'pages/PasswordRecovery';
+import { PasswordForgotten } from 'pages/PasswordForgotten';
 import { Profile } from 'pages/Profile';
 import { initializeApp } from 'store/asyncActions/app';
 
@@ -52,7 +52,7 @@ const App = (): ReactElement => {
           <Route path="*" element={<NotFound />} />
         </Route>
         <Route path="password-set" element={<PasswordCreateNew />} />
-        <Route path="password-reset" element={<PasswordRecovery />} />
+        <Route path="password-forgotten" element={<PasswordForgotten />} />
         <Route path="instructions" element={<InfoOnPasswordRecovery />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />

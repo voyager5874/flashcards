@@ -2,11 +2,11 @@ import { FC, ReactElement, useEffect } from 'react';
 
 import styles from './PacksList.module.scss';
 
-import { GetPacksRequestParametersType } from 'api/types';
+import { GetPacksParameterType } from 'api/types';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { setPacksData } from 'store/asyncActions/packs';
 
-type PacksListPropsType = GetPacksRequestParametersType;
+type PacksListPropsType = GetPacksParameterType;
 
 export const PacksList: FC<PacksListPropsType> = ({
   min,
@@ -21,7 +21,7 @@ export const PacksList: FC<PacksListPropsType> = ({
   useEffect(() => {
     // eslint-disable-next-line no-debugger
     debugger;
-    const queryObject: GetPacksRequestParametersType = {
+    const queryObject: GetPacksParameterType = {
       max,
       min,
       // eslint-disable-next-line camelcase

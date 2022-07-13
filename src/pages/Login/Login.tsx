@@ -45,7 +45,7 @@ export const Login = (): ReactElement => {
           onChange={e => setPassword(e.currentTarget.value)}
         />
 
-        <NavLink to="/password-reset" style={{ alignSelf: 'left' }}>
+        <NavLink to="/password-forgotten" style={{ alignSelf: 'left' }}>
           Forgot password?
         </NavLink>
         <CheckboxFlatDesign

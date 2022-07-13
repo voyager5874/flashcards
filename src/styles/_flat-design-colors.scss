@@ -65,6 +65,7 @@ $messagePopupBorder: darken($messagePopupBackground, 20%);
 
 $normalButtonBackground: $algalFuel;
 $normalButtonBorder: darken($normalButtonBackground, 20%);
+$disabledNormalButtonBackground: desaturate($normalButtonBackground, 35%);
 
 $error: $desire;
 $danger: $desire;

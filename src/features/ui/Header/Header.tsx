@@ -38,8 +38,8 @@ export const Header: FC<HeaderPropsType> = ({ height }): ReactElement => {
           <NavLink to="/no-page">NotFound</NavLink>
           <NavLink to="/flat-test">Test Page 1</NavLink>
           <NavLink to="/heap-test">Test page 2</NavLink>
-          <NavLink to="/password-set">Create new password</NavLink>
-          <NavLink to="/password-reset">Reset password</NavLink>
+          <NavLink to="/password-reset">Create new password</NavLink>
+          <NavLink to="/password-forgotten">Reset password</NavLink>
         </DropdownMenu>
       </div>
       <div style={{ marginLeft: '20px', display: 'inline-block', width: '250px' }}>

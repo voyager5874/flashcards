@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 
 import { dataAPI } from 'api';
-import { GetPacksRequestParametersType } from 'api/types';
+import { GetPacksParameterType } from 'api/types';
 import { appIsBusy, appErrorOccurred } from 'store/reducers/app';
 import {
   packsDataReceived,
@@ -11,7 +11,7 @@ import {
 import { AppDispatch, RootState } from 'store/types';
 
 export const setPacksData =
-  (requestParameters: GetPacksRequestParametersType) =>
+  (requestParameters: GetPacksParameterType) =>
   async (dispatch: AppDispatch, getState: () => RootState) => {
     dispatch(appIsBusy(true));
     const currentMaxCardsCount = getState().packs.maxCardsCount;

@@ -106,3 +106,12 @@
     background-color: rgb(192, 57, 43);
   }
 }
+
+.wrapper{
+  button {
+    &:disabled{
+      pointer-events: none;
+      background-color: flat-design-colors.$disabledNormalButtonBackground;
+    }
+  }
+}

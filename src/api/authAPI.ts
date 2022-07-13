@@ -1,8 +1,11 @@
 import { axiosInstance } from 'api/config';
 import {
-  LoginDataType,
+  LoginParameterType,
   LoginResponseType,
   LogoutResponseType,
+  PasswordForgottenParameterType,
+  ResetPasswordParameterType,
+  ResetPasswordResponseType,
   SignUpParameterType,
   SignUpResponseType,
   UpdateProfileParameterType,
@@ -10,7 +13,7 @@ import {
 } from 'api/types';
 
 export const authAPI = {
-  login(authData: LoginDataType) {
+  login(authData: LoginParameterType) {
     return axiosInstance
       .post<LoginResponseType>('auth/login', authData)
       .then(response => response.data);
@@ -34,5 +37,21 @@ export const authAPI = {
     return axiosInstance
       .post<SignUpResponseType>('/auth/register', data)
       .then(response => response.data);
+  },
+  passwordForgotten(email: string) {
+    const data: PasswordForgottenParameterType = {
+      email,
+      from: 'alex void<voyager5874@gmail.com>',
+      message: `<div style="padding: 15px"> 
+                        password recovery link: 
+                        <a href='http://localhost:3000/password-set/$token$'>link</a>
+                </div>`,
+    };
+    return axiosInstance
+      .post<ResetPasswordResponseType>('/auth/forgot', data)
+      .then(response => response.data);
+  },
+  resetPassword(data: ResetPasswordParameterType) {
+    axiosInstance.post<ResetPasswordResponseType>('auth/set-new-password', data);
   },
 };

@@ -1,9 +1,9 @@
 import { axiosInstance } from 'api/config';
-import { GetPacksRequestParametersType, PackDataOnServerType } from 'api/types';
+import { GetPacksParameterType, PackDataOnServerType } from 'api/types';
 import { ZERO_LENGTH } from 'const';
 
 export const dataAPI = {
-  getPacks(requestParameters: GetPacksRequestParametersType) {
+  getPacks(requestParameters: GetPacksParameterType) {
     // eslint-disable-next-line no-debugger
     debugger;
     let query = ``;

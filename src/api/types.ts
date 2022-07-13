@@ -1,6 +1,4 @@
-import { UserType } from 'features/user/types';
-
-export type LoginDataType = {
+export type LoginParameterType = {
   email: string;
   password: string;
   rememberMe: boolean;
@@ -65,7 +63,7 @@ export type SortParameterType =
   | '0user_name'
   | '1user_name';
 
-export type GetPacksRequestParametersType = {
+export type GetPacksParameterType = {
   packName?: 'english' | 'russian'; // wtf?
   min?: number;
   max?: number;
@@ -75,7 +73,7 @@ export type GetPacksRequestParametersType = {
   user_id?: string;
 };
 
-export type CreatePackRequestParametersType = {
+export type CreatePackParameterType = {
   name: string; // also is not mandatory
   private?: boolean;
   path?: string; // folder ?
@@ -135,5 +133,26 @@ export type SignUpResponseType = {
     updated: string;
     __v: number;
   };
+  error?: string;
+};
+
+export type PasswordForgottenParameterType = {
+  email: string; // кому восстанавливать пароль
+  from: string; // можно указать разработчика фронта)
+  message: string; // хтмп-письмо, вместо $token$ бэк вставит токен
+};
+
+export type PasswordForgottenResponseType = {
+  info: string;
+  error?: string;
+};
+
+export type ResetPasswordParameterType = {
+  password: string;
+  resetPasswordToken: string;
+};
+
+export type ResetPasswordResponseType = {
+  info: string;
   error?: string;
 };
