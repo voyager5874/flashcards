@@ -7,22 +7,24 @@ import { useAppDispatch } from 'hooks';
 import styles from 'pages/PasswordForgotten/PasswordForgotten.module.scss';
 import { startPasswordRecovery } from 'store/asyncActions/password';
 import { validationSchema } from 'utils';
-import { createValidationSchema } from 'utils/formsValidationSchema';
+import { AppFieldSNamesType, createValidationSchema } from 'utils/formsValidationSchema';
 
-type FormInitialValuesType = {
+type AppFormsFieldType = {
   email: string;
   // how to write universal validationSchema?
   // password: string;
   // confirmPassword: string;
 };
 
-const initialValues: FormInitialValuesType = {
+const initialValues: AppFormsFieldType = {
   email: '',
   // password: 'validPass775',
   // confirmPassword: 'validPass775',
 };
 
-const formValidationSchema = createValidationSchema(Object.keys(initialValues));
+const formValidationSchema = createValidationSchema(
+  Object.keys(initialValues) as AppFieldSNamesType[],
+);
 
 export const PasswordForgotten = () => {
   const navigate = useNavigate();
