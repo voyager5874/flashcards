@@ -1,7 +1,5 @@
 import * as Yup from 'yup';
-import { ObjectSchema } from 'yup';
 import YupPassword from 'yup-password';
-import { RequiredStringSchema } from 'yup/lib/string';
 
 import { ZERO_LENGTH } from 'const';
 
@@ -16,8 +14,6 @@ type AppFormsFieldType = {
   password?: string;
   confirmPassword?: string;
 };
-
-export type AppFieldSNamesType = 'email' | 'password' | 'confirmPassword';
 
 // const baseTextFieldValidation = Yup.string().required('required');
 const baseTextFieldValidation = Yup.string();
@@ -96,12 +92,14 @@ export const validationSchema = Yup.object({
 //   return Yup.object(validationObject);
 // };
 
-export const createValidationSchema = (formFields: AppFieldSNamesType[]) => {
+export const createValidationSchema = (formFields: AppFormsFieldType) => {
+  const formFieldsNames = Object.keys(formFields);
+  const schemaFieldsNames = Object.keys(validationSchema.fields);
   let schema = validationSchema.concat(Yup.object({}));
-  const fields = Object.keys(validationSchema.fields);
-  fields.forEach(field => {
-    schema = formFields.includes(field as AppFieldSNamesType)
-      ? schema.concat(Yup.object({ [field]: Yup.string().required('required field') }))
+
+  schemaFieldsNames.forEach(field => {
+    schema = formFieldsNames.includes(field)
+      ? schema.concat(Yup.object({ [field]: Yup.string().required(`${field} required`) }))
       : (schema = schema.concat(Yup.object({ [field]: skipFieldValidation })));
   });
   console.log('schema', schema);

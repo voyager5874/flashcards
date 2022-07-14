@@ -1,13 +1,14 @@
-import { FormikHelpers, useFormik } from 'formik';
+import { useEffect } from 'react';
+
+import { useFormik } from 'formik';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { TextInput } from 'features/ui/flat-design';
-import { useAppDispatch } from 'hooks';
+import { useAppDispatch, useDebouncedCallback, useDebouncedValue } from 'hooks';
 import styles from 'pages/PasswordForgotten/PasswordForgotten.module.scss';
 import { startPasswordRecovery } from 'store/asyncActions/password';
-import { validationSchema } from 'utils';
-import { AppFieldSNamesType, createValidationSchema } from 'utils/formsValidationSchema';
+import { createValidationSchema } from 'utils/formsValidationSchema';
 
 type AppFormsFieldType = {
   email: string;
@@ -22,9 +23,7 @@ const initialValues: AppFormsFieldType = {
   // confirmPassword: 'validPass775',
 };
 
-const formValidationSchema = createValidationSchema(
-  Object.keys(initialValues) as AppFieldSNamesType[],
-);
+const formValidationSchema = createValidationSchema(initialValues);
 
 export const PasswordForgotten = () => {
   const navigate = useNavigate();
@@ -52,12 +51,15 @@ export const PasswordForgotten = () => {
       );
     },
   });
-  console.log('formik errors', formik.errors);
-  console.log(window.location);
-  const checkData = () => {
-    console.log('formik errors', formik.errors);
-    console.log(window.location);
-  };
+
+  const debouncedEmailField = useDebouncedValue(formik.values.email);
+
+  useEffect(() => {
+    // if (!formik.errors.email) return;
+    if (!debouncedEmailField) return;
+    formik.validateForm();
+    // }, [formik.errors.email, debouncedEmailField]);
+  }, [debouncedEmailField]);
 
   return (
     <div className={styles.wrapper}>
@@ -73,11 +75,7 @@ export const PasswordForgotten = () => {
         />
         <p>Enter your password and we will send you further instructions</p>
 
-        <ButtonFlatDesign
-          type="submit"
-          disabled={formik.isSubmitting || !formik.isValid}
-          onClick={checkData}
-        >
+        <ButtonFlatDesign type="submit" disabled={formik.isSubmitting || !formik.isValid}>
           Send instructions
         </ButtonFlatDesign>
 
