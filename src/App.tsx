@@ -14,8 +14,8 @@ import { InfoOnPasswordRecovery } from 'pages/InstructionsOnPasswordRecovery';
 import { Loader } from 'pages/Loader/Loader';
 import { NotFound } from 'pages/NotFound';
 import { Packs } from 'pages/Packs/Packs';
-import { PasswordCreateNew } from 'pages/PasswordCreateNew';
 import { PasswordForgotten } from 'pages/PasswordForgotten';
+import { PasswordReset } from 'pages/PasswordReset';
 import { Profile } from 'pages/Profile';
 import { initializeApp } from 'store/asyncActions/app';
 
@@ -51,7 +51,9 @@ const App = (): ReactElement => {
           <Route path="flat-test" element={<FlatDesignTestPage />} />
           <Route path="*" element={<NotFound />} />
         </Route>
-        <Route path="password-set" element={<PasswordCreateNew />} />
+        <Route path="password-reset/" element={<PasswordReset />}>
+          <Route path=":token" element={<PasswordReset />} />
+        </Route>
         <Route path="password-forgotten" element={<PasswordForgotten />} />
         <Route path="instructions" element={<InfoOnPasswordRecovery />} />
         <Route path="login" element={<Login />} />

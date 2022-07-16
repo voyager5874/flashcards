@@ -1,9 +1,8 @@
-import { AxiosError } from 'axios';
-
 import { authAPI } from 'api';
 import { PasswordForgottenParameterType } from 'api/types';
 import { appErrorOccurred, appIsBusy, setAppMessage } from 'store/reducers/app';
 import { AppDispatch } from 'store/types';
+import { processAsyncActionErrors } from 'utils';
 
 export const startPasswordRecovery =
   (
@@ -25,12 +24,17 @@ export const startPasswordRecovery =
         dispatch(setAppMessage(response.info));
       } else dispatch(appErrorOccurred(response.error));
     } catch (error) {
-      if (error instanceof AxiosError) {
-        const errorMessage = error?.response?.data?.error ?? error.message;
-        dispatch(appErrorOccurred(errorMessage));
-      } else {
-        dispatch(appErrorOccurred('error requesting password recovery link'));
-      }
+      // if (error instanceof AxiosError) {
+      //   const errorMessage = error?.response?.data?.error ?? error.message;
+      //   dispatch(appErrorOccurred(errorMessage));
+      // } else {
+      //   dispatch(appErrorOccurred('error requesting password recovery link'));
+      // }
+      processAsyncActionErrors(
+        error,
+        dispatch,
+        'error requesting password recovery link',
+      );
     } finally {
       dispatch(appIsBusy(false));
       changeFormSubmittingStateCallback(false);

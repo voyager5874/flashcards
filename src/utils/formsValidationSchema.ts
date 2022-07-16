@@ -53,45 +53,6 @@ export const validationSchema = Yup.object({
 //         }),
 //     })}
 
-// export const createValidationSchema = (formFields: string[]) => {
-//   const validationObject: any = {};
-//   const validationObjectTest: ObjectSchema<any> = Yup.object({});
-//   console.log('validationObjectTest', validationObjectTest);
-//   console.log('yupObject', Yup.object);
-//   console.dir(Yup.object);
-//   console.log('yupObject with ({}) call', Yup.object({}));
-//   console.dir(Yup.object({}));
-//   console.log('typeOf yupObject', typeof Yup.object);
-//   console.dir(typeof Yup.object);
-//   formFields.forEach(field => {
-//     switch (field) {
-//       case 'email':
-//         validationObject[field] = Yup.string()
-//           .email('Invalid email address')
-//           .required('Required')
-//           .max(MAX_EMAIL_LENGTH, 'this seems too long');
-//         break;
-//       case 'password':
-//         validationObject[field] = Yup.string()
-//           .password()
-//           .required('Required')
-//           .minSymbols(ZERO_LENGTH)
-//           .max(MAX_PASSWORD_LENGTH, 'Are you sure you will remember this?');
-//         break;
-//       case 'confirmPassword':
-//         validationObject[field] = Yup.string().when('password', {
-//           is: (val: string) => !!(val && val.length > ZERO_LENGTH),
-//           then: Yup.string().oneOf([Yup.ref('password')], 'passwords mismatch'),
-//         });
-//         break;
-//       default:
-//         validationObject[field] = Yup.string().required();
-//     }
-//   });
-//   console.log('Yup.object(validationObject)__', Yup.object(validationObject));
-//   return Yup.object(validationObject);
-// };
-
 export const createValidationSchema = (formFields: AppFormsFieldType) => {
   const formFieldsNames = Object.keys(formFields);
   const schemaFieldsNames = Object.keys(validationSchema.fields);
@@ -102,6 +63,5 @@ export const createValidationSchema = (formFields: AppFormsFieldType) => {
       ? schema.concat(Yup.object({ [field]: Yup.string().required(`${field} required`) }))
       : (schema = schema.concat(Yup.object({ [field]: skipFieldValidation })));
   });
-  console.log('schema', schema);
   return schema;
 };

@@ -1,10 +1,9 @@
-import { AxiosError } from 'axios';
-
 import { authAPI } from 'api';
 import { UpdateProfileParameterType } from 'api/types';
 import { appErrorOccurred, appIsBusy } from 'store/reducers/app';
 import { profileDataReceived } from 'store/reducers/profile';
 import { AppDispatch } from 'store/types';
+import { processAsyncActionErrors } from 'utils';
 
 export const setUpdatedProfileData =
   (data: UpdateProfileParameterType) => async (dispatch: AppDispatch) => {
@@ -19,12 +18,17 @@ export const setUpdatedProfileData =
         dispatch(appErrorOccurred(response.error));
       }
     } catch (error) {
-      if (error instanceof AxiosError) {
-        const errorMessage = error?.response?.data?.error ?? error.message;
-        dispatch(appErrorOccurred(errorMessage));
-      } else {
-        dispatch(appErrorOccurred('there was some error during profile update'));
-      }
+      // if (error instanceof AxiosError) {
+      //   const errorMessage = error?.response?.data?.error ?? error.message;
+      //   dispatch(appErrorOccurred(errorMessage));
+      // } else {
+      //   dispatch(appErrorOccurred('there was some error during profile update'));
+      // }
+      processAsyncActionErrors(
+        error,
+        dispatch,
+        'there was some error during profile update',
+      );
     } finally {
       dispatch(appIsBusy(false));
     }

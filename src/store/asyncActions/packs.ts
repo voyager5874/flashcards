@@ -1,14 +1,13 @@
-import { AxiosError } from 'axios';
-
 import { dataAPI } from 'api';
 import { GetPacksParameterType } from 'api/types';
-import { appIsBusy, appErrorOccurred } from 'store/reducers/app';
+import { appErrorOccurred, appIsBusy } from 'store/reducers/app';
 import {
   packsDataReceived,
   packsSetMaxCardsCountFilter,
   packsSetMinCardsCountFilter,
 } from 'store/reducers/packs';
 import { AppDispatch, RootState } from 'store/types';
+import { processAsyncActionErrors } from 'utils';
 
 export const setPacksData =
   (requestParameters: GetPacksParameterType) =>
@@ -31,12 +30,13 @@ export const setPacksData =
         dispatch(appErrorOccurred(JSON.stringify(response)));
       }
     } catch (error) {
-      if (error instanceof AxiosError) {
-        const errorMessage = error?.response?.data?.error ?? error.message;
-        dispatch(appErrorOccurred(errorMessage));
-      } else {
-        dispatch(appErrorOccurred('error getting packs from the server'));
-      }
+      // if (error instanceof AxiosError) {
+      //   const errorMessage = error?.response?.data?.error ?? error.message;
+      //   dispatch(appErrorOccurred(errorMessage));
+      // } else {
+      //   dispatch(appErrorOccurred('error getting packs from the server'));
+      // }
+      processAsyncActionErrors(error, dispatch, 'error getting packs from the server');
     } finally {
       dispatch(appIsBusy(false));
     }

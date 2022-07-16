@@ -1,1 +1,1 @@
-export { PasswordReset } from 'pages/PasswordReset/PasswordReset';
+export { PasswordReset } from './PasswordReset';

@@ -5,6 +5,7 @@ import {
   LogoutResponseType,
   PasswordForgottenParameterType,
   PasswordForgottenRequestDataType,
+  PasswordForgottenResponseType,
   ResetPasswordParameterType,
   ResetPasswordResponseType,
   SignUpParameterType,
@@ -49,10 +50,10 @@ export const authAPI = {
                 </div>`,
     };
     return axiosInstance
-      .post<ResetPasswordResponseType>('/auth/forgot', requestData)
+      .post<PasswordForgottenResponseType>('/auth/forgot', requestData)
       .then(response => response.data);
   },
   resetPassword(data: ResetPasswordParameterType) {
-    axiosInstance.post<ResetPasswordResponseType>('auth/set-new-password', data);
+    return axiosInstance.post<ResetPasswordResponseType>('auth/set-new-password', data);
   },
 };

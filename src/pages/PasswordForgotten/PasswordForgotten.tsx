@@ -52,7 +52,7 @@ export const PasswordForgotten = () => {
     },
   });
 
-  const debouncedEmailField = useDebouncedValue(formik.values.email);
+  const debouncedEmailField = useDebouncedValue(formik.values.email, 2000);
 
   useEffect(() => {
     // if (!formik.errors.email) return;
@@ -73,7 +73,7 @@ export const PasswordForgotten = () => {
           onBlur={formik.handleBlur}
           error={formik.touched && formik.errors.email ? formik.errors.email : ''}
         />
-        <p>Enter your password and we will send you further instructions</p>
+        <p>Enter your email and we will send you further instructions</p>
 
         <ButtonFlatDesign type="submit" disabled={formik.isSubmitting || !formik.isValid}>
           Send instructions

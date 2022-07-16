@@ -1,10 +1,9 @@
-import { AxiosError } from 'axios';
-
 import { authAPI } from 'api';
-import { appIsBusy, appErrorOccurred } from 'store/reducers/app';
-import { loginStateChanged } from 'store/reducers/login';
+import { appErrorOccurred, appIsBusy } from 'store/reducers/app';
+import { userLoggedIn } from 'store/reducers/login';
 import { profileDataReceived } from 'store/reducers/profile';
 import { AppDispatch } from 'store/types';
+import { processAsyncActionErrors } from 'utils';
 
 export const auth = () => async (dispatch: AppDispatch) => {
   dispatch(appIsBusy(true));
@@ -12,19 +11,24 @@ export const auth = () => async (dispatch: AppDispatch) => {
     const response = await authAPI.authMe();
     if (!response.error) {
       dispatch(profileDataReceived(response));
-      dispatch(loginStateChanged(true));
+      dispatch(userLoggedIn(true));
     } else {
       dispatch(appErrorOccurred(response.error));
-      dispatch(loginStateChanged(false));
+      dispatch(userLoggedIn(false));
     }
   } catch (error) {
-    if (error instanceof AxiosError) {
-      const errorMessage = error?.response?.data?.error ?? error.message;
-      dispatch(appErrorOccurred(errorMessage));
-    } else {
-      dispatch(appErrorOccurred('there was some error during authorization'));
-    }
-    dispatch(loginStateChanged(false));
+    // if (error instanceof AxiosError) {
+    //   const errorMessage = error?.response?.data?.error ?? error.message;
+    //   dispatch(appErrorOccurred(errorMessage));
+    // } else {
+    //   dispatch(appErrorOccurred('there was some error during authorization'));
+    // }
+    processAsyncActionErrors(
+      error,
+      dispatch,
+      'there was some error during authorization',
+    );
+    dispatch(userLoggedIn(false));
   } finally {
     dispatch(appIsBusy(false));
   }

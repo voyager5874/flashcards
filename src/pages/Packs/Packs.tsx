@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactElement } from 'react';
+import { ChangeEvent, ReactElement, useEffect } from 'react';
 
 import styles from './Packs.module.scss';
 
@@ -9,6 +9,7 @@ import { TextInput } from 'features/ui/flat-design';
 import { RangeDoubleSlider } from 'features/ui/flat-design/RangeDoubleSlider';
 import { Pagination } from 'features/ui/Pagination';
 import { useAppDispatch, useAppSelector } from 'hooks';
+import { setPacksData } from 'store/asyncActions/packs';
 import {
   packsCurrentPageChanged,
   packsSetCurrentUserPacksFilter,
@@ -19,6 +20,10 @@ import {
 
 export const Packs = (): ReactElement => {
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setPacksData({}));
+  }, []);
 
   const currentPage = useAppSelector(state => state.packs.page);
   const packsPerPage = useAppSelector(state => state.packs.pageCount);
