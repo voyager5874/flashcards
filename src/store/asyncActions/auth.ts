@@ -17,12 +17,6 @@ export const auth = () => async (dispatch: AppDispatch) => {
       dispatch(userLoggedIn(false));
     }
   } catch (error) {
-    // if (error instanceof AxiosError) {
-    //   const errorMessage = error?.response?.data?.error ?? error.message;
-    //   dispatch(appErrorOccurred(errorMessage));
-    // } else {
-    //   dispatch(appErrorOccurred('there was some error during authorization'));
-    // }
     processAsyncActionErrors(
       error,
       dispatch,

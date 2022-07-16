@@ -5,14 +5,15 @@ import { ZERO_LENGTH } from 'const';
 
 YupPassword(Yup);
 
-// const MIN_PASSWORD_LENGTH = 6;
+const MIN_TOKEN_LENGTH = 10;
 const MAX_PASSWORD_LENGTH = 20;
 const MAX_EMAIL_LENGTH = 50;
 
 type AppFormsFieldType = {
-  email: string;
+  email?: string;
   password?: string;
   confirmPassword?: string;
+  token?: string;
 };
 
 // const baseTextFieldValidation = Yup.string().required('required');
@@ -37,6 +38,7 @@ export const validationSchema = Yup.object({
     is: (val: string) => !!(val && val.length > ZERO_LENGTH),
     then: Yup.string().oneOf([Yup.ref('password')], 'passwords mismatch'),
   }),
+  token: baseTextFieldValidation.min(MIN_TOKEN_LENGTH, 'token invalid'),
   // .label('confirm password')
   // .oneOf([Yup.ref('password'), null], 'passwords mismatch'),
 });

@@ -1,5 +1,6 @@
 import { authAPI } from 'api';
-import { PasswordForgottenParameterType } from 'api/types';
+import { PasswordForgottenParameterType, ResetPasswordParameterType } from 'api/types';
+import { auth } from 'store/asyncActions/auth';
 import { appErrorOccurred, appIsBusy, setAppMessage } from 'store/reducers/app';
 import { AppDispatch } from 'store/types';
 import { processAsyncActionErrors } from 'utils';
@@ -7,12 +8,12 @@ import { processAsyncActionErrors } from 'utils';
 export const startPasswordRecovery =
   (
     data: PasswordForgottenParameterType,
-    redirectCallback: Function,
-    changeFormSubmittingStateCallback: Function,
+    navigate: Function,
+    changeFormSubmittingState: Function,
   ) =>
   async (dispatch: AppDispatch) => {
     dispatch(appIsBusy(true));
-    changeFormSubmittingStateCallback(true);
+    changeFormSubmittingState(true);
     // eslint-disable-next-line no-debugger
     debugger;
     try {
@@ -20,7 +21,7 @@ export const startPasswordRecovery =
 
       console.dir(response);
       if (!response.error) {
-        redirectCallback('../password-reset');
+        navigate('../instructions');
         dispatch(setAppMessage(response.info));
       } else dispatch(appErrorOccurred(response.error));
     } catch (error) {
@@ -37,6 +38,37 @@ export const startPasswordRecovery =
       );
     } finally {
       dispatch(appIsBusy(false));
-      changeFormSubmittingStateCallback(false);
+      changeFormSubmittingState(false);
+    }
+  };
+
+export const requestPasswordReset =
+  (
+    data: ResetPasswordParameterType,
+    navigate: Function,
+    changeFormSubmittingState: Function,
+  ) =>
+  async (dispatch: AppDispatch) => {
+    // if (!data.resetPasswordToken.length) {
+    //   appErrorOccurred('token invalid');
+    //   return;
+    // }
+    dispatch(appIsBusy(true));
+    changeFormSubmittingState(true);
+    // eslint-disable-next-line no-debugger
+    debugger;
+    try {
+      const response = await authAPI.resetPassword(data);
+      if (!response.error) {
+        dispatch(setAppMessage(response.info));
+        navigate('/login', { replace: true });
+      } else if (response.error) {
+        dispatch(appErrorOccurred(response.error));
+      }
+    } catch (error) {
+      processAsyncActionErrors(error, dispatch, 'some error during password reset');
+    } finally {
+      dispatch(appIsBusy(false));
+      changeFormSubmittingState(false);
     }
   };

@@ -16,7 +16,7 @@ export const InfoOnPasswordRecovery = () => {
       <div>
         <h1>Check email</h1>
         <FontAwesomeIcon icon={faPaperPlane} fontSize={60} />
-        <p>We have sent you instructions to your email example@email.com</p>
+        <p>Check your email and follow the link to reset your password</p>
         <ButtonFlatDesign onClick={handleClick}>to home page</ButtonFlatDesign>
       </div>
     </div>

@@ -19,12 +19,6 @@ export const initializeApp =
       //   dispatch(packsSetMinCardsCountFilter(getState().packs.minCardsCount));
       // }
     } catch (error) {
-      // if (error instanceof AxiosError) {
-      //   const errorMessage = error?.response?.data?.error ?? error.message;
-      //   dispatch(appErrorOccurred(errorMessage));
-      // } else {
-      //   dispatch(appErrorOccurred('there was some error during app initialization'));
-      // }
       processAsyncActionErrors(
         error,
         dispatch,

@@ -42,6 +42,7 @@ const App = (): ReactElement => {
   return (
     <div className="app">
       <Routes>
+        <Route path="/*" element={<NotFound />} />
         <Route path="/" element={isLoggedIn ? <Layout /> : <Navigate to="login" />}>
           {/* <Route path="/" element={<Layout />}> */}
           <Route index element={<Profile />} />
@@ -49,7 +50,7 @@ const App = (): ReactElement => {
           <Route path="packs" element={<Packs />} />
           <Route path="heap-test" element={<ComponentsTest />} />
           <Route path="flat-test" element={<FlatDesignTestPage />} />
-          <Route path="*" element={<NotFound />} />
+          {/* <Route path="*" element={<NotFound />} /> */}
         </Route>
         <Route path="password-reset/" element={<PasswordReset />}>
           <Route path=":token" element={<PasswordReset />} />

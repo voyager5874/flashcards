@@ -5,19 +5,19 @@ import { NavLink, useNavigate } from 'react-router-dom';
 
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { TextInput } from 'features/ui/flat-design';
-import { useAppDispatch, useDebouncedCallback, useDebouncedValue } from 'hooks';
+import { useAppDispatch, useDebouncedValue } from 'hooks';
 import styles from 'pages/PasswordForgotten/PasswordForgotten.module.scss';
 import { startPasswordRecovery } from 'store/asyncActions/password';
 import { createValidationSchema } from 'utils/formsValidationSchema';
 
-type AppFormsFieldType = {
-  email: string;
-  // how to write universal validationSchema?
-  // password: string;
-  // confirmPassword: string;
-};
+// type AppFormsFieldType = {
+//   email?: string;
+//   // how to write universal validationSchema?
+//   password?: string;
+//   confirmPassword?: string;
+// };
 
-const initialValues: AppFormsFieldType = {
+const initialValues = {
   email: '',
   // password: 'validPass775',
   // confirmPassword: 'validPass775',
