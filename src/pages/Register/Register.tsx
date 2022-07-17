@@ -71,6 +71,7 @@ export const Register = () => {
       <form onSubmit={formik.handleSubmit}>
         <h1>Sign Up</h1>
         <TextInput
+          disabled={formik.isSubmitting}
           placeholder="email"
           name="email"
           onChange={formik.handleChange}
@@ -79,6 +80,7 @@ export const Register = () => {
           error={formik.touched.email && formik.errors.email ? formik.errors.email : ''}
         />
         <TextInput
+          disabled={formik.isSubmitting}
           placeholder="password"
           name="password"
           onChange={formik.handleChange}
@@ -91,6 +93,7 @@ export const Register = () => {
           }
         />
         <TextInput
+          disabled={formik.isSubmitting}
           placeholder="confirm password"
           name="confirmPassword"
           onChange={formik.handleChange}

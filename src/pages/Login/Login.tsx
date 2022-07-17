@@ -13,12 +13,6 @@ import { useAppDispatch, useAppSelector, useDebouncedValue } from 'hooks';
 import { login } from 'store/asyncActions/login';
 import { createValidationSchema } from 'utils/formsValidationSchema';
 
-// type FormValuesType = {
-//   email: string;
-//   password: string;
-//   rememberMe: boolean;
-// };
-
 const initialValues: LoginParameterType = {
   email: process.env.REACT_APP_MY_EMAIL || 'test@test.ru',
   password: process.env.REACT_APP_PASSWORD || 'test@test.ru',
@@ -78,6 +72,7 @@ export const Login = (): ReactElement => {
       <form onSubmit={formik.handleSubmit}>
         <h1>Sign in</h1>
         <TextInput
+          disabled={formik.isSubmitting}
           name="email"
           placeholder="email"
           value={formik.values.email}
@@ -88,6 +83,7 @@ export const Login = (): ReactElement => {
           // error={formik.errors.email ? formik.errors.email : ''}
         />
         <TextInput
+          disabled={formik.isSubmitting}
           name="password"
           placeholder="password"
           value={formik.values.password}

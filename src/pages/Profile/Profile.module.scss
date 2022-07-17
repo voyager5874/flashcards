@@ -5,6 +5,13 @@
 .wrapper{
   @extend .form;
   height: 550px;
+  h1{
+    margin-bottom: 0;
+    //background-color: #f44336;
+  }
+  h1 .userName{
+    font-size: 30px;
+  }
   .avatar{
     height: 350px;
     //border: 1px solid;

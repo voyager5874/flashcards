@@ -1,6 +1,6 @@
-@use 'src/styles/layout-variables';
-@use 'src/styles/flat-design-colors';
-@import 'src/styles/flat-design-forms';
+@use '../../styles/layout-variables';
+@use '../../styles/flat-design-colors';
+@import '../../styles/flat-design-forms';
 
 .wrapper {
   @extend .container;

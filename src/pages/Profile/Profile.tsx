@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import defaultAvatar from 'assets/no-avatar.png';
 import { FIRST_ITEM_INDEX } from 'const';
+import { EditableText } from 'features/ui/EditableText';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import styles from 'pages/Profile/Profile.module.scss';
 import { setUpdatedProfileData } from 'store/asyncActions/profile';
@@ -14,6 +15,7 @@ export const Profile = () => {
   const id = useId();
   const dispatch = useAppDispatch();
   const profile = useAppSelector(state => state.profile);
+  const appIsBusy = useAppSelector(state => state.appReducer.isBusy);
 
   const onImageSelect = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -34,9 +36,20 @@ export const Profile = () => {
     }
   };
 
+  const updateName = (name: string) => {
+    dispatch(setUpdatedProfileData({ name }));
+  };
+
   return (
     <div className={styles.wrapper}>
-      <h1>{profile.name}</h1>
+      <h1>
+        <EditableText
+          text={profile.name || ''}
+          onFinishEdit={updateName}
+          disabled={appIsBusy}
+          textStyle={styles.userName}
+        />
+      </h1>
       <p>
         <span>Registered: </span>
         {profile.created && formatDate(profile.created).date}

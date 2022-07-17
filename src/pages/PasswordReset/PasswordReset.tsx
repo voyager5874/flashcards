@@ -52,6 +52,7 @@ export const PasswordReset = () => {
 
   useEffect(() => {
     if (!formik.values.password) return;
+    formik.setTouched({ password: true, confirmPassword: true });
     formik.validateForm();
   }, [debouncedPasswordField, debouncedConfirmPasswordField]);
 

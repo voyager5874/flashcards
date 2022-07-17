@@ -3,13 +3,12 @@ import { ReactElement, useEffect } from 'react';
 import { Form, Formik, useFormikContext } from 'formik';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-import { FormikTextInput } from './FormikTextInput';
-import styles from './Login.module.scss';
-
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { FormikCheckbox } from 'pages/FormikComponentLogin/FormikCheckbox';
 import { login } from 'store/asyncActions/login';
+import { FormikCheckbox } from 'tmp/FormikComponentLogin/FormikCheckbox';
+import { FormikTextInput } from 'tmp/FormikComponentLogin/FormikTextInput';
+import styles from 'tmp/FormikComponentLogin/Login.module.scss';
 import { validationSchema } from 'utils';
 
 type FormValuesType = {

@@ -1,0 +1,31 @@
+.wrapper {
+
+  input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid white;
+  }
+
+  span {
+    position: relative;
+
+    &::after {
+      display: inline-block;
+      width: fit-content;
+      content: 'double click to edit';
+      font-size: 0;
+      font-weight: 500;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    &:hover::after {
+      font-size: 12px;
+      transition: font-size 0.8s, bottom 0.5s;
+      bottom: calc(100% + 5px);
+    }
+  }
+}

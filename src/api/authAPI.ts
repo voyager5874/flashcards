@@ -41,13 +41,10 @@ export const authAPI = {
       .then(response => response.data);
   },
   passwordForgotten(data: PasswordForgottenParameterType) {
-    // eslint-disable-next-line no-debugger
-    debugger;
     const requestData: PasswordForgottenRequestDataType = {
       email: data.email,
       from: `${data.senderName} <${data.senderEmail}>`,
       message: `<div style="padding: 15px"> <a href="${data.origin}/password-reset/$token$">password recovery link</a></div>`,
-      // `<a href="${data.origin}/password-reset/$token$">link</a>`
     };
     return axiosInstance
       .post<PasswordForgottenResponseType>('/auth/forgot', requestData)
