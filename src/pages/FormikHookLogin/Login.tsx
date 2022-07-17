@@ -9,9 +9,9 @@ import { LoginParameterType } from 'api/types';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { CheckboxFlatDesign } from 'features/ui/Checkbox/CheckboxFlatDesign';
 import { TextInput } from 'features/ui/flat-design';
-import { useAppDispatch, useAppSelector } from 'hooks';
+import { useAppDispatch, useAppSelector, useDebouncedValue } from 'hooks';
 import { login } from 'store/asyncActions/login';
-import { validationSchema } from 'utils';
+import { createValidationSchema } from 'utils/formsValidationSchema';
 
 // type FormValuesType = {
 //   email: string;
@@ -25,6 +25,11 @@ const initialValues: LoginParameterType = {
   rememberMe: false,
 };
 
+const validationSchema = createValidationSchema({
+  email: '',
+  password: '',
+});
+
 export const Login = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -32,14 +37,16 @@ export const Login = (): ReactElement => {
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: ({ email, password, rememberMe }: LoginParameterType) => {
+    validateOnChange: false,
+    onSubmit: ({ email, password, rememberMe }, { setSubmitting }) => {
+      setSubmitting(true);
       dispatch(
         login({
           email,
           password,
           rememberMe,
         }),
-      );
+      ).then(() => setSubmitting(false));
     },
   });
   const isLoggedIn = useAppSelector(state => state.login.isLoggedIn);
@@ -47,6 +54,24 @@ export const Login = (): ReactElement => {
     if (!isLoggedIn) return;
     navigate('../packs', { replace: true });
   }, [isLoggedIn]);
+
+  const debouncedEmailField = useDebouncedValue(formik.values.email);
+  const debouncedPasswordField = useDebouncedValue(formik.values.password);
+
+  useEffect(() => {
+    if (!debouncedEmailField) return;
+    // if (!formik.values.email) return;
+    formik.setFieldTouched('email');
+    // formik.validateForm();
+    formik.validateField('email');
+  }, [debouncedEmailField]);
+
+  useEffect(() => {
+    if (!debouncedPasswordField) return;
+    formik.setFieldTouched('password');
+    // formik.validateForm();
+    formik.validateField('password');
+  }, [debouncedPasswordField]);
 
   return (
     <div className={styles.wrapper}>
@@ -57,13 +82,17 @@ export const Login = (): ReactElement => {
           placeholder="email"
           value={formik.values.email}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           error={formik.touched.email && formik.errors.email ? formik.errors.email : ''}
+          // touched toggles after first onBlur
+          // error={formik.errors.email ? formik.errors.email : ''}
         />
         <TextInput
           name="password"
           placeholder="password"
           value={formik.values.password}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           error={
             formik.touched.password && formik.errors.password
               ? formik.errors.password
@@ -71,7 +100,7 @@ export const Login = (): ReactElement => {
           }
         />
 
-        <NavLink to="/password-reset" style={{ alignSelf: 'left' }}>
+        <NavLink to="/password-forgotten" style={{ alignSelf: 'left' }}>
           Forgot password?
         </NavLink>
         <CheckboxFlatDesign
@@ -81,7 +110,9 @@ export const Login = (): ReactElement => {
         >
           Remember me
         </CheckboxFlatDesign>
-        <ButtonFlatDesign type="submit">Login</ButtonFlatDesign>
+        <ButtonFlatDesign type="submit" disabled={formik.isSubmitting || !formik.isValid}>
+          Login
+        </ButtonFlatDesign>
 
         <div className={styles.formBottom}>
           <p>Don&apos;t have an account?</p>

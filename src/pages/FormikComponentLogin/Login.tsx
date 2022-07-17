@@ -1,6 +1,6 @@
 import { ReactElement, useEffect } from 'react';
 
-import { Form, Formik } from 'formik';
+import { Form, Formik, useFormikContext } from 'formik';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 import { FormikTextInput } from './FormikTextInput';
@@ -59,7 +59,9 @@ export const Login = (): ReactElement => {
             Forgot password?
           </NavLink>
           <FormikCheckbox name="rememberMe">Remember me</FormikCheckbox>
-          <ButtonFlatDesign type="submit">Login</ButtonFlatDesign>
+          <ButtonFlatDesign type="submit" disabled={useFormikContext().isSubmitting}>
+            Login
+          </ButtonFlatDesign>
 
           <div className={styles.formBottom}>
             <p>Don&apos;t have an account?</p>
