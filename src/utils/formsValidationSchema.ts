@@ -12,7 +12,7 @@ const MAX_EMAIL_LENGTH = 50;
 type AppFormsFieldType = {
   email?: string;
   password?: string;
-  confirmPassword?: string;
+  // confirmPassword?: string;
   token?: string;
 };
 
@@ -28,20 +28,33 @@ export const validationSchema = Yup.object({
   password: baseTextFieldValidation
     .password()
     .minSymbols(ZERO_LENGTH)
-    // .matches(
-    //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
-    //   // 'Must Contain at least 8 chars, one uppercase, one lowercase, one number and one symbol',
-    //   'password is too weak',
-    // )
     .max(MAX_PASSWORD_LENGTH, 'Are you sure you will remember this?'),
+  token: baseTextFieldValidation.min(MIN_TOKEN_LENGTH, 'token invalid'),
+});
+
+const confirmPasswordFieldValidationSchema = Yup.object({
   confirmPassword: Yup.string().when('password', {
     is: (val: string) => !!(val && val.length > ZERO_LENGTH),
     then: Yup.string().oneOf([Yup.ref('password')], 'passwords mismatch'),
   }),
-  token: baseTextFieldValidation.min(MIN_TOKEN_LENGTH, 'token invalid'),
-  // .label('confirm password')
-  // .oneOf([Yup.ref('password'), null], 'passwords mismatch'),
 });
+
+export const createValidationSchema = (formFields: AppFormsFieldType) => {
+  const formFieldsNames = Object.keys(formFields);
+  const schemaFieldsNames = Object.keys(validationSchema.fields);
+  let schema = validationSchema.concat(Yup.object({}));
+
+  schemaFieldsNames.forEach(field => {
+    schema = formFieldsNames.includes(field)
+      ? schema.concat(Yup.object({ [field]: Yup.string().required(`${field} required`) }))
+      : (schema = schema.concat(Yup.object({ [field]: skipFieldValidation })));
+  });
+
+  schema = schema.concat(confirmPasswordFieldValidationSchema);
+  return schema;
+};
+
+// just examples
 
 // validationSchema={Yup.object({
 //         lookingForAJob: Yup.boolean().oneOf(
@@ -55,15 +68,17 @@ export const validationSchema = Yup.object({
 //         }),
 //     })}
 
-export const createValidationSchema = (formFields: AppFormsFieldType) => {
-  const formFieldsNames = Object.keys(formFields);
-  const schemaFieldsNames = Object.keys(validationSchema.fields);
-  let schema = validationSchema.concat(Yup.object({}));
+// .label('confirm password')
+// .oneOf([Yup.ref('password'), null], 'passwords mismatch'),
 
-  schemaFieldsNames.forEach(field => {
-    schema = formFieldsNames.includes(field)
-      ? schema.concat(Yup.object({ [field]: Yup.string().required(`${field} required`) }))
-      : (schema = schema.concat(Yup.object({ [field]: skipFieldValidation })));
-  });
-  return schema;
-};
+// confirmPassword: Yup.string().when('password', {
+//   is: (val: string) => !!(val && val.length > ZERO_LENGTH),
+//   then: Yup.string().oneOf([Yup.ref('password')], 'passwords mismatch'),
+// }),
+
+// password: Yup.string().required('required')
+// .matches(
+//   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
+//   // 'at least 8 chars, one uppercase, one lowercase, one number and one symbol',
+//   'password is too weak',
+// )

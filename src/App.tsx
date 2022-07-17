@@ -56,7 +56,9 @@ const App = (): ReactElement => {
           <Route path=":token" element={<PasswordReset />} />
         </Route>
         <Route path="password-forgotten" element={<PasswordForgotten />} />
-        <Route path="instructions" element={<InfoOnPasswordRecovery />} />
+        <Route path="instructions" element={<InfoOnPasswordRecovery />}>
+          <Route path=":email" element={<InfoOnPasswordRecovery />} />
+        </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
       </Routes>

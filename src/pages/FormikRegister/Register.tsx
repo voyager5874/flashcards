@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { Formik, Field, Form, ErrorMessage, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 import { ButtonFlatDesign } from 'features/ui/Button';
@@ -8,7 +8,7 @@ import { TextInput } from 'features/ui/flat-design';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import styles from 'pages/Register/Register.module.scss';
 import { register } from 'store/asyncActions/register';
-import { validationSchema } from 'utils';
+import { createValidationSchema } from 'utils/formsValidationSchema';
 
 type SignUpFormInitialValuesType = {
   email: string;
@@ -34,12 +34,14 @@ export const Register = () => {
     password: '',
     confirmPassword: '',
   };
+
+  const validationSchema = createValidationSchema({ email: '', password: '' });
+
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: (values, { setSubmitting }) => {
-      dispatch(register(values, navigate));
-      setSubmitting(false);
+      dispatch(register(values, navigate, setSubmitting));
     },
   });
   return (
@@ -78,7 +80,9 @@ export const Register = () => {
               : ''
           }
         />
-        <ButtonFlatDesign type="submit">Sign up</ButtonFlatDesign>
+        <ButtonFlatDesign type="submit" disabled={formik.isSubmitting || !formik.isValid}>
+          Sign up
+        </ButtonFlatDesign>
         <NavLink to="/login">Sign in</NavLink>
       </form>
     </div>

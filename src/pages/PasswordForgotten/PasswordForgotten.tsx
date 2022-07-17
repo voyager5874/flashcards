@@ -35,8 +35,6 @@ export const PasswordForgotten = () => {
     validationSchema: formValidationSchema,
     validateOnChange: false,
     onSubmit: (values, formikHelpers) => {
-      // eslint-disable-next-line no-debugger
-      debugger;
       dispatch(
         startPasswordRecovery(
           {
@@ -52,7 +50,7 @@ export const PasswordForgotten = () => {
     },
   });
 
-  const debouncedEmailField = useDebouncedValue(formik.values.email, 2000);
+  const debouncedEmailField = useDebouncedValue(formik.values.email);
 
   useEffect(() => {
     // if (!formik.errors.email) return;

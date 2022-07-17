@@ -1,5 +1,4 @@
 import { auth } from 'store/asyncActions/auth';
-import { setPacksData } from 'store/asyncActions/packs';
 import { appInitialized, appIsBusy } from 'store/reducers/app';
 import { AppDispatch, RootState } from 'store/types';
 import { processAsyncActionErrors } from 'utils';
