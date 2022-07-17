@@ -17,7 +17,6 @@ export const setPacksData =
     const currentMinCardsCount = getState().packs.minCardsCount;
     try {
       const response = await dataAPI.getPacks(requestParameters);
-      console.dir(response);
       if (response.token) {
         dispatch(packsDataReceived(response));
         if (response.minCardsCount !== currentMinCardsCount) {
@@ -30,12 +29,6 @@ export const setPacksData =
         dispatch(appErrorOccurred(JSON.stringify(response)));
       }
     } catch (error) {
-      // if (error instanceof AxiosError) {
-      //   const errorMessage = error?.response?.data?.error ?? error.message;
-      //   dispatch(appErrorOccurred(errorMessage));
-      // } else {
-      //   dispatch(appErrorOccurred('error getting packs from the server'));
-      // }
       processAsyncActionErrors(error, dispatch, 'error getting packs from the server');
     } finally {
       dispatch(appIsBusy(false));
