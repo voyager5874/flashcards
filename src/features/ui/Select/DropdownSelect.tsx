@@ -73,7 +73,7 @@ export const DropdownSelect: FC<RadioPropsType> = ({
       >
         {options
           ? options.map(option => (
-              <label htmlFor={`${option}-${id}`} key={`${option}-${id}`}>
+              <label htmlFor={`${option}-${id}`} key={`${name}${option}-${id}`}>
                 <input
                   id={`${option}-${id}`}
                   onChange={onChangeCallback}

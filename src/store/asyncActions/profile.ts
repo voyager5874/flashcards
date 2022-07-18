@@ -12,8 +12,6 @@ export const setUpdatedProfileData =
     dispatch(appIsBusy(true));
     try {
       const response = await authAPI.updateProfile(data);
-      // eslint-disable-next-line no-debugger
-      debugger;
       if (!response.error) {
         dispatch(profileDataReceived(response.updatedUser));
       } else if (response.error) {

@@ -4,8 +4,6 @@ import { ZERO_LENGTH } from 'const';
 
 export const dataAPI = {
   getPacks(requestParameters: GetPacksParameterType) {
-    // eslint-disable-next-line no-debugger
-    debugger;
     let query = ``;
     const parameters = Object.keys(requestParameters);
     parameters.forEach(parameter => {

@@ -54,8 +54,6 @@ export const packs = (
     case 'PACKS/NEW-PACK-CREATED':
       return { ...state, cardPacks: [...state.cardPacks, action.payload] };
     case 'PACKS/SET-ITEMS-PER-PAGE':
-      // eslint-disable-next-line no-debugger
-      debugger;
       return { ...state, ...action.payload };
     case 'PACKS/SET-MIN-CARDS-COUNT-FILTER':
       return { ...state, ...action.payload };

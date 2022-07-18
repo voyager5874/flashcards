@@ -21,9 +21,10 @@ import {
 
 export const Packs = (): ReactElement => {
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(setPacksData({}));
-  }, []);
+
+  // useEffect(() => {
+  //   dispatch(setPacksData({}));
+  // }, []);
 
   const currentPage = useAppSelector(state => state.packs.page);
   const packsPerPage = useAppSelector(state => state.packs.pageCount);
@@ -62,7 +63,6 @@ export const Packs = (): ReactElement => {
   const debouncedSearchString = useDebouncedValue(packName, 3000);
 
   useEffect(() => {
-    console.log(debouncedSearchString);
     dispatch(packsSetPackNameFilter(debouncedSearchString));
   }, [debouncedSearchString]);
 
@@ -75,8 +75,10 @@ export const Packs = (): ReactElement => {
       <div className={styles.form}>
         <h1>Packs page</h1>
         <TextInput
+          disabled={appIsBusy}
           placeholder="enter a pack name"
           className={styles.textInput}
+          value={packName}
           onChange={changePackNameFilter}
         />
         <ButtonFlatDesign>create new pack</ButtonFlatDesign>
@@ -84,12 +86,14 @@ export const Packs = (): ReactElement => {
 
       <div className={styles.controls}>
         <CheckboxFlatDesign
+          disabled={appIsBusy}
           checked={packsOfCurrentUserFilter}
           onChange={flipPacksOfCurrentUserFilter}
         >
           show only my packs
         </CheckboxFlatDesign>
         <RangeDoubleSlider
+          disabled={appIsBusy}
           onChangeRange={changePacksFilterValues}
           lowerValue={minCardsCountFilter || 0}
           upperValue={maxCardsCountFilter || 10}

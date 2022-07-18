@@ -12,6 +12,7 @@ type SuperDoubleRangePropsType = {
   step: number;
   max: number;
   min: number;
+  disabled?: boolean;
 
   // min, max, step, disable, ...
 };
@@ -26,7 +27,8 @@ export const RangeDoubleSlider: FC<SuperDoubleRangePropsType> = ({
   max,
   step = 1,
   gap = 1,
-  ...restProps
+  disabled = false,
+  // ...restProps
   // min, max, step, disable, ...
 }): ReactElement => {
   const rangeLeftPartRef = useRef<HTMLInputElement>(null);
@@ -100,6 +102,7 @@ export const RangeDoubleSlider: FC<SuperDoubleRangePropsType> = ({
   return (
     <div className={styles.wrapper}>
       <input
+        disabled={disabled}
         min={min}
         max={max}
         step={step}
@@ -107,11 +110,11 @@ export const RangeDoubleSlider: FC<SuperDoubleRangePropsType> = ({
         onChange={handleLeftThumbMove}
         onMouseUp={setNewRange}
         className={`${styles.thumb} ${styles.rangeLeftPart}`}
-        {...restProps}
         type="range"
         ref={rangeLeftPartRef}
       />
       <input
+        disabled={disabled}
         min={min || DEFAULT_MIN}
         max={max}
         step={step}
@@ -119,7 +122,6 @@ export const RangeDoubleSlider: FC<SuperDoubleRangePropsType> = ({
         onChange={handleRightThumbMove}
         onMouseUp={setNewRange}
         className={`${styles.thumb} ${styles.rangeRightPart}`}
-        {...restProps}
         type="range"
         ref={rangeRightPartRef}
       />

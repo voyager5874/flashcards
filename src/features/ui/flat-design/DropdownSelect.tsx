@@ -88,8 +88,10 @@ export const DropdownSelect: FC<RadioPropsType> = ({
       >
         {options
           ? options.map((option, index) => (
-              <label htmlFor={`${option}-${id}`} key={`${option}-${id}`}>
+              // eslint-disable-next-line react/no-array-index-key
+              <label htmlFor={`${option}-${id}`} key={`${id}${+option + index}`}>
                 <input
+                  // key={`${id}${option}`}
                   id={`${option}-${id}`}
                   onChange={onChangeCallback}
                   name={name}

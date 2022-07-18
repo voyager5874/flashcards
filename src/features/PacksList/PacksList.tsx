@@ -20,8 +20,6 @@ export const PacksList: FC<PacksListPropsType> = ({
 }): ReactElement => {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    // eslint-disable-next-line no-debugger
-    debugger;
     const queryObject: GetPacksParameterType = {
       max,
       min,

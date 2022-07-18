@@ -12,10 +12,11 @@ export const auth = () => async (dispatch: AppDispatch) => {
     if (!response.error) {
       dispatch(profileDataReceived(response));
       dispatch(userLoggedIn(true));
-    } else {
-      dispatch(appErrorOccurred(response.error));
-      dispatch(userLoggedIn(false));
+      return response.name;
     }
+    dispatch(appErrorOccurred(response.error));
+    dispatch(userLoggedIn(false));
+    return new Error(response.error);
   } catch (error) {
     processAsyncActionErrors(
       error,
@@ -23,6 +24,7 @@ export const auth = () => async (dispatch: AppDispatch) => {
       'there was some error during authorization',
     );
     dispatch(userLoggedIn(false));
+    throw new Error('not authorized');
   } finally {
     dispatch(appIsBusy(false));
   }
