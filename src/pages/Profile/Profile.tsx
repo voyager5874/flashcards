@@ -7,9 +7,8 @@ import defaultAvatar from 'assets/no-avatar.png';
 import { EditableText } from 'features/ui/EditableText';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import styles from 'pages/Profile/Profile.module.scss';
-import { setUpdatedProfileData } from 'store/asyncActions/profile';
-import { appErrorOccurred } from 'store/reducers/app';
-import { formatDate, toBase64 } from 'utils';
+import { setUpdatedProfileData, uploadAvatar } from 'store/asyncActions/profile';
+import { formatDate } from 'utils';
 
 export const Profile = () => {
   const id = useId();
@@ -18,12 +17,7 @@ export const Profile = () => {
   const appIsBusy = useAppSelector(state => state.appReducer.isBusy);
 
   const onImageSelect = async (event: ChangeEvent<HTMLInputElement>) => {
-    try {
-      const response = await toBase64(event);
-      if (response) dispatch(setUpdatedProfileData({ avatar: response }));
-    } catch {
-      appErrorOccurred('conversion to base 64 failed');
-    }
+    dispatch(uploadAvatar(event));
   };
 
   const updateName = (name: string) => {

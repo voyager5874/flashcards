@@ -15,6 +15,7 @@ type InitialStateType = {
   minCardsCountFilter: number;
   maxCardsCountFilter: number;
   packsOfCurrentUserFilter: boolean;
+  packNameFilter: string;
 };
 
 const initialState: InitialStateType = {
@@ -30,6 +31,7 @@ const initialState: InitialStateType = {
   minCardsCountFilter: 0,
   maxCardsCountFilter: 10,
   packsOfCurrentUserFilter: false,
+  packNameFilter: '',
 };
 
 type PacksActionType =
@@ -39,7 +41,8 @@ type PacksActionType =
   | ReturnType<typeof packsSetMinCardsCountFilter>
   | ReturnType<typeof packsSetMaxCardsCountFilter>
   | ReturnType<typeof packsCurrentPageChanged>
-  | ReturnType<typeof packsSetCurrentUserPacksFilter>;
+  | ReturnType<typeof packsSetCurrentUserPacksFilter>
+  | ReturnType<typeof packsSetPackNameFilter>;
 
 export const packs = (
   state: InitialStateType = initialState,
@@ -61,6 +64,8 @@ export const packs = (
     case 'PACKS/SET-CURRENT-USER-PACKS-FILTER':
       return { ...state, ...action.payload };
     case 'PACKS/CURRENT-PAGE-CHANGED':
+      return { ...state, ...action.payload };
+    case 'PACKS/SET-PACK-NAME-FILTER':
       return { ...state, ...action.payload };
     default:
       return state;
@@ -118,5 +123,13 @@ export const packsSetCurrentUserPacksFilter = (packsOfCurrentUserFilter: boolean
     type: 'PACKS/SET-CURRENT-USER-PACKS-FILTER',
     payload: {
       packsOfCurrentUserFilter,
+    },
+  } as const);
+
+export const packsSetPackNameFilter = (packNameFilter: string) =>
+  ({
+    type: 'PACKS/SET-PACK-NAME-FILTER',
+    payload: {
+      packNameFilter,
     },
   } as const);

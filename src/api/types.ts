@@ -64,7 +64,7 @@ export type SortParameterType =
   | '1user_name';
 
 export type GetPacksParameterType = {
-  packName?: 'english' | 'russian'; // wtf?
+  packName?: string; // just search within pack names string
   min?: number;
   max?: number;
   sortPacks?: SortParameterType;

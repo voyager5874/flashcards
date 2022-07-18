@@ -15,6 +15,7 @@ export const PacksList: FC<PacksListPropsType> = ({
   user_id,
   pageCount,
   page,
+  packName,
   ...restProps
 }): ReactElement => {
   const dispatch = useAppDispatch();
@@ -28,11 +29,12 @@ export const PacksList: FC<PacksListPropsType> = ({
       user_id,
       pageCount,
       page,
+      packName,
       ...restProps,
     };
     dispatch(setPacksData(queryObject));
     // eslint-disable-next-line camelcase
-  }, [min, max, user_id, pageCount, page]);
+  }, [min, max, user_id, pageCount, page, packName]);
 
   const packsList = useAppSelector(state => state.packs.cardPacks);
 

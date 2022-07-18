@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactElement, useEffect } from 'react';
+import { ChangeEvent, ReactElement, useEffect, useState } from 'react';
 
 import styles from './Packs.module.scss';
 
@@ -8,7 +8,7 @@ import { CheckboxFlatDesign } from 'features/ui/Checkbox/CheckboxFlatDesign';
 import { TextInput } from 'features/ui/flat-design';
 import { RangeDoubleSlider } from 'features/ui/flat-design/RangeDoubleSlider';
 import { Pagination } from 'features/ui/Pagination';
-import { useAppDispatch, useAppSelector } from 'hooks';
+import { useAppDispatch, useAppSelector, useDebouncedValue } from 'hooks';
 import { setPacksData } from 'store/asyncActions/packs';
 import {
   packsCurrentPageChanged,
@@ -16,11 +16,11 @@ import {
   packsSetItemsPerPage,
   packsSetMaxCardsCountFilter,
   packsSetMinCardsCountFilter,
+  packsSetPackNameFilter,
 } from 'store/reducers/packs';
 
 export const Packs = (): ReactElement => {
   const dispatch = useAppDispatch();
-
   useEffect(() => {
     dispatch(setPacksData({}));
   }, []);
@@ -38,6 +38,9 @@ export const Packs = (): ReactElement => {
     state => state.packs.packsOfCurrentUserFilter,
   );
   const appIsBusy = useAppSelector(state => state.appReducer.isBusy);
+  const packNameFilter = useAppSelector(state => state.packs.packNameFilter);
+
+  const [packName, setPackName] = useState(packNameFilter);
 
   const changePacksFilterValues = (newFilterValues: [number, number]) => {
     dispatch(packsSetMaxCardsCountFilter(newFilterValues[1]));
@@ -49,8 +52,6 @@ export const Packs = (): ReactElement => {
   };
 
   const changePacksPerPageCount = (perPageCount: number) => {
-    // eslint-disable-next-line no-debugger
-    debugger;
     dispatch(packsSetItemsPerPage(+perPageCount));
   };
 
@@ -58,11 +59,26 @@ export const Packs = (): ReactElement => {
     dispatch(packsCurrentPageChanged(page));
   };
 
+  const debouncedSearchString = useDebouncedValue(packName, 3000);
+
+  useEffect(() => {
+    console.log(debouncedSearchString);
+    dispatch(packsSetPackNameFilter(debouncedSearchString));
+  }, [debouncedSearchString]);
+
+  const changePackNameFilter = (event: ChangeEvent<HTMLInputElement>) => {
+    setPackName(event.currentTarget.value);
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.form}>
         <h1>Packs page</h1>
-        <TextInput placeholder="enter a pack name" className={styles.textInput} />
+        <TextInput
+          placeholder="enter a pack name"
+          className={styles.textInput}
+          onChange={changePackNameFilter}
+        />
         <ButtonFlatDesign>create new pack</ButtonFlatDesign>
       </div>
 
@@ -98,6 +114,7 @@ export const Packs = (): ReactElement => {
         pageCount={packsPerPage}
         user_id={(packsOfCurrentUserFilter && currentUserId) || ''}
         page={currentPage}
+        packName={packNameFilter}
       />
     </div>
   );

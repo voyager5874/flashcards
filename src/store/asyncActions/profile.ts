@@ -1,9 +1,11 @@
+import { ChangeEvent } from 'react';
+
 import { authAPI } from 'api';
 import { UpdateProfileParameterType } from 'api/types';
 import { appErrorOccurred, appIsBusy } from 'store/reducers/app';
 import { profileDataReceived } from 'store/reducers/profile';
 import { AppDispatch } from 'store/types';
-import { processAsyncActionErrors } from 'utils';
+import { processAsyncActionErrors, toBase64 } from 'utils';
 
 export const setUpdatedProfileData =
   (data: UpdateProfileParameterType) => async (dispatch: AppDispatch) => {
@@ -18,12 +20,6 @@ export const setUpdatedProfileData =
         dispatch(appErrorOccurred(response.error));
       }
     } catch (error) {
-      // if (error instanceof AxiosError) {
-      //   const errorMessage = error?.response?.data?.error ?? error.message;
-      //   dispatch(appErrorOccurred(errorMessage));
-      // } else {
-      //   dispatch(appErrorOccurred('there was some error during profile update'));
-      // }
       processAsyncActionErrors(
         error,
         dispatch,
@@ -31,5 +27,16 @@ export const setUpdatedProfileData =
       );
     } finally {
       dispatch(appIsBusy(false));
+    }
+  };
+
+export const uploadAvatar =
+  (dataFromInput: ChangeEvent<HTMLInputElement>) => async (dispatch: AppDispatch) => {
+    dispatch(appIsBusy(true));
+    try {
+      const response = await toBase64(dataFromInput);
+      if (response) dispatch(setUpdatedProfileData({ avatar: response }));
+    } catch (error) {
+      processAsyncActionErrors(error, dispatch, 'error during conversion to base64');
     }
   };
