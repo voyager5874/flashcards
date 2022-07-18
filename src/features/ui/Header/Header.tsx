@@ -47,7 +47,7 @@ export const Header: FC<HeaderPropsType> = ({ height }): ReactElement => {
           <button type="button" onClick={handleLogout}>
             logout
           </button>
-          <button type="button">logout</button>
+          <button type="button">some command</button>
         </DropdownMenu>
       </div>
       <button type="button" onClick={handleLogout}>

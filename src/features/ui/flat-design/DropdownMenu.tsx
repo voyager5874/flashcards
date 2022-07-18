@@ -67,8 +67,10 @@ export const DropdownMenu: FC<DropdownMenuPropsType> = ({
 
   return (
     <div className={styles.wrapper} ref={elementContainerRef}>
-      <button
-        type="button"
+      <div
+        onKeyPress={toggleShowOptions}
+        tabIndex={0}
+        role="button"
         className={buttonClassName}
         onClick={toggleShowOptions}
         onFocus={expandOnHover ? showOptions : undefined}
@@ -96,7 +98,7 @@ export const DropdownMenu: FC<DropdownMenuPropsType> = ({
               ))
             : []}
         </ul>
-      </button>
+      </div>
     </div>
   );
 };

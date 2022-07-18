@@ -4,12 +4,12 @@ import { faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons/faArrowU
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import defaultAvatar from 'assets/no-avatar.png';
-import { FIRST_ITEM_INDEX } from 'const';
 import { EditableText } from 'features/ui/EditableText';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import styles from 'pages/Profile/Profile.module.scss';
 import { setUpdatedProfileData } from 'store/asyncActions/profile';
-import { formatDate } from 'utils';
+import { appErrorOccurred } from 'store/reducers/app';
+import { formatDate, toBase64 } from 'utils';
 
 export const Profile = () => {
   const id = useId();
@@ -17,22 +17,12 @@ export const Profile = () => {
   const profile = useAppSelector(state => state.profile);
   const appIsBusy = useAppSelector(state => state.appReducer.isBusy);
 
-  const onImageSelect = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      // eslint-disable-next-line no-debugger
-      debugger;
-      const formData = new FormData();
-      const reader = new FileReader();
-      let base64String = '';
-      const avatar = event.target.files[FIRST_ITEM_INDEX];
-      formData.append('avatar', avatar);
-      reader.readAsDataURL(avatar);
-      reader.onloadend = () => {
-        if (reader.result) {
-          base64String = reader.result as string;
-          dispatch(setUpdatedProfileData({ avatar: base64String }));
-        }
-      };
+  const onImageSelect = async (event: ChangeEvent<HTMLInputElement>) => {
+    try {
+      const response = await toBase64(event);
+      if (response) dispatch(setUpdatedProfileData({ avatar: response }));
+    } catch {
+      appErrorOccurred('conversion to base 64 failed');
     }
   };
 
