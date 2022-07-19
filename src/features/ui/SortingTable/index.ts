@@ -1,0 +1,1 @@
+export { SortingTable } from './SortingTable';

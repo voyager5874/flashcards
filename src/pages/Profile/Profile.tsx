@@ -1,17 +1,19 @@
-import { ChangeEvent, useId } from 'react';
+import { ChangeEvent, useId, useState } from 'react';
 
 import { faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons/faArrowUpFromBracket';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import defaultAvatar from 'assets/no-avatar.png';
+import invalidAvatar from 'assets/wtf.jpg';
 import { EditableText } from 'features/ui/EditableText';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import styles from 'pages/Profile/Profile.module.scss';
 import { setUpdatedProfileData, uploadAvatar } from 'store/asyncActions/profile';
-import { formatDate } from 'utils';
+import { formatDate, validateImage } from 'utils';
 
 export const Profile = () => {
   const id = useId();
+  const [avatarValid, setAvatarValid] = useState(true);
   const dispatch = useAppDispatch();
   const profile = useAppSelector(state => state.profile);
   const appIsBusy = useAppSelector(state => state.appReducer.isBusy);
@@ -22,6 +24,17 @@ export const Profile = () => {
 
   const updateName = (name: string) => {
     dispatch(setUpdatedProfileData({ name }));
+  };
+
+  if (profile.avatar)
+    validateImage(profile.avatar).then(res => {
+      if (avatarValid !== res) setAvatarValid(res);
+    });
+
+  const chooseAvatar = () => {
+    if (!profile.avatar || profile.avatar === ' ') return defaultAvatar;
+    if (!avatarValid) return invalidAvatar;
+    return profile.avatar;
   };
 
   return (
@@ -53,7 +66,8 @@ export const Profile = () => {
           </span>
           <input id={id} type="file" onChange={onImageSelect} hidden />
         </label>
-        <img src={profile.avatar || defaultAvatar} alt="avatar" />
+        {/* <img src={avatarValid ? profile.avatar : defaultAvatar} alt="avatar" /> */}
+        <img src={chooseAvatar()} alt="avatar" />
       </div>
     </div>
   );

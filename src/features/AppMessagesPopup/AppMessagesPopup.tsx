@@ -10,7 +10,7 @@ type AppMessagesPopupPropsType = {
   error?: boolean;
 };
 
-const POPUP_SHOW_DURATION = 2000;
+const POPUP_SHOW_DURATION = 2500;
 
 export const AppMessagesPopup: FC<AppMessagesPopupPropsType> = ({
   message,

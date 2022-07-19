@@ -1,10 +1,8 @@
-import { log } from 'util';
-
 import { auth } from 'store/asyncActions/auth';
 import { setPacksData } from 'store/asyncActions/packs';
 import { appInitialized, appIsBusy } from 'store/reducers/app';
+import { packsSetItemsPerPage } from 'store/reducers/packs';
 import { AppDispatch } from 'store/types';
-import { processAsyncActionErrors } from 'utils';
 
 // export const initializeApp = () => async (dispatch: AppDispatch) => {
 //   dispatch(appIsBusy(true));
@@ -34,6 +32,7 @@ export const initializeApp = () => async (dispatch: AppDispatch) => {
   Promise.all(list)
     .then(res => {
       dispatch(setPacksData({}));
+      dispatch(packsSetItemsPerPage(10));
     })
     .finally(() => {
       dispatch(appIsBusy(false));

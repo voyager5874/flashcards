@@ -21,7 +21,7 @@ type InitialStateType = {
 const initialState: InitialStateType = {
   cardPacks: [],
   page: 1,
-  pageCount: 5,
+  pageCount: 10,
   cardPacksTotalCount: null,
   minCardsCount: 0,
   maxCardsCount: null,

@@ -10,13 +10,6 @@ import styles from 'pages/PasswordForgotten/PasswordForgotten.module.scss';
 import { startPasswordRecovery } from 'store/asyncActions/password';
 import { createValidationSchema } from 'utils/formsValidationSchema';
 
-// type AppFormsFieldType = {
-//   email?: string;
-//   // how to write universal validationSchema?
-//   password?: string;
-//   confirmPassword?: string;
-// };
-
 const initialValues = {
   email: '',
   // password: 'validPass775',
@@ -27,7 +20,8 @@ const formValidationSchema = createValidationSchema(initialValues);
 
 export const PasswordForgotten = () => {
   const navigate = useNavigate();
-
+  // const location = useLocation();
+  // const origin = location.pathname;
   const dispatch = useAppDispatch();
 
   const formik = useFormik({
