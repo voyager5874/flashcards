@@ -1,4 +1,4 @@
-import { ChangeEvent, useId, useState } from 'react';
+import { ChangeEvent, useEffect, useId, useState } from 'react';
 
 import { faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons/faArrowUpFromBracket';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,14 +9,18 @@ import { EditableText } from 'features/ui/EditableText';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import styles from 'pages/Profile/Profile.module.scss';
 import { setUpdatedProfileData, uploadAvatar } from 'store/asyncActions/profile';
+import { appErrorOccurred } from 'store/reducers/app';
 import { formatDate, validateImage } from 'utils';
 
 export const Profile = () => {
   const id = useId();
-  const [avatarValid, setAvatarValid] = useState(true);
+
   const dispatch = useAppDispatch();
+
   const profile = useAppSelector(state => state.profile);
   const appIsBusy = useAppSelector(state => state.appReducer.isBusy);
+
+  const [avatar, setAvatar] = useState(profile.avatar || defaultAvatar);
 
   const onImageSelect = async (event: ChangeEvent<HTMLInputElement>) => {
     dispatch(uploadAvatar(event));
@@ -26,16 +30,22 @@ export const Profile = () => {
     dispatch(setUpdatedProfileData({ name }));
   };
 
-  if (profile.avatar)
-    validateImage(profile.avatar).then(res => {
-      if (avatarValid !== res) setAvatarValid(res);
-    });
-
-  const chooseAvatar = () => {
-    if (!profile.avatar || profile.avatar === ' ') return defaultAvatar;
-    if (!avatarValid) return invalidAvatar;
-    return profile.avatar;
-  };
+  useEffect(() => {
+    if (profile.avatar) {
+      validateImage(profile.avatar).then(res => {
+        if (!res) {
+          dispatch(
+            appErrorOccurred(
+              'Trying to break it? Huh? You have something other than image in place of your avatar',
+            ),
+          );
+          setAvatar(invalidAvatar);
+        } else {
+          setAvatar(profile.avatar!);
+        }
+      });
+    }
+  }, [profile.avatar]);
 
   return (
     <div className={styles.wrapper}>
@@ -66,8 +76,7 @@ export const Profile = () => {
           </span>
           <input id={id} type="file" onChange={onImageSelect} hidden />
         </label>
-        {/* <img src={avatarValid ? profile.avatar : defaultAvatar} alt="avatar" /> */}
-        <img src={chooseAvatar()} alt="avatar" />
+        <img src={avatar} alt="avatar" />
       </div>
     </div>
   );

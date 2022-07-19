@@ -71,7 +71,14 @@ export const PasswordForgotten = () => {
           Send instructions
         </ButtonFlatDesign>
 
-        <NavLink to="/login">Try logging in</NavLink>
+        <NavLink
+          to="/login"
+          style={{
+            pointerEvents: `${formik.isSubmitting ? 'none' : 'all'}`,
+          }}
+        >
+          Try logging in
+        </NavLink>
       </form>
     </div>
   );

@@ -16,6 +16,9 @@ const initialValues = {
   confirmPassword: '',
 };
 
+// createValidationSchema made to accept an object as parameter for passing initialValues
+// but current implementation of the function needs to skip some of the properties (here 'confirmPassword')
+// values don't matter - the function uses Object.keys method
 const validationSchema = createValidationSchema({ email: '', password: '' });
 
 export const Register = () => {
@@ -55,14 +58,12 @@ export const Register = () => {
 
   useEffect(() => {
     if (!debouncedPasswordField) return;
-    // formik.validateForm();
     formik.setFieldTouched('password');
     formik.validateField('password');
   }, [debouncedPasswordField]);
 
   useEffect(() => {
     if (!debouncedConfirmPasswordField) return;
-    // formik.validateForm();
     formik.validateField('confirmPassword');
   }, [debouncedConfirmPasswordField]);
 
@@ -106,7 +107,14 @@ export const Register = () => {
         <ButtonFlatDesign type="submit" disabled={formik.isSubmitting || !formik.isValid}>
           Sign up
         </ButtonFlatDesign>
-        <NavLink to="/login">Sign in</NavLink>
+        <NavLink
+          to="/login"
+          style={{
+            pointerEvents: `${formik.isSubmitting ? 'none' : 'all'}`,
+          }}
+        >
+          Sign in
+        </NavLink>
       </form>
     </div>
   );

@@ -99,7 +99,13 @@ export const Login = (): ReactElement => {
           }
         />
 
-        <NavLink to="/password-forgotten" style={{ alignSelf: 'left' }}>
+        <NavLink
+          to="/password-forgotten"
+          style={{
+            alignSelf: 'left',
+            pointerEvents: `${formik.isSubmitting ? 'none' : 'all'}`,
+          }}
+        >
           Forgot password?
         </NavLink>
         <CheckboxFlatDesign
@@ -115,7 +121,12 @@ export const Login = (): ReactElement => {
 
         <div className={styles.formBottom}>
           <p>Don&apos;t have an account?</p>
-          <NavLink to="/register">Sign Up</NavLink>
+          <NavLink
+            to="/register"
+            style={{ pointerEvents: `${formik.isSubmitting ? 'none' : 'all'}` }}
+          >
+            Sign Up
+          </NavLink>
         </div>
       </form>
     </div>

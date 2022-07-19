@@ -8,6 +8,7 @@
 
   thead {
     background-color: #275EFE;
+
     tr {
 
       th {
@@ -20,18 +21,26 @@
     tr {
       border: 3px solid green;
       background-color: #f44336;
+      max-height: 100px;
+
       &:nth-child(even) {
         background: lightgreen;
+
       }
+
       td {
-        &:first-child{
-          text-align: left;
-          padding-left: 20px;
-        }
+        max-height: 100px;
+        max-width: 500px;
         text-align: center;
         padding-top: 5px;
         padding-bottom: 5px;
-        button{
+
+        &:first-child {
+          text-align: left;
+          padding-left: 20px;
+        }
+
+        button {
           background-color: #275EFE;
         }
       }

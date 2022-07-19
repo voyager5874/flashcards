@@ -18,8 +18,6 @@ export const TextInput: React.FC<TextInputPropsType> = ({
   spanClassName,
   placeholder,
   type = 'text',
-  // controlElementIcon,
-  // controlElementAction,
   ...restProps
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
