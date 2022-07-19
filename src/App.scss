@@ -15,7 +15,7 @@
     font-family: "Josefin Sans", sans-serif;
     font-size: 18px;
     font-weight: 700;
-    color: flat-design-colors.$normalText;
+    //color: flat-design-colors.$normalText;
 }
 
 h1, h2, h3 {
@@ -48,6 +48,10 @@ a {
 a:hover {
     color: flat-design-colors.$hoveredLink;
     text-shadow: 2px 2px 0 rgba(0, 0, 0, .3);
+}
+
+button {
+    color: flat-design-colors.$normalText;
 }
 
 

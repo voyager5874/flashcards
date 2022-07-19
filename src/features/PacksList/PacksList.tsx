@@ -44,6 +44,7 @@ export const PacksList: FC<PacksListPropsType> = memo(
           caption="packs list"
           items={packsList}
           itemActions={['delete', 'edit', 'learn']}
+          tableHeaders={['Name', 'Cards', 'Last updated', 'Created by', 'Actions']}
         />
       </div>
     );

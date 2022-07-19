@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
+import { DetailedHTMLProps, InputHTMLAttributes, ReactElement } from 'react';
 
 type DefaultInputPropsType = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
@@ -10,4 +10,7 @@ export type TextInputPropsType = DefaultInputPropsType & {
   onEnter?: () => void;
   error?: string;
   spanClassName?: string;
+  type?: 'text' | 'password';
+  controlElementIcon?: ReactElement;
+  controlElementAction?: Function;
 };

@@ -46,7 +46,7 @@ export const ComponentsTest = (): ReactElement => {
     <div className={styles.page}>
       <h1>TestPage</h1>
       <div className={styles.componentsContainer}>
-        <TextInputField placeholder="super input" type="button" />
+        <TextInputField placeholder="super input" />
         <div className={styles.elementTypeContainer}>
           <Button>eat me</Button>
           <ButtonGlitchEffect>2077</ButtonGlitchEffect>

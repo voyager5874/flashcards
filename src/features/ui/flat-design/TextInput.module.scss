@@ -86,7 +86,7 @@
 
   .helperText {
     position: absolute;
-    top: 5px;
+    top: 3px;
     right: 10px;
     color: flat-design-colors.$normalTextInputBorder;
     font-size: 15px;
@@ -98,5 +98,28 @@
     color: flat-design-colors.$errorTextInputText;
 
   }
+
+  .inputControl {
+    background-color: transparent;
+    //background-color: #f44336;
+    color: flat-design-colors.$normalTextInputBorder;
+    border: none;
+    outline: none;
+    position: absolute;
+    right: 10px;
+    top: 0;
+    bottom: 0;
+    z-index: 10;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 40px;
+    cursor: pointer;
+
+    svg {
+      height: 24px;
+    }
+  }
+
 }
 

@@ -26,6 +26,7 @@ const validationSchema = createValidationSchema({
 
 export const Login = (): ReactElement => {
   const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
 
   const formik = useFormik({
@@ -43,6 +44,7 @@ export const Login = (): ReactElement => {
       ).then(() => setSubmitting(false));
     },
   });
+
   const isLoggedIn = useAppSelector(state => state.login.isLoggedIn);
   useEffect(() => {
     if (!isLoggedIn) return;
@@ -83,6 +85,7 @@ export const Login = (): ReactElement => {
           // error={formik.errors.email ? formik.errors.email : ''}
         />
         <TextInput
+          type="password"
           disabled={formik.isSubmitting}
           name="password"
           placeholder="password"

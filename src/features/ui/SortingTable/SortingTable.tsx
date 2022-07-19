@@ -4,8 +4,48 @@ import styles from './SortingTable.module.scss';
 
 import { PackInAppType } from 'features/Pack/types';
 
+type TableItemActionsPropsType = {
+  itemActions: string[];
+};
+
+const TableItemActions = ({ itemActions }: TableItemActionsPropsType) => (
+  <>
+    {itemActions.map((action, index) => (
+      // eslint-disable-next-line react/no-array-index-key
+      <button type="button" key={index}>
+        {action}
+      </button>
+    ))}
+  </>
+);
+
+type TableHeaderPropsType = {
+  headers: string[];
+};
+
+const TableHead = ({ headers }: TableHeaderPropsType): ReactElement => (
+  <>
+    {headers.map(header => (
+      <th key={header}>{header}</th>
+    ))}
+  </>
+);
+
+type TableBodyPropsType = {
+  data: string[];
+};
+
+const TableBody = ({ data }: TableBodyPropsType): ReactElement => (
+  <>
+    {data.map(prop => (
+      <th key={prop}>{prop}</th>
+    ))}
+  </>
+);
+
 type PropsType = {
   caption: string;
+  tableHeaders: string[];
   itemActions: string[];
   items: PackInAppType[];
 };
@@ -13,42 +53,29 @@ type PropsType = {
 export const SortingTable: FC<PropsType> = ({
   items,
   caption,
+  tableHeaders,
   itemActions,
-}): ReactElement => {
-  const actions = () => (
-    <>
-      {itemActions.map((action, index) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <button type="button" key={index}>
-          {action}
-        </button>
-      ))}
-    </>
-  );
-  return (
-    <table className={styles.table}>
-      <caption>{caption}</caption>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Cards</th>
-          <th>Last updated</th>
-          <th>Created by</th>
-          <th>Actions</th>
+}): ReactElement => (
+  <table className={styles.table}>
+    <caption>{caption}</caption>
+    <thead>
+      <tr>
+        <TableHead headers={tableHeaders} />
+      </tr>
+    </thead>
+    <tbody>
+      {items.map(item => (
+        // eslint-disable-next-line no-underscore-dangle
+        <tr key={item._id}>
+          <td>{item.name}</td>
+          <td>{item.cardsCount}</td>
+          <td>{item.updated}</td>
+          <td>{item.user_name}</td>
+          <td>
+            <TableItemActions itemActions={itemActions} />
+          </td>
         </tr>
-      </thead>
-      <tbody>
-        {items.map(item => (
-          // eslint-disable-next-line no-underscore-dangle
-          <tr key={item._id}>
-            <td>{item.name}</td>
-            <td>{item.cardsCount}</td>
-            <td>{item.updated}</td>
-            <td>{item.user_name}</td>
-            <td>{actions()}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
-};
+      ))}
+    </tbody>
+  </table>
+);

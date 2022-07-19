@@ -80,6 +80,7 @@ export const Register = () => {
           error={formik.touched.email && formik.errors.email ? formik.errors.email : ''}
         />
         <TextInput
+          type="password"
           disabled={formik.isSubmitting}
           placeholder="password"
           name="password"
@@ -93,6 +94,7 @@ export const Register = () => {
           }
         />
         <TextInput
+          type="password"
           disabled={formik.isSubmitting}
           placeholder="confirm password"
           name="confirmPassword"
