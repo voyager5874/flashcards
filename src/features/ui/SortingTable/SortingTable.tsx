@@ -67,10 +67,14 @@ export const SortingTable: FC<PropsType> = ({
       {items.map(item => (
         // eslint-disable-next-line no-underscore-dangle
         <tr key={item._id}>
-          <td>{item.name}</td>
+          <td>
+            <span className={styles.tdSizeLimiter}>{item.name}</span>
+          </td>
           <td>{item.cardsCount}</td>
           <td>{item.updated}</td>
-          <td>{item.user_name}</td>
+          <td>
+            <span className={styles.tdSizeLimiter}>{item.user_name}</span>
+          </td>
           <td>
             <TableItemActions itemActions={itemActions} />
           </td>

@@ -18,11 +18,11 @@ export const auth = () => async (dispatch: AppDispatch) => {
     dispatch(userLoggedIn(false));
     return new Error(response.error);
   } catch (error) {
-    processAsyncActionErrors(
-      error,
-      dispatch,
-      'there was some error during authorization',
-    );
+    // processAsyncActionErrors(
+    //   error,
+    //   dispatch,
+    //   'there was some error during authorization',
+    // );
     dispatch(userLoggedIn(false));
     throw new Error('not authorized');
   } finally {

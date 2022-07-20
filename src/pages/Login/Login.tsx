@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from 'react';
+import { CSSProperties, ReactElement, useEffect } from 'react';
 
 import { useFormik } from 'formik';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -12,6 +12,10 @@ import { TextInput } from 'features/ui/flat-design';
 import { useAppDispatch, useAppSelector, useDebouncedValue } from 'hooks';
 import { login } from 'store/asyncActions/login';
 import { createValidationSchema } from 'utils/formsValidationSchema';
+
+const disableNavLink: CSSProperties = {
+  pointerEvents: 'none',
+};
 
 const initialValues: LoginParameterType = {
   email: process.env.REACT_APP_MY_EMAIL || 'test@test.ru',
@@ -121,10 +125,7 @@ export const Login = (): ReactElement => {
 
         <div className={styles.formBottom}>
           <p>Don&apos;t have an account?</p>
-          <NavLink
-            to="/register"
-            style={{ pointerEvents: `${formik.isSubmitting ? 'none' : 'all'}` }}
-          >
+          <NavLink to="/register" style={formik.isSubmitting ? disableNavLink : {}}>
             Sign Up
           </NavLink>
         </div>
