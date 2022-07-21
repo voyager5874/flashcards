@@ -11,7 +11,6 @@ type InitialStateType = {
   maxCardsCount: Nullable<number>;
   token: Nullable<string>;
   tokenDeathTime: Nullable<number>;
-  // itemsPerPage: number;
   minCardsCountFilter: number;
   maxCardsCountFilter: number;
   packsOfCurrentUserFilter: boolean;
@@ -27,7 +26,6 @@ const initialState: InitialStateType = {
   maxCardsCount: null,
   token: null,
   tokenDeathTime: null,
-  // itemsPerPage: 10,
   minCardsCountFilter: 0,
   maxCardsCountFilter: 10,
   packsOfCurrentUserFilter: false,

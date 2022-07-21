@@ -7,6 +7,7 @@ import { AppMessagesPopup } from 'features/AppMessagesPopup';
 import { Layout } from 'features/ui/Layout';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { ComponentsTest } from 'pages/ComponentsTest';
+import { Flashcards } from 'pages/Flashcards/Flashcards';
 import { FlatDesignTestPage } from 'pages/FlatDesignTest/FlatDesignTestPage';
 import { InfoOnPasswordRecovery } from 'pages/InfoOnPasswordRecovery';
 import { Loader } from 'pages/Loader';
@@ -48,6 +49,9 @@ const App = (): ReactElement => {
           <Route index element={<Profile />} />
           <Route path="profile" element={<Profile />} />
           <Route path="packs" element={<Packs />} />
+          <Route path="flashcards" element={<Flashcards />}>
+            <Route path=":packId" element={<Flashcards />} />
+          </Route>
           <Route path="heap-test" element={<ComponentsTest />} />
           <Route path="flat-test" element={<FlatDesignTestPage />} />
           {/* <Route path="*" element={<NotFound />} /> */}

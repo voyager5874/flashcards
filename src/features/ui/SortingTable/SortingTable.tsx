@@ -1,61 +1,128 @@
-import { FC, ReactElement } from 'react';
+import { PropsWithChildren, ReactElement } from 'react';
 
 import styles from './SortingTable.module.scss';
 
-import { PackInAppType } from 'features/Pack/types';
-
 type TableItemActionsPropsType = {
-  itemActions: string[];
+  itemId: string;
+  itemActionsNames: string[];
+  // itemActionsHandlers: { [key: string]: Function };
+  itemActionsHandlers?: Function[];
 };
 
-const TableItemActions = ({ itemActions }: TableItemActionsPropsType) => (
+const TableItemActions = ({
+  itemId,
+  itemActionsNames,
+  itemActionsHandlers,
+}: TableItemActionsPropsType) => (
   <>
-    {itemActions.map((action, index) => (
-      // eslint-disable-next-line react/no-array-index-key
-      <button type="button" key={index}>
+    {itemActionsNames.map((action, index) => (
+      <button
+        type="button"
+        key={action}
+        // @ts-ignore
+        onClick={() => itemActionsHandlers[index](itemId)}
+      >
         {action}
       </button>
     ))}
   </>
 );
 
-type TableHeaderPropsType = {
-  headers: string[];
+type TableHeadPropsType<T> = {
+  headers: Array<keyof T>;
 };
 
-const TableHead = ({ headers }: TableHeaderPropsType): ReactElement => (
+const TableHead = <T,>({
+  headers,
+}: PropsWithChildren<TableHeadPropsType<T>>): ReactElement => (
   <>
     {headers.map(header => (
-      <th key={header}>{header}</th>
+      <th key={header as string}>{header as string}</th>
     ))}
+    <th>Actions</th>
   </>
 );
 
-type TableBodyPropsType = {
-  data: string[];
+type TableRowPropsType<T> = {
+  tableHeaders: Array<keyof T>;
+  data: T;
+  itemActionNames: string[];
+  // itemActionsHandlers?: { [key: string]: Function };
+  itemActionsHandlers?: Function[];
 };
 
-const TableBody = ({ data }: TableBodyPropsType): ReactElement => (
+const TableRow = <T extends { _id: string }>({
+  tableHeaders,
+  data,
+  itemActionNames,
+  itemActionsHandlers,
+  ...restProps
+}: PropsWithChildren<TableRowPropsType<T>>): ReactElement => (
   <>
-    {data.map(prop => (
-      <th key={prop}>{prop}</th>
+    {tableHeaders.map(header => (
+      <td key={header as string}>
+        {/* @ts-ignore */}
+        <span className={styles.tdSizeLimiter}>{data[header]}</span>
+      </td>
+    ))}
+    <td>
+      <TableItemActions
+        itemActionsNames={itemActionNames}
+        itemActionsHandlers={itemActionsHandlers}
+        // eslint-disable-next-line no-underscore-dangle
+        itemId={data._id}
+      />
+    </td>
+  </>
+);
+
+type TableBodyPropsType<T> = {
+  data: T[];
+  tableHeaders: Array<keyof T>;
+  itemActionNames: string[];
+  // itemActionsHandlers?: { [key: string]: Function };
+  itemActionsHandlers?: Function[];
+};
+
+const TableBody = <T extends { _id: string }>({
+  data,
+  tableHeaders,
+  itemActionNames,
+  itemActionsHandlers,
+  ...restProps
+}: PropsWithChildren<TableBodyPropsType<T>>): ReactElement => (
+  <>
+    {data.map(item => (
+      // eslint-disable-next-line no-underscore-dangle
+      <tr key={item._id}>
+        <TableRow
+          tableHeaders={tableHeaders}
+          data={item}
+          itemActionNames={itemActionNames}
+          itemActionsHandlers={itemActionsHandlers}
+        />
+      </tr>
     ))}
   </>
 );
 
-type PropsType = {
+type SortingTablePropsType<T> = {
   caption: string;
-  tableHeaders: string[];
-  itemActions: string[];
-  items: PackInAppType[];
+  tableHeaders: Array<keyof T>;
+  itemActionsNames: string[];
+  // itemActionsHandlers?: { [key: string]: Function };
+  itemActionsHandlers?: Function[];
+  items: T[];
 };
 
-export const SortingTable: FC<PropsType> = ({
+export const SortingTable = <T extends { _id: string }>({
   items,
   caption,
   tableHeaders,
-  itemActions,
-}): ReactElement => (
+  itemActionsNames,
+  itemActionsHandlers,
+  ...restProps
+}: PropsWithChildren<SortingTablePropsType<T>>): ReactElement => (
   <table className={styles.table}>
     <caption>{caption}</caption>
     <thead>
@@ -64,22 +131,12 @@ export const SortingTable: FC<PropsType> = ({
       </tr>
     </thead>
     <tbody>
-      {items.map(item => (
-        // eslint-disable-next-line no-underscore-dangle
-        <tr key={item._id}>
-          <td>
-            <span className={styles.tdSizeLimiter}>{item.name}</span>
-          </td>
-          <td>{item.cardsCount}</td>
-          <td>{item.updated}</td>
-          <td>
-            <span className={styles.tdSizeLimiter}>{item.user_name}</span>
-          </td>
-          <td>
-            <TableItemActions itemActions={itemActions} />
-          </td>
-        </tr>
-      ))}
+      <TableBody
+        data={items}
+        tableHeaders={tableHeaders}
+        itemActionNames={itemActionsNames}
+        itemActionsHandlers={itemActionsHandlers}
+      />
     </tbody>
   </table>
 );

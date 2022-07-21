@@ -12,14 +12,16 @@ export const login = (
 ) => {
   switch (action.type) {
     case 'LOGIN/LOGIN-STATE-CHANGED':
-      return { ...state, isLoggedIn: action.loginStatus };
+      return { ...state, ...action.payload };
     default:
       return state;
   }
 };
 
-export const userLoggedIn = (loginStatus: boolean) =>
+export const userLoggedIn = (isLoggedIn: boolean) =>
   ({
     type: 'LOGIN/LOGIN-STATE-CHANGED',
-    loginStatus,
+    payload: {
+      isLoggedIn,
+    },
   } as const);

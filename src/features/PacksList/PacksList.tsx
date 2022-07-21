@@ -1,5 +1,7 @@
 import { FC, memo, ReactElement, useEffect } from 'react';
 
+import { useNavigate } from 'react-router-dom';
+
 import styles from './PacksList.module.scss';
 
 import { GetPacksParameterType } from 'api/types';
@@ -21,6 +23,9 @@ export const PacksList: FC<PacksListPropsType> = memo(
     // ...restProps
   }): ReactElement => {
     const dispatch = useAppDispatch();
+
+    const navigate = useNavigate();
+
     useEffect(() => {
       const queryObject: GetPacksParameterType = {
         max,
@@ -38,13 +43,26 @@ export const PacksList: FC<PacksListPropsType> = memo(
 
     const packsList = useAppSelector(state => state.packs.cardPacks);
 
+    const openPack = (id: string) => {
+      navigate(`/flashcards/${id}`);
+    };
+
+    const deletePack = (id: string) => {
+      // eslint-disable-next-line no-alert
+      alert(`pack with id: ${id} to be deleted`);
+    };
+
+    const packHandlers = [openPack, openPack, openPack, deletePack];
+
     return (
       <div className={styles.wrapper}>
         <SortingTable
           caption="packs list"
           items={packsList}
-          itemActions={['delete', 'edit', 'learn']}
-          tableHeaders={['Name', 'Cards', 'Last updated', 'Created by', 'Actions']}
+          itemActionsNames={['open', 'learn', 'edit name', 'delete']}
+          itemActionsHandlers={packHandlers}
+          // tableHeaders={['Name', 'Cards', 'Last updated', 'Created by', 'Actions']}
+          tableHeaders={['name', 'cardsCount', 'updated', 'user_name']}
         />
       </div>
     );

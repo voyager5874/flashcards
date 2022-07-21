@@ -6,6 +6,7 @@ const initialState = {
 };
 
 type InitialStateType = typeof initialState;
+
 type AppActionType =
   | ReturnType<typeof appIsBusy>
   | ReturnType<typeof appErrorOccurred>

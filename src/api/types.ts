@@ -1,3 +1,5 @@
+import { Nullable } from 'types';
+
 export type LoginParameterType = {
   email: string;
   password: string;
@@ -26,7 +28,7 @@ export type LogoutResponseType = {
   error?: string;
 };
 
-type PackOnServerType = {
+export type PackOnServerType = {
   _id: string;
   user_id: string;
   user_name: string;
@@ -44,6 +46,23 @@ type PackOnServerType = {
   __v: number;
 };
 
+export type FlashcardOnServerType = {
+  _id: string;
+  cardsPack_id: string;
+  user_id: string;
+  answer: string;
+  question: string;
+  grade: string;
+  shots: number;
+  comments: string;
+  type: string;
+  rating: number;
+  more_id: string;
+  created: string;
+  updated: string;
+  __v: number;
+};
+
 export type PackDataOnServerType = {
   cardPacks: PackOnServerType[];
   page: number;
@@ -55,38 +74,116 @@ export type PackDataOnServerType = {
   tokenDeathTime: number;
 };
 
-export type SortParameterType =
-  | '0updated'
-  | '1updated'
-  | '0cardsCount'
-  | '1cardsCount'
-  | '0user_name'
-  | '1user_name';
+export type PacksSortParameterType = keyof PackOnServerType;
+// | '0updated'
+// | '1updated'
+// | '0cardsCount'
+// | '1cardsCount'
+// | '0user_name'
+// | '1user_name';
+
+export type FlashcardOnServerDataType = {
+  cards: FlashcardOnServerType[];
+  packUserId: string;
+  page: number;
+  pageCount: number;
+  cardsTotalCount: number;
+  minGrade: number;
+  maxGrade: number;
+  token: string;
+  tokenDeathTime: number;
+};
 
 export type GetPacksParameterType = {
   packName?: string; // just search within pack names string
   min?: number;
   max?: number;
-  sortPacks?: SortParameterType;
+  sortPacks?: PacksSortParameterType;
   page?: number;
   pageCount?: number; // number of items per page
   user_id?: string;
 };
 
-export type CreatePackParameterType = {
-  name: string; // also is not mandatory
-  private?: boolean;
-  path?: string; // folder ?
-  grade?: number;
-  type?: string;
-  deckCover?: string;
+export type CardsSortParameterType = keyof FlashcardOnServerType;
+
+export type GetFlashcardParameterType = {
+  cardsPack_id: string;
+  cardAnswer?: string;
+  cardQuestion?: string;
+  min?: number | string;
+  max?: number | string;
+  sortCards?: CardsSortParameterType;
+  page: number | string;
+  pageCount: number | string;
 };
 
-export type ServerErrorMessageType = {
-  error: string;
-  errorObject: boolean;
-  in: string;
-  info: string;
+export type CreatePackParameterType = {
+  cardsPack: {
+    name: string; // 'No name' by default
+    deckCover?: string;
+    private?: boolean;
+    // path?: string; // folder ?
+    // grade?: number; // wtf?
+    // type?: string;
+  };
+};
+
+export type CreatePackResponseType = {
+  newCardsPack: {
+    _id: string;
+    user_id: string;
+    user_name: string;
+    private: boolean;
+    name: string;
+    path: string; // "/def",
+    grade: number;
+    shots: number;
+    deckCover: string;
+    cardsCount: number;
+    type: string; // "pack",
+    rating: number;
+    created: string; // "2022-07-05T15:40:59.191Z",
+    updated: string;
+    more_id: string;
+    __v: number;
+  };
+  token: string;
+  tokenDeathTime: number; // 1657640459095
+};
+
+export type CreateFlashcardParameterType = {
+  card: {
+    cardsPack_id: string;
+    question?: string; // если не отправить будет 'no question'
+    answer?: string; // если не отправить будет 'no answer'
+    // grade?: number; // 0..5, computed by backend?
+    // shots?: number; // computed by backend?
+    answerImg?: string;
+    questionImg?: string;
+    questionVideo?: string;
+    answerVideo?: string;
+  };
+};
+
+export type CreateFlashcardResponseType = {
+  newCard: {
+    _id: string;
+    cardsPack_id: string;
+    user_id: string;
+    answer: string;
+    question: string;
+    grade: number;
+    shots: number;
+    comments: string;
+    type: string; // "card",
+    rating: number;
+    more_id: string;
+    created: string; // "2022-07-05T16:59:40.845Z",
+    updated: string; // "2022-07-05T16:59:40.845Z",
+    __v: number;
+  };
+  token: string;
+  tokenDeathTime: number; // 1657645180657
 };
 
 export type UpdateProfileParameterType = {
@@ -162,4 +259,11 @@ export type ResetPasswordParameterType = {
 export type ResetPasswordResponseType = {
   info: string;
   error?: string;
+};
+
+export type ServerErrorMessageType = {
+  error: string;
+  errorObject: boolean;
+  in: string;
+  info: string;
 };

@@ -9,11 +9,13 @@ import {
 
 import styles from './Pack.module.scss';
 
-import { FlashcardType } from 'features/Flashcard/types';
+import { FlashcardInAppType } from 'features/Flashcard/types';
 
 type PackPropsType = {
   flashcardList: any;
 };
+
+// flashcards list entity === pack entity
 
 export const Pack: FC<PackPropsType> = ({ flashcardList }): ReactElement => {
   const someFunc = () => {};

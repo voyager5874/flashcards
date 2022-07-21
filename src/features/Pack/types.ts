@@ -1,7 +1,8 @@
 import { Nullable } from 'types';
 
 export type PackInAppType = {
-  _id: Nullable<string>;
+  // _id: Nullable<string>;
+  _id: string;
   user_id: Nullable<string>;
   user_name: Nullable<string>;
   private: Nullable<boolean>;

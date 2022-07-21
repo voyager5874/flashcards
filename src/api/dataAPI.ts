@@ -1,5 +1,10 @@
 import { axiosInstance } from 'api/config';
-import { GetPacksParameterType, PackDataOnServerType } from 'api/types';
+import {
+  FlashcardOnServerDataType,
+  GetFlashcardParameterType,
+  GetPacksParameterType,
+  PackDataOnServerType,
+} from 'api/types';
 import { ZERO_LENGTH } from 'const';
 
 export const dataAPI = {
@@ -19,5 +24,10 @@ export const dataAPI = {
     });
     const url = parameters.length > ZERO_LENGTH ? `cards/pack${query}` : `cards/pack`;
     return axiosInstance.get<PackDataOnServerType>(url).then(response => response.data);
+  },
+  getFlashcards(requestParameters: GetFlashcardParameterType) {
+    return axiosInstance.get<FlashcardOnServerDataType>('cards/card', {
+      params: { ...requestParameters },
+    });
   },
 };
