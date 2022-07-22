@@ -19,7 +19,7 @@ const initialState = {
   cards: [] as FlashcardOnServerType[],
   packUserId: '',
   page: 1,
-  pageCount: 0,
+  pageCount: 10,
   cardsTotalCount: 0,
   minGrade: 0,
   maxGrade: 5,
@@ -29,6 +29,8 @@ const initialState = {
   maxGradeFilter: 5,
   keywordsFilter: '',
   packName: '',
+  answerKeywordsFilter: '',
+  questionKeywordsFilter: '',
 };
 
 type initialStateType = typeof initialState;
@@ -72,11 +74,11 @@ export const flashcardsDataReceived = (data: FlashcardOnServerDataType) =>
     payload: data,
   } as const);
 
-export const flashcardsKeywordsFilterApplied = (keywordFilter: string) =>
+export const flashcardsKeywordsFilterApplied = (keywordsFilter: string) =>
   ({
     type: 'FLASHCARDS/KEYWORDS-FILTER-APPLIED',
     payload: {
-      keywordFilter,
+      keywordsFilter,
     },
   } as const);
 

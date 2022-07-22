@@ -8,8 +8,8 @@ export const setFlashcardsData =
   (requestParameters: GetFlashcardParameterType) => async (dispatch: AppDispatch) => {
     try {
       const response = await dataAPI.getFlashcards(requestParameters);
-      if (response.data.token) {
-        dispatch(flashcardsDataReceived(response.data));
+      if (response.token) {
+        dispatch(flashcardsDataReceived(response));
       }
     } catch (error) {
       processAsyncActionErrors(error, dispatch, 'error getting flashcards');

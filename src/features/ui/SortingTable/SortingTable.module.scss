@@ -53,7 +53,8 @@
 
 .tdSizeLimiter {
   display: inline-block;
-  max-height: 90px;
+  max-height: 120px;
   overflow: hidden;
-  word-break: break-all;
+  //word-break: break-all;
+  word-break: break-word;
 }

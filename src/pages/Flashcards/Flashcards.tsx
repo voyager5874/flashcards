@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom';
 import { FIRST_ITEM_INDEX, SECOND_ITEM_INDEX } from 'const';
 import { FlashcardsList } from 'features/FlashcardsList';
 import { ButtonFlatDesign } from 'features/ui/Button';
-import { CheckboxFlatDesign } from 'features/ui/Checkbox/CheckboxFlatDesign';
 import { TextInput } from 'features/ui/flat-design';
 import { RangeDoubleSlider } from 'features/ui/flat-design/RangeDoubleSlider';
 import { Pagination } from 'features/ui/Pagination';
@@ -15,11 +14,9 @@ import {
   flashcardsCurrentPageChanged,
   flashcardsItemsPerPageChanged,
   flashcardsKeywordsFilterApplied,
+  flashcardsMaxGradeFilterApplied,
+  flashcardsMinGradeFilterApplied,
 } from 'store/reducers/flashcards';
-import {
-  packsSetMaxCardsCountFilter,
-  packsSetMinCardsCountFilter,
-} from 'store/reducers/packs';
 
 export const Flashcards = (): ReactElement => {
   const dispatch = useAppDispatch();
@@ -37,15 +34,17 @@ export const Flashcards = (): ReactElement => {
     maxGradeFilter,
     minGradeFilter,
     keywordsFilter,
+    answerKeywordsFilter,
+    questionKeywordsFilter,
   } = useAppSelector(state => state.flashcards);
 
   const appIsBusy = useAppSelector(state => state.appReducer.isBusy);
 
-  const [searchString, setSearchString] = useState(keywordsFilter);
+  const [answerSearchString, setAnswerSearchString] = useState(answerKeywordsFilter);
 
   const changeGradeFilterValues = (newFilterValues: [number, number]) => {
-    dispatch(packsSetMaxCardsCountFilter(newFilterValues[SECOND_ITEM_INDEX]));
-    dispatch(packsSetMinCardsCountFilter(newFilterValues[FIRST_ITEM_INDEX]));
+    dispatch(flashcardsMaxGradeFilterApplied(newFilterValues[SECOND_ITEM_INDEX]));
+    dispatch(flashcardsMinGradeFilterApplied(newFilterValues[FIRST_ITEM_INDEX]));
   };
 
   const changeCardsPerPageCount = (perPageCount: number) => {
@@ -56,14 +55,14 @@ export const Flashcards = (): ReactElement => {
     dispatch(flashcardsCurrentPageChanged(pageNumber));
   };
 
-  const debouncedSearchString = useDebouncedValue(searchString);
+  const debouncedAnswerSearchString = useDebouncedValue(answerSearchString);
 
   useEffect(() => {
-    dispatch(flashcardsKeywordsFilterApplied(debouncedSearchString));
-  }, [debouncedSearchString]);
+    dispatch(flashcardsKeywordsFilterApplied(debouncedAnswerSearchString));
+  }, [debouncedAnswerSearchString]);
 
   const changeKeyWordsFilter = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchString(event.currentTarget.value);
+    setAnswerSearchString(event.currentTarget.value);
   };
 
   return (
@@ -74,7 +73,7 @@ export const Flashcards = (): ReactElement => {
           disabled={appIsBusy}
           placeholder="enter some key words to search for"
           className={styles.textInput}
-          value={searchString}
+          value={answerSearchString}
           onChange={changeKeyWordsFilter}
         />
         <ButtonFlatDesign>create new pack</ButtonFlatDesign>
@@ -114,8 +113,8 @@ export const Flashcards = (): ReactElement => {
         max={maxGradeFilter}
         pageCount={pageCount}
         page={page}
-        cardQuestion={searchString}
-        cardAnswer={searchString}
+        cardQuestion={keywordsFilter}
+        cardAnswer={answerKeywordsFilter}
       />
     </div>
   );

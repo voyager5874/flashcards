@@ -62,7 +62,7 @@ export const PacksList: FC<PacksListPropsType> = memo(
           itemActionsNames={['open', 'learn', 'edit name', 'delete']}
           itemActionsHandlers={packHandlers}
           // tableHeaders={['Name', 'Cards', 'Last updated', 'Created by', 'Actions']}
-          tableHeaders={['name', 'cardsCount', 'updated', 'user_name']}
+          tableHeaders={['name', 'cardsCount', 'updated', 'user_name', 'grade']}
         />
       </div>
     );
