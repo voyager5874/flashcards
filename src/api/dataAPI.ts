@@ -1,9 +1,12 @@
 import { axiosInstance } from 'api/config';
 import {
+  CreatePackParameterType,
+  CreatePackResponseType,
   FlashcardOnServerDataType,
   GetFlashcardParameterType,
   GetPacksParameterType,
   PackDataOnServerType,
+  PackOnServerType,
 } from 'api/types';
 import { clearObjectEmptyProperties } from 'utils';
 
@@ -22,6 +25,11 @@ export const dataAPI = {
       .get<FlashcardOnServerDataType>('cards/card', {
         params: { ...cleanParameters },
       })
+      .then(response => response.data);
+  },
+  postPack(requestParameter: CreatePackParameterType) {
+    return axiosInstance
+      .post<CreatePackResponseType>('cards/pack', requestParameter)
       .then(response => response.data);
   },
 };

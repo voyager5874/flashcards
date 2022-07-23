@@ -1,6 +1,6 @@
 import { dataAPI } from 'api';
-import { GetPacksParameterType } from 'api/types';
-import { appErrorOccurred, appIsBusy } from 'store/reducers/app';
+import { CreatePackParameterType, GetPacksParameterType } from 'api/types';
+import { appErrorOccurred, appIsBusy, setAppMessage } from 'store/reducers/app';
 import {
   packsDataReceived,
   packsSetMaxCardsCountFilter,
@@ -32,5 +32,37 @@ export const setPacksData =
       processAsyncActionErrors(error, dispatch, 'error getting packs from the server');
     } finally {
       dispatch(appIsBusy(false));
+    }
+  };
+
+export const createPack =
+  (packData: CreatePackParameterType) =>
+  async (dispatch: AppDispatch, getState: () => RootState) => {
+    const {
+      page,
+      pageCount,
+      minCardsCountFilter,
+      maxCardsCountFilter,
+      packNameFilter,
+      packsOfCurrentUserFilter,
+    } = getState().packs;
+    const { _id } = getState().profile;
+    try {
+      const response = await dataAPI.postPack(packData);
+      if (response.token) {
+        dispatch(
+          setPacksData({
+            packName: packNameFilter,
+            pageCount,
+            page,
+            max: maxCardsCountFilter,
+            min: minCardsCountFilter,
+            // user_id: packsOfCurrentUserFilter ? _id : '',
+          }),
+        );
+        dispatch(setAppMessage('new pack created successfully'));
+      }
+    } catch (error) {
+      processAsyncActionErrors(error, dispatch, 'error creating new pack');
     }
   };

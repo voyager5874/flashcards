@@ -9,7 +9,7 @@ import { TextInput } from 'features/ui/flat-design';
 import { RangeDoubleSlider } from 'features/ui/flat-design/RangeDoubleSlider';
 import { Pagination } from 'features/ui/Pagination';
 import { useAppDispatch, useAppSelector, useDebouncedValue } from 'hooks';
-import { setPacksData } from 'store/asyncActions/packs';
+import { createPack, setPacksData } from 'store/asyncActions/packs';
 import {
   packsCurrentPageChanged,
   packsSetCurrentUserPacksFilter,
@@ -60,6 +60,10 @@ export const Packs = (): ReactElement => {
     dispatch(packsCurrentPageChanged(page));
   };
 
+  const handleCreatePack = () => {
+    dispatch(createPack({ cardsPack: { name: 'v5874 new pack', private: true } }));
+  };
+
   const debouncedSearchString = useDebouncedValue(packName, 3000);
 
   useEffect(() => {
@@ -81,7 +85,7 @@ export const Packs = (): ReactElement => {
           value={packName}
           onChange={changePackNameFilter}
         />
-        <ButtonFlatDesign>create new pack</ButtonFlatDesign>
+        <ButtonFlatDesign onClick={handleCreatePack}>create new pack</ButtonFlatDesign>
       </div>
 
       <div className={styles.controls}>

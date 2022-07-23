@@ -1,4 +1,4 @@
-import { PackDataOnServerType } from 'api/types';
+import { PackDataOnServerType, PackOnServerType } from 'api/types';
 import { PackInAppType } from 'features/Pack/types';
 import { Nullable } from 'types';
 
@@ -74,7 +74,7 @@ export const packsDataReceived = (packsData: PackDataOnServerType) =>
     payload: packsData,
   } as const);
 
-export const packsNewPackCreated = (pack: PackInAppType) =>
+export const packsNewPackCreated = (pack: PackOnServerType) =>
   ({
     type: 'PACKS/NEW-PACK-CREATED',
     payload: {
