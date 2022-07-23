@@ -1,5 +1,6 @@
 import { axiosInstance } from 'api/config';
 import {
+  CreateFlashcardParameterType,
   CreatePackParameterType,
   CreatePackResponseType,
   FlashcardOnServerDataType,
@@ -31,5 +32,8 @@ export const dataAPI = {
     return axiosInstance
       .post<CreatePackResponseType>('cards/pack', requestParameter)
       .then(response => response.data);
+  },
+  postFlashcard(requestParameter: CreateFlashcardParameterType) {
+    return axiosInstance.post('cards/card', requestParameter);
   },
 };

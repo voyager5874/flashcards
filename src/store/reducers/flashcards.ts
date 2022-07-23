@@ -42,7 +42,8 @@ type FlashcardsActionType =
   | ReturnType<typeof flashcardsMinGradeFilterApplied>
   | ReturnType<typeof flashcardsCurrentPageChanged>
   | ReturnType<typeof flashcardsItemsPerPageChanged>
-  | ReturnType<typeof flashcardsPackNameDetermined>;
+  | ReturnType<typeof flashcardsPackNameDetermined>
+  | ReturnType<typeof flashcardsQuestionKeywordsFilterApplied>;
 
 export const flashcards = (
   state: initialStateType = initialState,
@@ -62,6 +63,8 @@ export const flashcards = (
     case 'FLASHCARDS/ITEMS-PER-PAGE-CHANGED':
       return { ...state, ...action.payload };
     case 'FLASHCARDS/PACK-NAME-DETERMINED':
+      return { ...state, ...action.payload };
+    case 'FLASHCARDS/QUESTION-KEYWORDS-FILTER-APPLIED':
       return { ...state, ...action.payload };
     default:
       return state;
@@ -119,5 +122,13 @@ export const flashcardsPackNameDetermined = (packName: string) =>
     type: 'FLASHCARDS/PACK-NAME-DETERMINED',
     payload: {
       packName,
+    },
+  } as const);
+
+export const flashcardsQuestionKeywordsFilterApplied = (questionKeywordsFilter: string) =>
+  ({
+    type: 'FLASHCARDS/QUESTION-KEYWORDS-FILTER-APPLIED',
+    payload: {
+      questionKeywordsFilter,
     },
   } as const);

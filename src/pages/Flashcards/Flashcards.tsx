@@ -10,12 +10,14 @@ import { RangeDoubleSlider } from 'features/ui/flat-design/RangeDoubleSlider';
 import { Pagination } from 'features/ui/Pagination';
 import { useAppDispatch, useAppSelector, useDebouncedValue } from 'hooks';
 import styles from 'pages/Flashcards/Flashcards.module.scss';
+import { createFlashcard } from 'store/asyncActions/flashcards';
 import {
   flashcardsCurrentPageChanged,
   flashcardsItemsPerPageChanged,
   flashcardsKeywordsFilterApplied,
   flashcardsMaxGradeFilterApplied,
   flashcardsMinGradeFilterApplied,
+  flashcardsQuestionKeywordsFilterApplied,
 } from 'store/reducers/flashcards';
 
 export const Flashcards = (): ReactElement => {
@@ -41,6 +43,8 @@ export const Flashcards = (): ReactElement => {
   const appIsBusy = useAppSelector(state => state.appReducer.isBusy);
 
   const [answerSearchString, setAnswerSearchString] = useState(answerKeywordsFilter);
+  const [questionSearchString, setQuestionSearchString] =
+    useState(questionKeywordsFilter);
 
   const changeGradeFilterValues = (newFilterValues: [number, number]) => {
     dispatch(flashcardsMaxGradeFilterApplied(newFilterValues[SECOND_ITEM_INDEX]));
@@ -56,13 +60,34 @@ export const Flashcards = (): ReactElement => {
   };
 
   const debouncedAnswerSearchString = useDebouncedValue(answerSearchString);
+  const debouncedQuestionSearchString = useDebouncedValue(questionSearchString);
 
   useEffect(() => {
     dispatch(flashcardsKeywordsFilterApplied(debouncedAnswerSearchString));
   }, [debouncedAnswerSearchString]);
 
+  useEffect(() => {
+    dispatch(flashcardsQuestionKeywordsFilterApplied(debouncedQuestionSearchString));
+  }, [debouncedQuestionSearchString]);
+
   const changeKeyWordsFilter = (event: ChangeEvent<HTMLInputElement>) => {
-    setAnswerSearchString(event.currentTarget.value);
+    setQuestionSearchString(event.currentTarget.value);
+  };
+
+  const handleCreateFlashcard = () => {
+    if (!packId) return;
+    dispatch(
+      createFlashcard(
+        {
+          card: {
+            cardsPack_id: packId,
+            question: 'accidentally, component, virtual DOM',
+            answer: 'strange things',
+          },
+        },
+        packId,
+      ),
+    );
   };
 
   return (
@@ -73,10 +98,10 @@ export const Flashcards = (): ReactElement => {
           disabled={appIsBusy}
           placeholder="enter some key words to search for"
           className={styles.textInput}
-          value={answerSearchString}
+          value={questionSearchString}
           onChange={changeKeyWordsFilter}
         />
-        <ButtonFlatDesign>create new pack</ButtonFlatDesign>
+        <ButtonFlatDesign onClick={handleCreateFlashcard}>Add flashcard</ButtonFlatDesign>
       </div>
 
       <div className={styles.controls}>
@@ -113,7 +138,7 @@ export const Flashcards = (): ReactElement => {
         max={maxGradeFilter}
         pageCount={pageCount}
         page={page}
-        cardQuestion={keywordsFilter}
+        cardQuestion={questionKeywordsFilter}
         cardAnswer={answerKeywordsFilter}
       />
     </div>
