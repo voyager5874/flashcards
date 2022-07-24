@@ -1,5 +1,9 @@
 import { dataAPI } from 'api';
-import { CreatePackParameterType, GetPacksParameterType } from 'api/types';
+import {
+  CreatePackParameterType,
+  GetPacksParameterType,
+  PutPackDataType,
+} from 'api/types';
 import { appErrorOccurred, appIsBusy, setAppMessage } from 'store/reducers/app';
 import {
   packsDataReceived,
@@ -36,33 +40,34 @@ export const setPacksData =
   };
 
 export const createPack =
-  (packData: CreatePackParameterType) =>
-  async (dispatch: AppDispatch, getState: () => RootState) => {
-    const {
-      page,
-      pageCount,
-      minCardsCountFilter,
-      maxCardsCountFilter,
-      packNameFilter,
-      packsOfCurrentUserFilter,
-    } = getState().packs;
-    const { _id } = getState().profile;
+  (packData: CreatePackParameterType, viewSettings: GetPacksParameterType) =>
+  async (dispatch: AppDispatch) => {
     try {
       const response = await dataAPI.postPack(packData);
       if (response.token) {
-        dispatch(
-          setPacksData({
-            packName: packNameFilter,
-            pageCount,
-            page,
-            max: maxCardsCountFilter,
-            min: minCardsCountFilter,
-            // user_id: packsOfCurrentUserFilter ? _id : '',
-          }),
-        );
+        dispatch(setPacksData(viewSettings));
         dispatch(setAppMessage('new pack created successfully'));
       }
     } catch (error) {
       processAsyncActionErrors(error, dispatch, 'error creating new pack');
+    }
+  };
+
+export const updatePack =
+  (data: PutPackDataType, currentViewSettings: GetPacksParameterType) =>
+  async (dispatch: AppDispatch) => {
+    dispatch(appIsBusy(true));
+    try {
+      const response = await dataAPI.putPackData(data);
+      console.log(response);
+      if (response.statusText === 'OK') {
+        // just trying another approach with response codes
+        console.log(response.data);
+        dispatch(setPacksData(currentViewSettings));
+      }
+    } catch (error) {
+      processAsyncActionErrors(error, dispatch, 'error updating the pack');
+    } finally {
+      dispatch(appIsBusy(false));
     }
   };

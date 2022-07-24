@@ -1,5 +1,3 @@
-import { Nullable } from 'types';
-
 export type LoginParameterType = {
   email: string;
   password: string;
@@ -52,7 +50,7 @@ export type FlashcardOnServerType = {
   user_id: string;
   answer: string;
   question: string;
-  grade: string;
+  grade: number;
   shots: number;
   comments: string;
   type: string;
@@ -61,6 +59,10 @@ export type FlashcardOnServerType = {
   created: string;
   updated: string;
   __v: number;
+  answerImg: string;
+  answerVideo: string;
+  questionImg: string;
+  questionVideo: string;
 };
 
 export type PackDataOnServerType = {
@@ -266,4 +268,90 @@ export type ServerErrorMessageType = {
   errorObject: boolean;
   in: string;
   info: string;
+};
+
+export type PutPackDataType = {
+  _id: string;
+  // user_id: string;
+  // user_name: number;
+  private?: boolean;
+  name?: string;
+  path?: string;
+  // grade: number;
+  // shots: number;
+  deckCover?: string;
+  // cardsCount: number;
+  // type: string;
+  // rating: number;
+  // more_id: string;
+  // __v: number;
+};
+
+export type PutPackDataResponseType = {
+  updatedCardsPack: {
+    _id: string;
+    user_id: string;
+    user_name: number;
+    private: boolean;
+    name: string;
+    path: string;
+    grade: number;
+    shots: number;
+    deckCover: string;
+    cardsCount: number;
+    type: string;
+    rating: number;
+    created: string; // "2022-07-05T20:57:42.943Z",
+    updated: string; // "2022-07-24T17:59:20.965Z",
+    more_id: string;
+    __v: number;
+  };
+  token: string;
+  tokenDeathTime: number; // 1659290360772
+};
+
+export type PutFlashcardDataType = {
+  _id: string;
+  cardsPack_id?: string;
+  // user_id: string;
+  answer?: string;
+  question?: string;
+  // grade: number;
+  // shots: number;
+  // comments: string;
+  // type: string;
+  // rating: number;
+  // more_id: string;
+  // created: string;
+  // updated: string;
+  // __v: number;
+  answerImg?: string;
+  answerVideo?: string;
+  questionImg?: string;
+  questionVideo?: string;
+};
+
+export type PutFlashcardDataResponseType = {
+  updatedCard: {
+    _id: string;
+    cardsPack_id: string;
+    user_id: string;
+    answer: string;
+    question: string;
+    grade: number;
+    shots: number;
+    comments: string;
+    type: string;
+    rating: number;
+    more_id: string;
+    created: string;
+    updated: string;
+    __v: number;
+    answerImg: string;
+    answerVideo: string;
+    questionImg: string;
+    questionVideo: string;
+  };
+  token: string;
+  tokenDeathTime: number;
 };

@@ -12,6 +12,7 @@ import {
 
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import getUuidByString from 'uuid-by-string';
 
 import styles from './DropdownSelect.module.scss';
 
@@ -34,8 +35,11 @@ export const DropdownSelect: FC<RadioPropsType> = ({
   ...restProps
 }): ReactElement => {
   const id = useId();
+
   const elementContainerRef = useRef<HTMLDivElement>(null);
+
   const [collapsed, setCollapsed] = useState(true);
+
   const childrenArray = Children.toArray(children);
   if (childrenArray.length < options.length) {
     for (let i = childrenArray.length; i < options.length; i += STEP_TO_NEXT) {
@@ -73,7 +77,7 @@ export const DropdownSelect: FC<RadioPropsType> = ({
   };
 
   const buttonClassName = `${styles.menuButton} ${collapsed ? '' : styles.menuExpanded}`;
-
+  console.log('dropdownSelect id', id);
   return (
     <div className={styles.wrapper} ref={elementContainerRef}>
       <button type="button" className={buttonClassName} onClick={toggleShowOptions}>
@@ -88,11 +92,14 @@ export const DropdownSelect: FC<RadioPropsType> = ({
       >
         {options
           ? options.map((option, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <label htmlFor={`${option}-${id}`} key={`${id}${+option + index}`}>
+              <label
+                htmlFor={`${id}pagination-${option}items-on-page`}
+                key={getUuidByString(`labelPageCount${option}`)}
+              >
                 <input
-                  // key={`${id}${option}`}
-                  id={`${option}-${id}`}
+                  // key={getUuidByString(`inputPageCount${option}`, 5)}
+                  key={getUuidByString(`labelPageCount${option}`)}
+                  id={`${id}pagination-${option}items-on-page`}
                   onChange={onChangeCallback}
                   name={name}
                   value={option}

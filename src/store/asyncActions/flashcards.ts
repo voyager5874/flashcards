@@ -1,5 +1,9 @@
 import { dataAPI } from 'api';
-import { CreateFlashcardParameterType, GetFlashcardParameterType } from 'api/types';
+import {
+  CreateFlashcardParameterType,
+  GetFlashcardParameterType,
+  PutFlashcardDataType,
+} from 'api/types';
 import { appIsBusy, setAppMessage } from 'store/reducers/app';
 import { flashcardsDataReceived } from 'store/reducers/flashcards';
 import { AppDispatch, RootState } from 'store/types';
@@ -51,6 +55,23 @@ export const createFlashcard =
       }
     } catch (error) {
       processAsyncActionErrors(error, dispatch, 'error creating flashcard');
+    } finally {
+      dispatch(appIsBusy(false));
+    }
+  };
+
+export const updateFlashcard =
+  (data: PutFlashcardDataType, viewSettings: GetFlashcardParameterType) =>
+  async (dispatch: AppDispatch) => {
+    dispatch(appIsBusy(true));
+
+    try {
+      const response = await dataAPI.putFlashcardData(data);
+      if (response.statusText === 'OK') {
+        dispatch(setFlashcardsData(viewSettings));
+      }
+    } catch (error) {
+      processAsyncActionErrors(error, dispatch, 'error updating the flashcard');
     } finally {
       dispatch(appIsBusy(false));
     }

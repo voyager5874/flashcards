@@ -7,7 +7,10 @@ import {
   GetFlashcardParameterType,
   GetPacksParameterType,
   PackDataOnServerType,
-  PackOnServerType,
+  PutFlashcardDataResponseType,
+  PutFlashcardDataType,
+  PutPackDataResponseType,
+  PutPackDataType,
 } from 'api/types';
 import { clearObjectEmptyProperties } from 'utils';
 
@@ -35,5 +38,21 @@ export const dataAPI = {
   },
   postFlashcard(requestParameter: CreateFlashcardParameterType) {
     return axiosInstance.post('cards/card', requestParameter);
+  },
+  putPackData(data: PutPackDataType) {
+    return axiosInstance.put<PutPackDataResponseType>(`cards/pack`, {
+      cardsPack: { ...data },
+    });
+  },
+  putFlashcardData(data: PutFlashcardDataType) {
+    return axiosInstance.put<PutFlashcardDataResponseType>('cards/card', {
+      card: { ...data },
+    });
+  },
+  deletePack(id: string) {
+    return axiosInstance.delete(`cards/pack?id=${id}`);
+  },
+  deleteFlashcard(id: string) {
+    return axiosInstance.delete(`cards/card?id=${id}`);
   },
 };

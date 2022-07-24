@@ -2,11 +2,10 @@ import { FC, memo, ReactElement, useEffect } from 'react';
 
 import styles from './FlashcardsList.module.scss';
 
-import { GetFlashcardParameterType, GetPacksParameterType } from 'api/types';
+import { GetFlashcardParameterType } from 'api/types';
 import { SortingTable } from 'features/ui/SortingTable';
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { setFlashcardsData } from 'store/asyncActions/flashcards';
-import { setPacksData } from 'store/asyncActions/packs';
+import { setFlashcardsData, updateFlashcard } from 'store/asyncActions/flashcards';
 
 type FlashcardsListPropsType = GetFlashcardParameterType;
 
@@ -43,7 +42,17 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
 
     const flashcardsList = useAppSelector(state => state.flashcards.cards);
 
-    const flashcardHandlers = [() => {}, () => {}];
+    const editFlashcard = (id: string) => {
+      dispatch(
+        updateFlashcard(
+          { _id: id, question: `${new Date()} updated question` },
+          // eslint-disable-next-line camelcase
+          { page, pageCount, min, max, cardAnswer, cardQuestion, cardsPack_id },
+        ),
+      );
+    };
+
+    const flashcardHandlers = [() => {}, editFlashcard];
 
     return (
       <div className={styles.wrapper}>
