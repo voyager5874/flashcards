@@ -5,7 +5,11 @@ import styles from './FlashcardsList.module.scss';
 import { GetFlashcardParameterType } from 'api/types';
 import { SortingTable } from 'features/ui/SortingTable';
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { setFlashcardsData, updateFlashcard } from 'store/asyncActions/flashcards';
+import {
+  deleteFlashcard,
+  setFlashcardsData,
+  updateFlashcard,
+} from 'store/asyncActions/flashcards';
 
 type FlashcardsListPropsType = GetFlashcardParameterType;
 
@@ -42,7 +46,22 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
 
     const flashcardsList = useAppSelector(state => state.flashcards.cards);
 
-    const editFlashcard = (id: string) => {
+    const handleDeleteFlashCard = (id: string) => {
+      dispatch(
+        deleteFlashcard(id, {
+          page,
+          pageCount,
+          min,
+          max,
+          cardAnswer,
+          cardQuestion,
+          // eslint-disable-next-line camelcase
+          cardsPack_id,
+        }),
+      );
+    };
+
+    const handleEditFlashcard = (id: string) => {
       dispatch(
         updateFlashcard(
           { _id: id, question: `${new Date()} updated question` },
@@ -52,7 +71,7 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
       );
     };
 
-    const flashcardHandlers = [() => {}, editFlashcard];
+    const flashcardHandlers = [handleDeleteFlashCard, handleEditFlashcard];
 
     return (
       <div className={styles.wrapper}>

@@ -14,7 +14,7 @@ import { createFlashcard } from 'store/asyncActions/flashcards';
 import {
   flashcardsCurrentPageChanged,
   flashcardsItemsPerPageChanged,
-  flashcardsKeywordsFilterApplied,
+  // flashcardsKeywordsFilterApplied,
   flashcardsMaxGradeFilterApplied,
   flashcardsMinGradeFilterApplied,
   flashcardsQuestionKeywordsFilterApplied,
@@ -35,14 +35,14 @@ export const Flashcards = (): ReactElement => {
     minGrade,
     maxGradeFilter,
     minGradeFilter,
-    keywordsFilter,
-    answerKeywordsFilter,
+    // keywordsFilter,
+    // answerKeywordsFilter,
     questionKeywordsFilter,
   } = useAppSelector(state => state.flashcards);
 
   const appIsBusy = useAppSelector(state => state.appReducer.isBusy);
 
-  const [answerSearchString, setAnswerSearchString] = useState(answerKeywordsFilter);
+  // const [answerSearchString, setAnswerSearchString] = useState(answerKeywordsFilter);
   const [questionSearchString, setQuestionSearchString] =
     useState(questionKeywordsFilter);
 
@@ -59,12 +59,12 @@ export const Flashcards = (): ReactElement => {
     dispatch(flashcardsCurrentPageChanged(pageNumber));
   };
 
-  const debouncedAnswerSearchString = useDebouncedValue(answerSearchString);
+  // const debouncedAnswerSearchString = useDebouncedValue(answerSearchString);
   const debouncedQuestionSearchString = useDebouncedValue(questionSearchString);
 
-  useEffect(() => {
-    dispatch(flashcardsKeywordsFilterApplied(debouncedAnswerSearchString));
-  }, [debouncedAnswerSearchString]);
+  // useEffect(() => {
+  //   dispatch(flashcardsKeywordsFilterApplied(debouncedAnswerSearchString));
+  // }, [debouncedAnswerSearchString]);
 
   useEffect(() => {
     dispatch(flashcardsQuestionKeywordsFilterApplied(debouncedQuestionSearchString));
@@ -86,6 +86,15 @@ export const Flashcards = (): ReactElement => {
           },
         },
         packId,
+        {
+          cardsPack_id: packId || '62c45b8bbc623e0004e21154',
+          min: minGradeFilter,
+          max: maxGradeFilter,
+          pageCount,
+          page,
+          cardQuestion: questionKeywordsFilter,
+          // cardAnswer: answerKeywordsFilter,
+        },
       ),
     );
   };
@@ -139,7 +148,7 @@ export const Flashcards = (): ReactElement => {
         pageCount={pageCount}
         page={page}
         cardQuestion={questionKeywordsFilter}
-        cardAnswer={answerKeywordsFilter}
+        cardAnswer=""
       />
     </div>
   );

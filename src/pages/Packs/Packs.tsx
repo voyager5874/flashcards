@@ -2,6 +2,7 @@ import { ChangeEvent, ReactElement, useEffect, useState } from 'react';
 
 import styles from './Packs.module.scss';
 
+import { FIRST_ITEM_INDEX, SECOND_ITEM_INDEX } from 'const';
 import { PacksList } from 'features/PacksList';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { CheckboxFlatDesign } from 'features/ui/Checkbox/CheckboxFlatDesign';
@@ -9,7 +10,7 @@ import { TextInput } from 'features/ui/flat-design';
 import { RangeDoubleSlider } from 'features/ui/flat-design/RangeDoubleSlider';
 import { Pagination } from 'features/ui/Pagination';
 import { useAppDispatch, useAppSelector, useDebouncedValue } from 'hooks';
-import { createPack, setPacksData } from 'store/asyncActions/packs';
+import { createPack } from 'store/asyncActions/packs';
 import {
   packsCurrentPageChanged,
   packsSetCurrentUserPacksFilter,
@@ -44,8 +45,8 @@ export const Packs = (): ReactElement => {
   const [packName, setPackName] = useState(packNameFilter);
 
   const changePacksFilterValues = (newFilterValues: [number, number]) => {
-    dispatch(packsSetMaxCardsCountFilter(newFilterValues[1]));
-    dispatch(packsSetMinCardsCountFilter(newFilterValues[0]));
+    dispatch(packsSetMaxCardsCountFilter(newFilterValues[SECOND_ITEM_INDEX]));
+    dispatch(packsSetMinCardsCountFilter(newFilterValues[FIRST_ITEM_INDEX]));
   };
 
   const flipPacksOfCurrentUserFilter = (event: ChangeEvent<HTMLInputElement>) => {
@@ -61,7 +62,19 @@ export const Packs = (): ReactElement => {
   };
 
   const handleCreatePack = () => {
-    dispatch(createPack({ cardsPack: { name: 'v5874 new pack', private: true } }));
+    dispatch(
+      createPack(
+        { cardsPack: { name: 'v5874 new pack', private: true } },
+        {
+          page: currentPage,
+          pageCount: packsPerPage,
+          user_id: (packsOfCurrentUserFilter && currentUserId) || '',
+          min: minCardsCountFilter,
+          max: maxCardsCountFilter,
+          packName: packNameFilter,
+        },
+      ),
+    );
   };
 
   const debouncedSearchString = useDebouncedValue(packName, 3000);

@@ -7,7 +7,7 @@ import styles from './PacksList.module.scss';
 import { GetPacksParameterType } from 'api/types';
 import { SortingTable } from 'features/ui/SortingTable';
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { setPacksData, updatePack } from 'store/asyncActions/packs';
+import { deletePack, setPacksData, updatePack } from 'store/asyncActions/packs';
 
 type PacksListPropsType = GetPacksParameterType;
 
@@ -57,12 +57,12 @@ export const PacksList: FC<PacksListPropsType> = memo(
       );
     };
 
-    const deletePack = (id: string) => {
-      // eslint-disable-next-line no-alert
-      alert(`pack with id: ${id} to be deleted`);
+    const handleDeletePack = (id: string) => {
+      // eslint-disable-next-line camelcase
+      dispatch(deletePack(id, { page, pageCount, min, max, user_id, packName }));
     };
 
-    const packHandlers = [openPack, () => {}, editPack, deletePack];
+    const packHandlers = [openPack, () => {}, editPack, handleDeletePack];
 
     return (
       <div className={styles.wrapper}>

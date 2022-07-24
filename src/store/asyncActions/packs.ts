@@ -45,7 +45,7 @@ export const createPack =
     try {
       const response = await dataAPI.postPack(packData);
       if (response.token) {
-        dispatch(setPacksData(viewSettings));
+        await dispatch(setPacksData(viewSettings));
         dispatch(setAppMessage('new pack created successfully'));
       }
     } catch (error) {
@@ -59,14 +59,29 @@ export const updatePack =
     dispatch(appIsBusy(true));
     try {
       const response = await dataAPI.putPackData(data);
-      console.log(response);
       if (response.statusText === 'OK') {
         // just trying another approach with response codes
-        console.log(response.data);
-        dispatch(setPacksData(currentViewSettings));
+        await dispatch(setPacksData(currentViewSettings));
+        dispatch(setAppMessage('pack updated successfully'));
       }
     } catch (error) {
       processAsyncActionErrors(error, dispatch, 'error updating the pack');
+    } finally {
+      dispatch(appIsBusy(false));
+    }
+  };
+
+export const deletePack =
+  (id: string, viewSettings: GetPacksParameterType) => async (dispatch: AppDispatch) => {
+    dispatch(appIsBusy(true));
+    try {
+      const response = await dataAPI.deletePack(id);
+      if (response.statusText === 'OK') {
+        await dispatch(setPacksData(viewSettings));
+        dispatch(setAppMessage('the pack deleted successfully'));
+      }
+    } catch (error) {
+      processAsyncActionErrors(error, dispatch, 'error deleting the pack');
     } finally {
       dispatch(appIsBusy(false));
     }
