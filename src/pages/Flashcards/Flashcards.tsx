@@ -19,15 +19,17 @@ import {
   flashcardsMinGradeFilterApplied,
   flashcardsQuestionKeywordsFilterApplied,
 } from 'store/reducers/flashcards';
+import { selectPackById } from 'store/selectors/selectPackById';
 
 export const Flashcards = (): ReactElement => {
   const dispatch = useAppDispatch();
+
   const params = useParams();
+
   const { packId } = params;
-  console.log(packId);
 
   const {
-    packName,
+    // packName,
     page,
     pageCount,
     cardsTotalCount,
@@ -41,6 +43,9 @@ export const Flashcards = (): ReactElement => {
   } = useAppSelector(state => state.flashcards);
 
   const appIsBusy = useAppSelector(state => state.appReducer.isBusy);
+
+  const packName = useAppSelector(state => selectPackById(state, packId || '').name);
+  // dispatch(flashcardsPackNameDetermined(openingPackName || ''));
 
   // const [answerSearchString, setAnswerSearchString] = useState(answerKeywordsFilter);
   const [questionSearchString, setQuestionSearchString] =

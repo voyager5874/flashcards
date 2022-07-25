@@ -52,7 +52,7 @@ export const PacksList: FC<PacksListPropsType> = memo(
         updatePack(
           { _id: id, name: `updated ${new Date()}` },
           // eslint-disable-next-line camelcase
-          { page, pageCount, min, max, user_id, packName },
+          { page, pageCount, min, max, user_id, packName }, // queryObject
         ),
       );
     };

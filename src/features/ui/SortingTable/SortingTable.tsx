@@ -4,6 +4,7 @@ import styles from './SortingTable.module.scss';
 
 type TableItemActionsPropsType = {
   itemId: string;
+  // itemName: string;
   itemActionsNames: string[];
   // itemActionsHandlers: { [key: string]: Function };
   itemActionsHandlers?: Function[];
@@ -11,6 +12,7 @@ type TableItemActionsPropsType = {
 
 const TableItemActions = ({
   itemId,
+  // itemName,
   itemActionsNames,
   itemActionsHandlers,
 }: TableItemActionsPropsType) => (
@@ -20,6 +22,7 @@ const TableItemActions = ({
         type="button"
         key={action}
         // @ts-ignore
+        // onClick={() => itemActionsHandlers[index](itemId, itemName)}
         onClick={() => itemActionsHandlers[index](itemId)}
       >
         {action}
@@ -56,13 +59,14 @@ const TableRow = <T extends { _id: string }>({
   data,
   itemActionNames,
   itemActionsHandlers,
-  ...restProps
-}: PropsWithChildren<TableRowPropsType<T>>): ReactElement => (
+}: // ...restProps
+PropsWithChildren<TableRowPropsType<T>>): ReactElement => (
   <>
     {tableHeaders.map(header => (
       <td key={header as string}>
-        {/* @ts-ignore */}
-        <span className={styles.tdSizeLimiter}>{data[header]}</span>
+        <span className={styles.tdSizeLimiter}>
+          {JSON.stringify(data[header as keyof T])}
+        </span>
       </td>
     ))}
     <td>
@@ -71,6 +75,7 @@ const TableRow = <T extends { _id: string }>({
         itemActionsHandlers={itemActionsHandlers}
         // eslint-disable-next-line no-underscore-dangle
         itemId={data._id}
+        // itemName={data.name ? data.name : ''}
       />
     </td>
   </>
