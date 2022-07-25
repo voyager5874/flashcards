@@ -48,6 +48,7 @@ export const Header: FC<HeaderPropsType> = ({ height }): ReactElement => {
             logout
           </button>
           <button type="button">some command</button>
+          <button type="button">some command</button>
         </DropdownMenu>
       </div>
       <button type="button" onClick={handleLogout}>

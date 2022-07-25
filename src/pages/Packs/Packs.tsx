@@ -2,7 +2,13 @@ import { ChangeEvent, ReactElement, useEffect, useState } from 'react';
 
 import styles from './Packs.module.scss';
 
-import { FIRST_ITEM_INDEX, SECOND_ITEM_INDEX } from 'const';
+import {
+  DEFAULT_MAX_ITEMS_FILTER_VALUE,
+  DEFAULT_MIN,
+  FIRST_ITEM_INDEX,
+  SECOND_ITEM_INDEX,
+  SERVER_MAX_ITEMS_PER_REQUEST,
+} from 'const';
 import { PacksList } from 'features/PacksList';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { CheckboxFlatDesign } from 'features/ui/Checkbox/CheckboxFlatDesign';
@@ -77,7 +83,7 @@ export const Packs = (): ReactElement => {
     );
   };
 
-  const debouncedSearchString = useDebouncedValue(packName, 3000);
+  const debouncedSearchString = useDebouncedValue(packName);
 
   useEffect(() => {
     dispatch(packsSetPackNameFilter(debouncedSearchString));
@@ -112,12 +118,12 @@ export const Packs = (): ReactElement => {
         <RangeDoubleSlider
           disabled={appIsBusy}
           onChangeRange={changePacksFilterValues}
-          lowerValue={minCardsCountFilter || 0}
-          upperValue={maxCardsCountFilter || 10}
+          lowerValue={minCardsCountFilter || DEFAULT_MIN}
+          upperValue={maxCardsCountFilter || DEFAULT_MAX_ITEMS_FILTER_VALUE}
           gap={1}
           step={1}
-          max={maxCardsCount || 100}
-          min={minCardsCount || 0}
+          max={maxCardsCount || SERVER_MAX_ITEMS_PER_REQUEST}
+          min={minCardsCount || DEFAULT_MIN}
         />
         <Pagination
           name="packs-page-pagination"
@@ -125,7 +131,7 @@ export const Packs = (): ReactElement => {
           onPageChange={changeCurrentPage}
           onItemsPerPageChange={changePacksPerPageCount}
           currentItemsPerPageValue={packsPerPage}
-          totalItemsCount={packsTotalCount || 0}
+          totalItemsCount={packsTotalCount || DEFAULT_MIN}
           disabled={appIsBusy}
         />
       </div>

@@ -41,9 +41,10 @@ export const DropdownSelect: FC<RadioPropsType> = ({
   const [collapsed, setCollapsed] = useState(true);
 
   const childrenArray = Children.toArray(children);
+
   if (childrenArray.length < options.length) {
     for (let i = childrenArray.length; i < options.length; i += STEP_TO_NEXT) {
-      childrenArray.push(<span />);
+      childrenArray.push(<span key={i} />);
     }
   }
 
@@ -77,7 +78,7 @@ export const DropdownSelect: FC<RadioPropsType> = ({
   };
 
   const buttonClassName = `${styles.menuButton} ${collapsed ? '' : styles.menuExpanded}`;
-  console.log('dropdownSelect id', id);
+
   return (
     <div className={styles.wrapper} ref={elementContainerRef}>
       <button type="button" className={buttonClassName} onClick={toggleShowOptions}>
@@ -93,13 +94,13 @@ export const DropdownSelect: FC<RadioPropsType> = ({
         {options
           ? options.map((option, index) => (
               <label
-                htmlFor={`${id}pagination-${option}items-on-page`}
-                key={getUuidByString(`labelPageCount${option}`)}
+                htmlFor={`${id}-${option}`}
+                key={getUuidByString(`optionLabel${option}`)}
               >
                 <input
                   // key={getUuidByString(`inputPageCount${option}`, 5)}
-                  key={getUuidByString(`labelPageCount${option}`)}
-                  id={`${id}pagination-${option}items-on-page`}
+                  // key={getUuidByString(`optionInput${option}`)}
+                  id={`${id}-${option}`}
                   onChange={onChangeCallback}
                   name={name}
                   value={option}

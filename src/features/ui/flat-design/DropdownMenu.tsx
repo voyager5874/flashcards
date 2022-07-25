@@ -4,7 +4,6 @@ import {
   FC,
   ReactElement,
   useCallback,
-  useId,
   useRef,
   useState,
 } from 'react';
@@ -26,13 +25,27 @@ type DropdownMenuPropsType = {
   children: Array<ReturnType<typeof NavLink>>;
 };
 
+// const replacerFunc = () => {
+//   const visited = new WeakSet();
+//   return (key: any, value: any) => {
+//     if (typeof value === 'object' && value !== null) {
+//       if (visited.has(value)) {
+//         return;
+//       }
+//       visited.add(value);
+//     }
+//     // eslint-disable-next-line consistent-return
+//     return value;
+//   };
+// };
+
 export const DropdownMenu: FC<DropdownMenuPropsType> = ({
   expandOnHover = false,
   children,
   placeholder,
 }): ReactElement => {
-  const id = useId();
   const elementContainerRef = useRef<HTMLDivElement>(null);
+
   const [collapsed, setCollapsed] = useState(true);
 
   const hideOptions = useCallback((): void => {
@@ -64,7 +77,10 @@ export const DropdownMenu: FC<DropdownMenuPropsType> = ({
   };
 
   const buttonClassName = `${styles.menuButton} ${collapsed ? '' : styles.menuExpanded}`;
-
+  // Children.map(children, child => {
+  //   console.log(child);
+  // console.log(JSON.stringify(child, replacerFunc()));
+  // });
   return (
     <div className={styles.wrapper} ref={elementContainerRef}>
       <div
@@ -90,7 +106,7 @@ export const DropdownMenu: FC<DropdownMenuPropsType> = ({
             ? Children.map(children, child => (
                 <li
                   className={styles.menuItem}
-                  key={`${child!.props.to}-${id}`}
+                  // key={`${child!.props.to}${child?.key}`} // react will assign a key?
                   style={{ height: `${OPTION_ITEM_HEIGHT}px` }}
                 >
                   {child}

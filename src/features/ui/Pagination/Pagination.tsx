@@ -1,11 +1,14 @@
 import { FC, ReactElement } from 'react';
 
+import { faHiking } from '@fortawesome/free-solid-svg-icons';
+import { faBookOpen } from '@fortawesome/free-solid-svg-icons/faBookOpen';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons/faChevronLeft';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons/faChevronRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import styles from './Pagination.module.scss';
 
+import { ONE_STEP, STEP_TO_NEXT, ZERO_COUNT } from 'const';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { DropdownSelect } from 'features/ui/flat-design';
 
@@ -19,6 +22,10 @@ type PaginationPropsType = {
   disabled: boolean;
 };
 
+// const pageCountOptions = [5, 10, 20, 50, 100];
+const pageCountOptions = ['5', '10', '20', '50', '100'];
+// options={['five', 'ten', 'twelve', 'fifty', 'hundred']}
+
 export const Pagination: FC<PaginationPropsType> = ({
   name,
   currentPage,
@@ -30,14 +37,14 @@ export const Pagination: FC<PaginationPropsType> = ({
 }): ReactElement => {
   const pagesCount = Math.ceil(totalItemsCount / currentItemsPerPageValue);
   const changePageNext = () => {
-    if (currentPage + 1 <= pagesCount) {
-      onPageChange(currentPage + 1);
+    if (currentPage + STEP_TO_NEXT <= pagesCount) {
+      onPageChange(currentPage + STEP_TO_NEXT);
     }
   };
 
   const changePagePrevious = () => {
-    if (currentPage - 1 > 0) {
-      onPageChange(currentPage - 1);
+    if (currentPage - ONE_STEP > ZERO_COUNT) {
+      onPageChange(currentPage - ONE_STEP);
     }
   };
 
@@ -54,12 +61,18 @@ export const Pagination: FC<PaginationPropsType> = ({
       </ButtonFlatDesign>
       <div style={{ width: '250px' }}>
         <DropdownSelect
-          options={[5, 10, 20, 50, 100]}
+          options={pageCountOptions}
           name={name}
           onChangeOption={onItemsPerPageChange}
           value={currentItemsPerPageValue}
           placeholder={`${currentItemsPerPageValue} per page`}
-        />
+        >
+          {/* <FontAwesomeIcon icon={faBookOpen} /> */}
+          {/* <FontAwesomeIcon icon={faBookOpen} /> */}
+          {/* <FontAwesomeIcon icon={faBookOpen} /> */}
+          {/* <FontAwesomeIcon icon={faBookOpen} /> */}
+          {/* <FontAwesomeIcon icon={faBookOpen} /> */}
+        </DropdownSelect>
       </div>
     </div>
   );
