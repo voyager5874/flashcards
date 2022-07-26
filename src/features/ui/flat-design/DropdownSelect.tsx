@@ -44,7 +44,7 @@ export const DropdownSelect: FC<RadioPropsType> = ({
 
   if (childrenArray.length < options.length) {
     for (let i = childrenArray.length; i < options.length; i += STEP_TO_NEXT) {
-      childrenArray.push(<span key={i} />);
+      childrenArray.push(<span key={getUuidByString(`optionLabel${options[i]}`)} />);
     }
   }
 
@@ -98,8 +98,6 @@ export const DropdownSelect: FC<RadioPropsType> = ({
                 key={getUuidByString(`optionLabel${option}`)}
               >
                 <input
-                  // key={getUuidByString(`inputPageCount${option}`, 5)}
-                  // key={getUuidByString(`optionInput${option}`)}
                   id={`${id}-${option}`}
                   onChange={onChangeCallback}
                   name={name}

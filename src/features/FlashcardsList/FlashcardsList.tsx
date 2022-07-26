@@ -1,10 +1,12 @@
-import { FC, memo, ReactElement, useEffect } from 'react';
+import { FC, memo, ReactElement, useEffect, useState, MouseEvent } from 'react';
 
 import styles from './FlashcardsList.module.scss';
 
 import { GetFlashcardParameterType } from 'api/types';
+import { ButtonFlatDesign } from 'features/ui/Button';
+import { Modal } from 'features/ui/Modal';
 import { SortingTable } from 'features/ui/SortingTable';
-import { useAppDispatch, useAppSelector } from 'hooks';
+import { useAppDispatch, useAppSelector, useControlledPromise } from 'hooks';
 import {
   deleteFlashcard,
   setFlashcardsData,
@@ -28,6 +30,10 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
   }): ReactElement => {
     const dispatch = useAppDispatch();
 
+    const [deleteItemDialogActive, setDeleteItemDialogActive] = useState(false);
+
+    const { controlledPromise, resetControlledPromise } = useControlledPromise();
+
     useEffect(() => {
       const queryObject: GetFlashcardParameterType = {
         // eslint-disable-next-line camelcase
@@ -46,7 +52,7 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
 
     const flashcardsList = useAppSelector(state => state.flashcards.cards);
 
-    const handleDeleteFlashCard = (id: string) => {
+    const handleDeleteFlashcard = (id: string) => {
       dispatch(
         deleteFlashcard(id, {
           page,
@@ -61,6 +67,25 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
       );
     };
 
+    const respondFromModal = (event: MouseEvent<HTMLButtonElement>): void => {
+      if (!controlledPromise.resolve) return;
+      if (event.currentTarget.textContent === 'Yes') {
+        controlledPromise.resolve(true);
+      } else {
+        controlledPromise.resolve(false);
+      }
+      setDeleteItemDialogActive(false);
+    };
+
+    const showDeleteDialog = async (id: string) => {
+      setDeleteItemDialogActive(true);
+      resetControlledPromise();
+      const command = await controlledPromise.promise;
+      if (command) {
+        handleDeleteFlashcard(id);
+      }
+    };
+
     const handleEditFlashcard = (id: string) => {
       dispatch(
         updateFlashcard(
@@ -71,17 +96,33 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
       );
     };
 
-    const flashcardHandlers = [handleDeleteFlashCard, handleEditFlashcard];
+    const flashcardHandlers = [showDeleteDialog, handleEditFlashcard];
 
     return (
       <div className={styles.wrapper}>
-        <SortingTable
-          caption="flashcards list"
-          items={flashcardsList}
-          itemActionsNames={['delete', 'edit']}
-          itemActionsHandlers={flashcardHandlers}
-          tableHeaders={['question', 'answer', 'updated', 'grade']}
-        />
+        <Modal
+          caption="delete this?"
+          active={deleteItemDialogActive}
+          displayControlCallback={setDeleteItemDialogActive}
+        >
+          <ButtonFlatDesign className={styles.button} onClick={respondFromModal}>
+            Yes
+          </ButtonFlatDesign>
+          <ButtonFlatDesign onClick={respondFromModal}>
+            No, I changed my mind
+          </ButtonFlatDesign>
+        </Modal>
+        {flashcardsList.length ? (
+          <SortingTable
+            caption="flashcards list"
+            items={flashcardsList}
+            itemActionsNames={['delete', 'edit']}
+            itemActionsHandlers={flashcardHandlers}
+            tableHeaders={['question', 'answer', 'updated', 'grade']}
+          />
+        ) : (
+          <p>This pack is empty. Click add new flashcard to fill it</p>
+        )}
       </div>
     );
   },

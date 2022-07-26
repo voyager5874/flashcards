@@ -12,7 +12,7 @@ type BackSlidingSelectPropsType = {
   options: string[];
   value: string;
   onChangeOption: Function;
-  children: ReactElement[];
+  children: ReactElement[]; // ReactNode?
 };
 
 export const BackSlidingSelect: FC<BackSlidingSelectPropsType> = ({
@@ -26,7 +26,7 @@ export const BackSlidingSelect: FC<BackSlidingSelectPropsType> = ({
 
   if (childrenArray.length < options.length) {
     for (let i = childrenArray.length; i < options.length; i += STEP_TO_NEXT) {
-      childrenArray.push(<FontAwesomeIcon icon={faQuestion} />);
+      childrenArray.push(<FontAwesomeIcon icon={faQuestion} key={i} />);
     }
   }
 

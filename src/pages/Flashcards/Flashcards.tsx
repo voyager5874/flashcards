@@ -1,5 +1,8 @@
 import { ChangeEvent, ReactElement, useEffect, useState } from 'react';
 
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons/faChevronLeft';
+import { faRightLeft } from '@fortawesome/free-solid-svg-icons/faRightLeft';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useParams } from 'react-router-dom';
 
 import { FIRST_ITEM_INDEX, SECOND_ITEM_INDEX } from 'const';
@@ -107,7 +110,10 @@ export const Flashcards = (): ReactElement => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.form}>
-        <h1>{packName}</h1>
+        <h2>
+          <FontAwesomeIcon icon={faChevronLeft} />
+          <span>{packName}</span>
+        </h2>
         <TextInput
           disabled={appIsBusy}
           placeholder="enter some key words to search for"
