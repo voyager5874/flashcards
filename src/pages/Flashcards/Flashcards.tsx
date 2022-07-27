@@ -102,19 +102,13 @@ export const Flashcards = (): ReactElement => {
   const appIsBusy = useAppSelector(state => state.appReducer.isBusy);
 
   const packName = useAppSelector(state => selectPackById(state, packId || '').name);
-  // dispatch(flashcardsPackNameDetermined(openingPackName || ''));
 
-  // const [answerSearchString, setAnswerSearchString] = useState(answerKeywordsFilter);
   const [questionSearchString, setQuestionSearchString] =
     useState(questionKeywordsFilter);
 
   const [addItemDialogActive, setAddItemDialogActive] = useState(false);
 
   const { controlledPromise, resetControlledPromise } = useControlledPromise();
-
-  // const [cardQuestion, setCardQuestion] = useState('');
-  //
-  // const [cardAnswer, setCardAnswer] = useState('');
 
   const changeGradeFilterValues = (newFilterValues: [number, number]) => {
     dispatch(flashcardsMaxGradeFilterApplied(newFilterValues[SECOND_ITEM_INDEX]));
@@ -129,12 +123,7 @@ export const Flashcards = (): ReactElement => {
     dispatch(flashcardsCurrentPageChanged(pageNumber));
   };
 
-  // const debouncedAnswerSearchString = useDebouncedValue(answerSearchString);
   const debouncedQuestionSearchString = useDebouncedValue(questionSearchString);
-
-  // useEffect(() => {
-  //   dispatch(flashcardsKeywordsFilterApplied(debouncedAnswerSearchString));
-  // }, [debouncedAnswerSearchString]);
 
   useEffect(() => {
     dispatch(flashcardsQuestionKeywordsFilterApplied(debouncedQuestionSearchString));
@@ -145,8 +134,6 @@ export const Flashcards = (): ReactElement => {
   };
 
   const handleCreateFlashcard = (cardData: Partial<CreateFlashcardParameterType>) => {
-    // eslint-disable-next-line no-debugger
-    debugger;
     if (!packId) return;
     dispatch(
       createFlashcard(
@@ -162,27 +149,15 @@ export const Flashcards = (): ReactElement => {
           pageCount,
           page,
           cardQuestion: questionKeywordsFilter,
-          // cardAnswer: answerKeywordsFilter,
         },
       ),
     );
   };
 
-  // const fillQuestion = (event: ChangeEvent<HTMLInputElement>) => {
-  //   setCardQuestion(event.currentTarget.value);
-  // };
-  //
-  // const fillAnswer = (event: ChangeEvent<HTMLInputElement>) => {
-  //   setCardAnswer(event.currentTarget.value);
-  // };
-
   const showAddDialog = async () => {
     setAddItemDialogActive(true);
     resetControlledPromise();
     const command = await controlledPromise.promise;
-    // if (command) {
-    //   handleCreateFlashcard(cardQuestion, cardAnswer);
-    // }
     setAddItemDialogActive(false);
   };
 
@@ -204,13 +179,6 @@ export const Flashcards = (): ReactElement => {
       </div>
 
       <div className={styles.controls}>
-        {/* <CheckboxFlatDesign */}
-        {/*  disabled={appIsBusy} */}
-        {/*  checked={packsOfCurrentUserFilter} */}
-        {/*  onChange={flipPacksOfCurrentUserFilter} */}
-        {/* > */}
-        {/*  show only my packs */}
-        {/* </CheckboxFlatDesign> */}
         <RangeDoubleSlider
           disabled={appIsBusy}
           onChangeRange={changeGradeFilterValues}

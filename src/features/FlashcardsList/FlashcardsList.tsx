@@ -6,13 +6,13 @@ import { GetFlashcardParameterType } from 'api/types';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { Modal } from 'features/ui/Modal';
 import { SortingTable } from 'features/ui/SortingTable';
-import { TextInputFLatDesign } from 'features/ui/TextInputField/TextInputFlatDesign';
 import { useAppDispatch, useAppSelector, useControlledPromise } from 'hooks';
 import {
   deleteFlashcard,
   setFlashcardsData,
   updateFlashcard,
 } from 'store/asyncActions/flashcards';
+import { selectFlashcardById } from 'store/selectors';
 
 type FlashcardsListPropsType = GetFlashcardParameterType;
 
@@ -53,6 +53,10 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
 
     const flashcardsList = useAppSelector(state => state.flashcards.cards);
 
+    const [currenCardId, setCurrentCardId] = useState('');
+
+    const currentCard = useAppSelector(state => selectFlashcardById(state, currenCardId));
+
     const handleDeleteFlashcard = (id: string) => {
       dispatch(
         deleteFlashcard(id, {
@@ -78,19 +82,21 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
       } else {
         controlledPromise.resolve(false);
       }
-      setDeleteItemDialogActive(false);
     };
 
     const showDeleteDialog = async (id: string) => {
+      setCurrentCardId(id);
       setDeleteItemDialogActive(true);
       resetControlledPromise();
       const command = await controlledPromise.promise;
       if (command) {
         handleDeleteFlashcard(id);
       }
+      setDeleteItemDialogActive(false);
     };
 
     const handleEditFlashcard = (id: string) => {
+      setCurrentCardId(id);
       dispatch(
         updateFlashcard(
           { _id: id, question: `${new Date()} updated question` },
@@ -104,21 +110,6 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
 
     return (
       <div className={styles.wrapper}>
-        {deleteItemDialogActive && (
-          <Modal
-            caption="Sure you want delete this?"
-            active={deleteItemDialogActive}
-            displayControlCallback={setDeleteItemDialogActive}
-          >
-            <ButtonFlatDesign className={styles.button} onClick={respondFromModal}>
-              Yes
-            </ButtonFlatDesign>
-            <ButtonFlatDesign onClick={respondFromModal}>
-              No, I changed my mind
-            </ButtonFlatDesign>
-          </Modal>
-        )}
-
         {flashcardsList.length ? (
           <SortingTable
             caption="flashcards list"
@@ -129,6 +120,21 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
           />
         ) : (
           <p>This pack is empty. Click add new flashcard to fill it</p>
+        )}
+        {deleteItemDialogActive && (
+          <Modal
+            caption="Delete flashcard"
+            active={deleteItemDialogActive}
+            displayControlCallback={setDeleteItemDialogActive}
+          >
+            <p>Do you really wanna delete {currentCard.question}?</p>
+            <ButtonFlatDesign className={styles.button} onClick={respondFromModal}>
+              Yes
+            </ButtonFlatDesign>
+            <ButtonFlatDesign onClick={respondFromModal}>
+              No, I changed my mind
+            </ButtonFlatDesign>
+          </Modal>
         )}
       </div>
     );
