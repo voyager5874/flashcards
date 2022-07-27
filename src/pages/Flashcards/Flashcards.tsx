@@ -1,28 +1,82 @@
 import { ChangeEvent, ReactElement, useEffect, useState } from 'react';
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons/faChevronLeft';
-import { faRightLeft } from '@fortawesome/free-solid-svg-icons/faRightLeft';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useFormik } from 'formik';
 import { useParams } from 'react-router-dom';
 
+import { CreateFlashcardParameterType } from 'api/types';
 import { FIRST_ITEM_INDEX, SECOND_ITEM_INDEX } from 'const';
 import { FlashcardsList } from 'features/FlashcardsList';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { TextInput } from 'features/ui/flat-design';
 import { RangeDoubleSlider } from 'features/ui/flat-design/RangeDoubleSlider';
+import { Modal } from 'features/ui/Modal';
 import { Pagination } from 'features/ui/Pagination';
-import { useAppDispatch, useAppSelector, useDebouncedValue } from 'hooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+  useControlledPromise,
+  useDebouncedValue,
+} from 'hooks';
+import { ControlledPromiseType } from 'hooks/useControlledPromise';
 import styles from 'pages/Flashcards/Flashcards.module.scss';
 import { createFlashcard } from 'store/asyncActions/flashcards';
 import {
   flashcardsCurrentPageChanged,
   flashcardsItemsPerPageChanged,
-  // flashcardsKeywordsFilterApplied,
   flashcardsMaxGradeFilterApplied,
   flashcardsMinGradeFilterApplied,
   flashcardsQuestionKeywordsFilterApplied,
 } from 'store/reducers/flashcards';
 import { selectPackById } from 'store/selectors/selectPackById';
+
+type AddFlashcardFormPropsType = {
+  promiseToControl: ControlledPromiseType;
+  submitCallback: (data: Partial<CreateFlashcardParameterType>) => void;
+};
+
+const AddFlashcardForm = ({
+  promiseToControl,
+  submitCallback,
+}: AddFlashcardFormPropsType) => {
+  // const dispatch = useAppDispatch();
+
+  const formik = useFormik({
+    initialValues: {
+      answer: '',
+      question: '',
+    } as Partial<CreateFlashcardParameterType>,
+    onSubmit: (values, formikHelpers) => {
+      submitCallback(values);
+      if (promiseToControl.resolve) promiseToControl.resolve(true);
+    },
+  });
+  return (
+    <form onSubmit={formik.handleSubmit}>
+      <TextInput
+        placeholder="question"
+        name="question"
+        value={formik.values.question}
+        onChange={formik.handleChange}
+      />
+      <TextInput
+        name="answer"
+        placeholder="answer"
+        value={formik.values.answer}
+        onChange={formik.handleChange}
+      />
+      <ButtonFlatDesign className={styles.button} type="submit">
+        Save
+      </ButtonFlatDesign>
+      <ButtonFlatDesign
+        onClick={() => promiseToControl.resolve && promiseToControl.resolve(false)}
+      >
+        Cancel
+      </ButtonFlatDesign>
+    </form>
+  );
+};
 
 export const Flashcards = (): ReactElement => {
   const dispatch = useAppDispatch();
@@ -32,7 +86,7 @@ export const Flashcards = (): ReactElement => {
   const { packId } = params;
 
   const {
-    // packName,
+    // packName, // remove from the slice
     page,
     pageCount,
     cardsTotalCount,
@@ -53,6 +107,14 @@ export const Flashcards = (): ReactElement => {
   // const [answerSearchString, setAnswerSearchString] = useState(answerKeywordsFilter);
   const [questionSearchString, setQuestionSearchString] =
     useState(questionKeywordsFilter);
+
+  const [addItemDialogActive, setAddItemDialogActive] = useState(false);
+
+  const { controlledPromise, resetControlledPromise } = useControlledPromise();
+
+  // const [cardQuestion, setCardQuestion] = useState('');
+  //
+  // const [cardAnswer, setCardAnswer] = useState('');
 
   const changeGradeFilterValues = (newFilterValues: [number, number]) => {
     dispatch(flashcardsMaxGradeFilterApplied(newFilterValues[SECOND_ITEM_INDEX]));
@@ -82,18 +144,17 @@ export const Flashcards = (): ReactElement => {
     setQuestionSearchString(event.currentTarget.value);
   };
 
-  const handleCreateFlashcard = () => {
+  const handleCreateFlashcard = (cardData: Partial<CreateFlashcardParameterType>) => {
+    // eslint-disable-next-line no-debugger
+    debugger;
     if (!packId) return;
     dispatch(
       createFlashcard(
         {
-          card: {
-            cardsPack_id: packId,
-            question: 'accidentally, component, virtual DOM',
-            answer: 'strange things',
-          },
+          cardsPack_id: packId,
+          question: cardData.question,
+          answer: cardData.answer,
         },
-        packId,
         {
           cardsPack_id: packId || '62c45b8bbc623e0004e21154',
           min: minGradeFilter,
@@ -105,6 +166,24 @@ export const Flashcards = (): ReactElement => {
         },
       ),
     );
+  };
+
+  // const fillQuestion = (event: ChangeEvent<HTMLInputElement>) => {
+  //   setCardQuestion(event.currentTarget.value);
+  // };
+  //
+  // const fillAnswer = (event: ChangeEvent<HTMLInputElement>) => {
+  //   setCardAnswer(event.currentTarget.value);
+  // };
+
+  const showAddDialog = async () => {
+    setAddItemDialogActive(true);
+    resetControlledPromise();
+    const command = await controlledPromise.promise;
+    // if (command) {
+    //   handleCreateFlashcard(cardQuestion, cardAnswer);
+    // }
+    setAddItemDialogActive(false);
   };
 
   return (
@@ -121,7 +200,7 @@ export const Flashcards = (): ReactElement => {
           value={questionSearchString}
           onChange={changeKeyWordsFilter}
         />
-        <ButtonFlatDesign onClick={handleCreateFlashcard}>Add flashcard</ButtonFlatDesign>
+        <ButtonFlatDesign onClick={showAddDialog}>Add flashcard</ButtonFlatDesign>
       </div>
 
       <div className={styles.controls}>
@@ -161,6 +240,18 @@ export const Flashcards = (): ReactElement => {
         cardQuestion={questionKeywordsFilter}
         cardAnswer=""
       />
+      {addItemDialogActive && (
+        <Modal
+          caption="Add new flashcard"
+          active={addItemDialogActive}
+          displayControlCallback={setAddItemDialogActive}
+        >
+          <AddFlashcardForm
+            promiseToControl={controlledPromise}
+            submitCallback={handleCreateFlashcard}
+          />
+        </Modal>
+      )}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-type PromiseObjectType = {
+export type ControlledPromiseType = {
   promise: null | Promise<any>;
   resolve: null | Function;
   reject: null | Function;
@@ -8,7 +8,7 @@ type PromiseObjectType = {
   onError: Function;
 };
 
-const handlePromise: PromiseObjectType = {
+const handlePromise: ControlledPromiseType = {
   promise: null,
   resolve: null,
   reject: null,

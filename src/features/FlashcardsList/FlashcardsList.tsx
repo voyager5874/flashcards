@@ -6,6 +6,7 @@ import { GetFlashcardParameterType } from 'api/types';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { Modal } from 'features/ui/Modal';
 import { SortingTable } from 'features/ui/SortingTable';
+import { TextInputFLatDesign } from 'features/ui/TextInputField/TextInputFlatDesign';
 import { useAppDispatch, useAppSelector, useControlledPromise } from 'hooks';
 import {
   deleteFlashcard,
@@ -69,7 +70,10 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
 
     const respondFromModal = (event: MouseEvent<HTMLButtonElement>): void => {
       if (!controlledPromise.resolve) return;
-      if (event.currentTarget.textContent === 'Yes') {
+      if (
+        event.currentTarget.textContent === 'Yes' ||
+        event.currentTarget.textContent === 'Save'
+      ) {
         controlledPromise.resolve(true);
       } else {
         controlledPromise.resolve(false);
@@ -100,18 +104,21 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
 
     return (
       <div className={styles.wrapper}>
-        <Modal
-          caption="delete this?"
-          active={deleteItemDialogActive}
-          displayControlCallback={setDeleteItemDialogActive}
-        >
-          <ButtonFlatDesign className={styles.button} onClick={respondFromModal}>
-            Yes
-          </ButtonFlatDesign>
-          <ButtonFlatDesign onClick={respondFromModal}>
-            No, I changed my mind
-          </ButtonFlatDesign>
-        </Modal>
+        {deleteItemDialogActive && (
+          <Modal
+            caption="Sure you want delete this?"
+            active={deleteItemDialogActive}
+            displayControlCallback={setDeleteItemDialogActive}
+          >
+            <ButtonFlatDesign className={styles.button} onClick={respondFromModal}>
+              Yes
+            </ButtonFlatDesign>
+            <ButtonFlatDesign onClick={respondFromModal}>
+              No, I changed my mind
+            </ButtonFlatDesign>
+          </Modal>
+        )}
+
         {flashcardsList.length ? (
           <SortingTable
             caption="flashcards list"

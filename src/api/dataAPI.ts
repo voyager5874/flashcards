@@ -37,7 +37,7 @@ export const dataAPI = {
       .then(response => response.data);
   },
   postFlashcard(requestParameter: CreateFlashcardParameterType) {
-    return axiosInstance.post('cards/card', requestParameter);
+    return axiosInstance.post('cards/card', { card: { ...requestParameter } });
   },
   putPackData(data: PutPackDataType) {
     return axiosInstance.put<PutPackDataResponseType>(`cards/pack`, {

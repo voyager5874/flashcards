@@ -25,25 +25,13 @@ export const setFlashcardsData =
   };
 
 export const createFlashcard =
-  (
-    newCardData: CreateFlashcardParameterType,
-    packId: string,
-    viewSettings: GetFlashcardParameterType,
-  ) =>
+  (newCardData: CreateFlashcardParameterType, viewSettings: GetFlashcardParameterType) =>
   async (dispatch: AppDispatch) => {
     dispatch(appIsBusy(true));
 
     try {
       const response = await dataAPI.postFlashcard(newCardData);
       if (response.data.token) {
-        // const {
-        //   page,
-        //   pageCount,
-        //   answerKeywordsFilter,
-        //   questionKeywordsFilter,
-        //   minGradeFilter,
-        //   maxGradeFilter,
-        // } = getState().flashcards;
         await dispatch(setFlashcardsData(viewSettings));
         dispatch(setAppMessage('flashcard created successfully'));
       }

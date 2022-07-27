@@ -154,17 +154,17 @@ export type CreatePackResponseType = {
 };
 
 export type CreateFlashcardParameterType = {
-  card: {
-    cardsPack_id: string;
-    question?: string; // если не отправить будет 'no question'
-    answer?: string; // если не отправить будет 'no answer'
-    // grade?: number; // 0..5, computed by backend?
-    // shots?: number; // computed by backend?
-    answerImg?: string;
-    questionImg?: string;
-    questionVideo?: string;
-    answerVideo?: string;
-  };
+  // card: {
+  cardsPack_id: string;
+  question?: string; // если не отправить будет 'no question'
+  answer?: string; // если не отправить будет 'no answer'
+  // grade?: number; // 0..5, computed by backend?
+  // shots?: number; // computed by backend?
+  answerImg?: string;
+  questionImg?: string;
+  questionVideo?: string;
+  answerVideo?: string;
+  // };
 };
 
 export type CreateFlashcardResponseType = {

@@ -19,7 +19,7 @@ const disableNavLink: CSSProperties = {
 
 const initialValues: LoginParameterType = {
   email: process.env.REACT_APP_MY_EMAIL || 'test@test.ru',
-  password: process.env.REACT_APP_PASSWORD || 'test@test.ru',
+  password: process.env.REACT_APP_PASSWORD || 'test@test.ru', // need to skip password strength check when login - only for register
   rememberMe: false,
 };
 
