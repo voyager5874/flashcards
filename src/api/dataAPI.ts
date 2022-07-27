@@ -4,7 +4,7 @@ import {
   CreatePackParameterType,
   CreatePackResponseType,
   FlashcardOnServerDataType,
-  GetFlashcardParameterType,
+  GetFlashcardsParameterType,
   GetPacksParameterType,
   PackDataOnServerType,
   PutFlashcardDataResponseType,
@@ -19,34 +19,36 @@ export const dataAPI = {
     const cleanParameters: GetPacksParameterType =
       clearObjectEmptyProperties(requestParameters);
     return axiosInstance
-      .get<PackDataOnServerType>('cards/pack', { params: { ...cleanParameters } })
+      .get<PackDataOnServerType>('cards/pack', { params: cleanParameters })
       .then(response => response.data);
   },
-  getFlashcards(requestParameters: GetFlashcardParameterType) {
-    const cleanParameters: GetFlashcardParameterType =
+  getFlashcards(requestParameters: GetFlashcardsParameterType) {
+    const cleanParameters: GetFlashcardsParameterType =
       clearObjectEmptyProperties(requestParameters);
     return axiosInstance
       .get<FlashcardOnServerDataType>('cards/card', {
-        params: { ...cleanParameters },
+        params: cleanParameters,
       })
       .then(response => response.data);
   },
   postPack(requestParameter: CreatePackParameterType) {
     return axiosInstance
-      .post<CreatePackResponseType>('cards/pack', requestParameter)
+      .post<CreatePackResponseType>('cards/pack', { cardsPack: requestParameter })
       .then(response => response.data);
   },
   postFlashcard(requestParameter: CreateFlashcardParameterType) {
-    return axiosInstance.post('cards/card', { card: { ...requestParameter } });
+    return axiosInstance.post('cards/card', { card: requestParameter });
   },
   putPackData(data: PutPackDataType) {
     return axiosInstance.put<PutPackDataResponseType>(`cards/pack`, {
-      cardsPack: { ...data },
+      cardsPack: data,
+      // cardsPack: { ...data },
     });
   },
   putFlashcardData(data: PutFlashcardDataType) {
     return axiosInstance.put<PutFlashcardDataResponseType>('cards/card', {
-      card: { ...data },
+      card: data,
+      // card: { ...data },
     });
   },
   deletePack(id: string) {

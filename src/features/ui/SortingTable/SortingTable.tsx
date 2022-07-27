@@ -1,6 +1,8 @@
-import { PropsWithChildren, ReactElement } from 'react';
+import { PropsWithChildren, ReactElement, MouseEvent } from 'react';
 
 import styles from './SortingTable.module.scss';
+
+import { useAppDispatch, useAppSelector } from 'hooks';
 
 type TableItemActionsPropsType = {
   itemId: string;
@@ -33,18 +35,41 @@ const TableItemActions = ({
 
 type TableHeadPropsType<T> = {
   headers: Array<keyof T>;
+  changeSorting: Function;
 };
 
 const TableHead = <T,>({
   headers,
-}: PropsWithChildren<TableHeadPropsType<T>>): ReactElement => (
-  <>
-    {headers.map(header => (
-      <th key={header as string}>{header as string}</th>
-    ))}
-    <th>Actions</th>
-  </>
-);
+  changeSorting,
+}: PropsWithChildren<TableHeadPropsType<T>>): ReactElement => {
+  const dispatch = useAppDispatch();
+  const currentSorting = useAppSelector(state => state.packs.sorting);
+  const changeTableSorting = (event: MouseEvent<HTMLButtonElement>) => {
+    if (!event.currentTarget.textContent) return;
+    let newSorting: string = '';
+    if (currentSorting.includes(event.currentTarget.textContent)) {
+      newSorting =
+        currentSorting[0] === '0'
+          ? `1${event.currentTarget.textContent}`
+          : `0${event.currentTarget.textContent}`;
+    } else {
+      newSorting = `0${event.currentTarget.textContent}`;
+    }
+    dispatch(changeSorting(newSorting));
+  };
+  return (
+    <>
+      {headers.map(header => (
+        <th key={header as string}>
+          <button type="button" onClick={changeTableSorting}>
+            {header as string}
+          </button>
+        </th>
+      ))}
+      <th>Actions</th>
+    </>
+  );
+};
 
 type TableRowPropsType<T> = {
   tableHeaders: Array<keyof T>;
@@ -114,6 +139,7 @@ const TableBody = <T extends { _id: string }>({
 type SortingTablePropsType<T> = {
   caption: string;
   tableHeaders: Array<keyof T>;
+  changeSorting: Function;
   itemActionsNames: string[];
   // itemActionsHandlers?: { [key: string]: Function };
   itemActionsHandlers?: Function[];
@@ -124,6 +150,7 @@ export const SortingTable = <T extends { _id: string }>({
   items,
   caption,
   tableHeaders,
+  changeSorting,
   itemActionsNames,
   itemActionsHandlers,
   ...restProps
@@ -132,7 +159,7 @@ export const SortingTable = <T extends { _id: string }>({
     <caption>{caption}</caption>
     <thead>
       <tr>
-        <TableHead headers={tableHeaders} />
+        <TableHead headers={tableHeaders} changeSorting={changeSorting} />
       </tr>
     </thead>
     <tbody>

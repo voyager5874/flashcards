@@ -2,6 +2,11 @@
   width: 100%;
   background-color: rgba(194, 170, 81, 0.62);
 
+  button {
+    background-color: transparent;
+    cursor: pointer;
+  }
+
   * {
     box-sizing: border-box;
   }
@@ -42,7 +47,7 @@
         }
 
         button {
-          background-color: #275EFE;
+          //background-color: #275EFE;
         }
       }
 

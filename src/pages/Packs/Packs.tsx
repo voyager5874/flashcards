@@ -29,24 +29,23 @@ import {
 export const Packs = (): ReactElement => {
   const dispatch = useAppDispatch();
 
-  // useEffect(() => {
-  //   dispatch(setPacksData({}));
-  // }, []);
+  const {
+    pageCount,
+    page,
+    maxCardsCount,
+    minCardsCount,
+    maxCardsCountFilter,
+    minCardsCountFilter,
+    packNameFilter,
+    packsOfCurrentUserFilter,
+    cardPacksTotalCount,
+    sorting,
+  } = useAppSelector(state => state.packs);
 
-  const currentPage = useAppSelector(state => state.packs.page);
-  const packsPerPage = useAppSelector(state => state.packs.pageCount);
-  const packsTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount);
-  const minCardsCountFilter = useAppSelector(state => state.packs.minCardsCountFilter);
-  const maxCardsCountFilter = useAppSelector(state => state.packs.maxCardsCountFilter);
-  const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount);
-  const minCardsCount = useAppSelector(state => state.packs.minCardsCount);
   // eslint-disable-next-line no-underscore-dangle
   const currentUserId = useAppSelector(state => state.profile._id);
-  const packsOfCurrentUserFilter = useAppSelector(
-    state => state.packs.packsOfCurrentUserFilter,
-  );
+
   const appIsBusy = useAppSelector(state => state.appReducer.isBusy);
-  const packNameFilter = useAppSelector(state => state.packs.packNameFilter);
 
   const [packName, setPackName] = useState(packNameFilter);
 
@@ -63,17 +62,17 @@ export const Packs = (): ReactElement => {
     dispatch(packsSetItemsPerPage(+perPageCount));
   };
 
-  const changeCurrentPage = (page: number) => {
-    dispatch(packsCurrentPageChanged(page));
+  const changeCurrentPage = (toPage: number) => {
+    dispatch(packsCurrentPageChanged(toPage));
   };
 
   const handleCreatePack = () => {
     dispatch(
       createPack(
-        { cardsPack: { name: 'v5874 new pack', private: true } },
+        { name: 'v5874 new pack', private: true },
         {
-          page: currentPage,
-          pageCount: packsPerPage,
+          page,
+          pageCount,
           user_id: (packsOfCurrentUserFilter && currentUserId) || '',
           min: minCardsCountFilter,
           max: maxCardsCountFilter,
@@ -127,21 +126,22 @@ export const Packs = (): ReactElement => {
         />
         <Pagination
           name="packs-page-pagination"
-          currentPage={currentPage}
+          currentPage={page}
           onPageChange={changeCurrentPage}
           onItemsPerPageChange={changePacksPerPageCount}
-          currentItemsPerPageValue={packsPerPage}
-          totalItemsCount={packsTotalCount || DEFAULT_MIN}
+          currentItemsPerPageValue={pageCount}
+          totalItemsCount={cardPacksTotalCount || DEFAULT_MIN}
           disabled={appIsBusy}
         />
       </div>
       <PacksList
         min={minCardsCountFilter}
         max={maxCardsCountFilter}
-        pageCount={packsPerPage}
+        pageCount={pageCount}
         user_id={(packsOfCurrentUserFilter && currentUserId) || ''}
-        page={currentPage}
+        page={page}
         packName={packNameFilter}
+        sortPacks={sorting}
       />
     </div>
   );

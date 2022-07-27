@@ -1,4 +1,8 @@
-import { PackDataOnServerType, PackOnServerType } from 'api/types';
+import {
+  PackDataOnServerType,
+  PackOnServerType,
+  PacksSortParameterType,
+} from 'api/types';
 import { PackInAppType } from 'features/Pack/types';
 import { Nullable } from 'types';
 
@@ -15,6 +19,7 @@ type InitialStateType = {
   maxCardsCountFilter: number;
   packsOfCurrentUserFilter: boolean;
   packNameFilter: string;
+  sorting: PacksSortParameterType | '';
 };
 
 const initialState: InitialStateType = {
@@ -30,6 +35,7 @@ const initialState: InitialStateType = {
   maxCardsCountFilter: 10,
   packsOfCurrentUserFilter: false,
   packNameFilter: '',
+  sorting: '',
 };
 
 type PacksActionType =
@@ -40,7 +46,8 @@ type PacksActionType =
   | ReturnType<typeof packsSetMaxCardsCountFilter>
   | ReturnType<typeof packsCurrentPageChanged>
   | ReturnType<typeof packsSetCurrentUserPacksFilter>
-  | ReturnType<typeof packsSetPackNameFilter>;
+  | ReturnType<typeof packsSetPackNameFilter>
+  | ReturnType<typeof packsSortingApplied>;
 
 export const packs = (
   state: InitialStateType = initialState,
@@ -63,6 +70,9 @@ export const packs = (
       return { ...state, ...action.payload };
     case 'PACKS/SET-PACK-NAME-FILTER':
       return { ...state, ...action.payload };
+    case 'PACKS/SORTING-APPLIED':
+      return { ...state, ...action.payload };
+
     default:
       return state;
   }
@@ -127,5 +137,13 @@ export const packsSetPackNameFilter = (packNameFilter: string) =>
     type: 'PACKS/SET-PACK-NAME-FILTER',
     payload: {
       packNameFilter,
+    },
+  } as const);
+
+export const packsSortingApplied = (sorting: PacksSortParameterType) =>
+  ({
+    type: 'PACKS/SORTING-APPLIED',
+    payload: {
+      sorting,
     },
   } as const);

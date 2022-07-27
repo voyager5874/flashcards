@@ -1,7 +1,7 @@
 import { dataAPI } from 'api';
 import {
   CreateFlashcardParameterType,
-  GetFlashcardParameterType,
+  GetFlashcardsParameterType,
   PutFlashcardDataType,
 } from 'api/types';
 import { appIsBusy, setAppMessage } from 'store/reducers/app';
@@ -10,7 +10,7 @@ import { AppDispatch } from 'store/types';
 import { processAsyncActionErrors } from 'utils';
 
 export const setFlashcardsData =
-  (requestParameters: GetFlashcardParameterType) => async (dispatch: AppDispatch) => {
+  (requestParameters: GetFlashcardsParameterType) => async (dispatch: AppDispatch) => {
     dispatch(appIsBusy(true));
     try {
       const response = await dataAPI.getFlashcards(requestParameters);
@@ -25,7 +25,7 @@ export const setFlashcardsData =
   };
 
 export const createFlashcard =
-  (newCardData: CreateFlashcardParameterType, viewSettings: GetFlashcardParameterType) =>
+  (newCardData: CreateFlashcardParameterType, viewSettings: GetFlashcardsParameterType) =>
   async (dispatch: AppDispatch) => {
     dispatch(appIsBusy(true));
 
@@ -43,7 +43,7 @@ export const createFlashcard =
   };
 
 export const updateFlashcard =
-  (data: PutFlashcardDataType, viewSettings: GetFlashcardParameterType) =>
+  (data: PutFlashcardDataType, viewSettings: GetFlashcardsParameterType) =>
   async (dispatch: AppDispatch) => {
     dispatch(appIsBusy(true));
 
@@ -60,7 +60,7 @@ export const updateFlashcard =
   };
 
 export const deleteFlashcard =
-  (id: string, viewSettings: GetFlashcardParameterType) =>
+  (id: string, viewSettings: GetFlashcardsParameterType) =>
   async (dispatch: AppDispatch) => {
     dispatch(appIsBusy(true));
     try {

@@ -76,13 +76,10 @@ export type PackDataOnServerType = {
   tokenDeathTime: number;
 };
 
-export type PacksSortParameterType = keyof PackOnServerType;
-// | '0updated'
-// | '1updated'
-// | '0cardsCount'
-// | '1cardsCount'
-// | '0user_name'
-// | '1user_name';
+// Template Literal Types
+export type PacksSortParameterType =
+  | `0${keyof PackOnServerType}`
+  | `1${keyof PackOnServerType}`;
 
 export type FlashcardOnServerDataType = {
   cards: FlashcardOnServerType[];
@@ -97,18 +94,20 @@ export type FlashcardOnServerDataType = {
 };
 
 export type GetPacksParameterType = {
-  packName?: string; // just search within pack names string
+  packName?: string; // search within packs names on the server
   min?: number;
   max?: number;
-  sortPacks?: PacksSortParameterType;
+  sortPacks?: PacksSortParameterType | '';
   page?: number;
   pageCount?: number; // number of items per page
   user_id?: string;
 };
 
-export type CardsSortParameterType = keyof FlashcardOnServerType;
+export type CardsSortParameterType =
+  | `0${keyof FlashcardOnServerType}`
+  | `1${keyof FlashcardOnServerType}`;
 
-export type GetFlashcardParameterType = {
+export type GetFlashcardsParameterType = {
   cardsPack_id: string;
   cardAnswer?: string;
   cardQuestion?: string;
@@ -120,14 +119,14 @@ export type GetFlashcardParameterType = {
 };
 
 export type CreatePackParameterType = {
-  cardsPack: {
-    name: string; // 'No name' by default
-    deckCover?: string;
-    private?: boolean;
-    // path?: string; // folder ?
-    // grade?: number; // wtf?
-    // type?: string;
-  };
+  // cardsPack: {
+  name: string; // 'No name' by default
+  deckCover?: string;
+  private?: boolean;
+  // path?: string; // folder ?
+  // grade?: number; // wtf?
+  // type?: string;
+  // };
 };
 
 export type CreatePackResponseType = {

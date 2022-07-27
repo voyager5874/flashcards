@@ -2,7 +2,7 @@ import { FC, memo, ReactElement, useEffect, useState, MouseEvent } from 'react';
 
 import styles from './FlashcardsList.module.scss';
 
-import { GetFlashcardParameterType } from 'api/types';
+import { GetFlashcardsParameterType } from 'api/types';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { Modal } from 'features/ui/Modal';
 import { SortingTable } from 'features/ui/SortingTable';
@@ -14,7 +14,7 @@ import {
 } from 'store/asyncActions/flashcards';
 import { selectFlashcardById } from 'store/selectors';
 
-type FlashcardsListPropsType = GetFlashcardParameterType;
+type FlashcardsListPropsType = GetFlashcardsParameterType;
 
 export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
   ({
@@ -36,7 +36,7 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
     const { controlledPromise, resetControlledPromise } = useControlledPromise();
 
     useEffect(() => {
-      const queryObject: GetFlashcardParameterType = {
+      const queryObject: GetFlashcardsParameterType = {
         // eslint-disable-next-line camelcase
         cardsPack_id,
         page,
@@ -117,9 +117,12 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
             itemActionsNames={['delete', 'edit']}
             itemActionsHandlers={flashcardHandlers}
             tableHeaders={['question', 'answer', 'updated', 'grade']}
+            changeSorting={() => {}}
           />
         ) : (
-          <p>This pack is empty. Click add new flashcard to fill it</p>
+          <p className={styles.defaultContent}>
+            This pack is empty. Click add new flashcard to fill it
+          </p>
         )}
         {deleteItemDialogActive && (
           <Modal
@@ -128,12 +131,14 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
             displayControlCallback={setDeleteItemDialogActive}
           >
             <p>Do you really wanna delete {currentCard.question}?</p>
-            <ButtonFlatDesign className={styles.button} onClick={respondFromModal}>
-              Yes
-            </ButtonFlatDesign>
-            <ButtonFlatDesign onClick={respondFromModal}>
-              No, I changed my mind
-            </ButtonFlatDesign>
+            <div>
+              <ButtonFlatDesign className={styles.button} onClick={respondFromModal}>
+                Yes
+              </ButtonFlatDesign>
+              <ButtonFlatDesign onClick={respondFromModal}>
+                No, I changed my mind
+              </ButtonFlatDesign>
+            </div>
           </Modal>
         )}
       </div>

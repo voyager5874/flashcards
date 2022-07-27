@@ -30,8 +30,8 @@ export const Modal: FC<ModalPropsType> = ({
   return (
     <div className={wrapperStyle}>
       <div className={styles.content} ref={modalContentRef}>
-        {caption && <h3>{caption}</h3>}
-        <div>{children}</div>
+        {caption && <h1>{caption}</h1>}
+        {children}
       </div>
     </div>
   );

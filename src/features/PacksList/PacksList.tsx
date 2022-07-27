@@ -8,6 +8,7 @@ import { GetPacksParameterType } from 'api/types';
 import { SortingTable } from 'features/ui/SortingTable';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { deletePack, setPacksData, updatePack } from 'store/asyncActions/packs';
+import { packsSortingApplied } from 'store/reducers/packs';
 
 type PacksListPropsType = GetPacksParameterType;
 
@@ -20,6 +21,7 @@ export const PacksList: FC<PacksListPropsType> = memo(
     pageCount,
     page,
     packName,
+    sortPacks,
     // ...restProps
   }): ReactElement => {
     const dispatch = useAppDispatch();
@@ -35,11 +37,12 @@ export const PacksList: FC<PacksListPropsType> = memo(
         pageCount,
         page,
         packName,
+        sortPacks,
         // ...restProps,
       };
       dispatch(setPacksData(queryObject));
       // eslint-disable-next-line camelcase
-    }, [min, max, user_id, pageCount, page, packName]);
+    }, [min, max, user_id, pageCount, page, packName, sortPacks]);
 
     const packsList = useAppSelector(state => state.packs.cardPacks);
 
@@ -73,6 +76,7 @@ export const PacksList: FC<PacksListPropsType> = memo(
           itemActionsHandlers={packHandlers}
           // tableHeaders={['Name', 'Cards', 'Last updated', 'Created by', 'Actions']}
           tableHeaders={['name', 'cardsCount', 'updated', 'user_name', 'grade']}
+          changeSorting={packsSortingApplied}
         />
       </div>
     );

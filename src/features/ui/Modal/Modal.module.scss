@@ -1,6 +1,7 @@
-.wrapper{
+.wrapper {
   position: fixed;
-  top:0;
+  z-index: 9999;
+  top: 0;
   left: 0;
   display: flex;
   justify-content: center;
@@ -10,18 +11,40 @@
   background-color: rgba(109, 106, 104, 0.6);
   opacity: 0;
   pointer-events: none;
-  &.active{
+
+  &.active {
     opacity: 1;
     pointer-events: all;
   }
-  .content{
+
+  .content {
     display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     gap: 20px;
-    justify-content: space-between;
     min-width: 400px;
+    max-width: 50vw;
+    min-height: 200px;
+    max-height: 70vh;
     padding: 50px;
     background-color: #0f8ad7;
-    .button{
+
+    div {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      gap: 20px;
+
+    }
+
+    p {
+      //background-color: #4b6584;
+      font-size: 20px;
+      //height: 50px;
+    }
+
+    .button {
     }
   }
 }
