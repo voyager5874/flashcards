@@ -1,8 +1,12 @@
 import { MouseEvent, PropsWithChildren, ReactElement } from 'react';
 
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
+import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import styles from './SortingTable.module.scss';
 
-import { FIRST_ITEM_INDEX } from 'const';
+import { FIRST_ITEM_INDEX, SECOND_ITEM_INDEX } from 'const';
 
 type TableItemActionsPropsType = {
   itemId: string;
@@ -47,7 +51,7 @@ const TableHead = <T,>({
     if (!event.currentTarget.textContent) return;
     const requiredSortingField = event.currentTarget.textContent;
     let newSortingOption: typeof sorting;
-    if (sorting.includes(requiredSortingField)) {
+    if (sorting.slice(SECOND_ITEM_INDEX) === requiredSortingField) {
       newSortingOption =
         sorting[FIRST_ITEM_INDEX] === '0'
           ? (`1${requiredSortingField}` as typeof sorting)
@@ -57,6 +61,16 @@ const TableHead = <T,>({
     }
     changeSorting(newSortingOption);
   };
+  const determineSortingSign = (header: string) => {
+    if (sorting.slice(SECOND_ITEM_INDEX) === (header as string)) {
+      if (sorting[FIRST_ITEM_INDEX] === '0')
+        return <FontAwesomeIcon icon={faChevronDown} />;
+      if (sorting[FIRST_ITEM_INDEX] === '1')
+        return <FontAwesomeIcon icon={faChevronUp} />;
+    }
+    return <span />;
+  };
+  // <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />;
 
   return (
     <>
@@ -66,10 +80,13 @@ const TableHead = <T,>({
             type="button"
             onClick={reportNewSorting}
             className={`${styles.filterButton} ${
-              sorting.includes(header as string) ? styles.activeFilterButton : ''
+              sorting.slice(SECOND_ITEM_INDEX) === (header as string)
+                ? styles.activeFilterButton
+                : ''
             }`}
           >
             {header as string}
+            {determineSortingSign(header as string)}
           </button>
         </th>
       ))}
