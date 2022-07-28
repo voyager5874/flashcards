@@ -3,7 +3,6 @@ import { FC, memo, MouseEvent, ReactElement, useEffect, useState } from 'react';
 import styles from './FlashcardsList.module.scss';
 
 import { CardsSortParameterType, GetFlashcardsParameterType } from 'api/types';
-import { FIRST_ITEM_INDEX } from 'const';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { Modal } from 'features/ui/Modal';
 import { SortingTable } from 'features/ui/SortingTable';
@@ -117,20 +116,8 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
       );
     };
 
-    const changeSorting = (sortingField: string) => {
-      // eslint-disable-next-line no-debugger
-      debugger;
-      if (!sortingField || typeof sortCards !== 'string') return;
-      let newSorting: CardsSortParameterType;
-      if (sortCards.includes(sortingField)) {
-        newSorting =
-          sortCards[FIRST_ITEM_INDEX] === '0'
-            ? (`1${sortingField}` as CardsSortParameterType)
-            : (`0${sortingField}` as CardsSortParameterType);
-      } else {
-        newSorting = `0${sortingField}` as CardsSortParameterType;
-      }
-      dispatch(flashcardsSortingApplied(newSorting));
+    const changeSorting = (sortingField: CardsSortParameterType) => {
+      dispatch(flashcardsSortingApplied(sortingField));
     };
 
     const flashcardHandlers = [showDeleteDialog, handleEditFlashcard];

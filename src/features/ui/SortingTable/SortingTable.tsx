@@ -2,11 +2,12 @@ import { MouseEvent, PropsWithChildren, ReactElement } from 'react';
 
 import styles from './SortingTable.module.scss';
 
+import { FIRST_ITEM_INDEX } from 'const';
+
 type TableItemActionsPropsType = {
   itemId: string;
   // itemName: string;
   itemActionsNames: string[];
-  // itemActionsHandlers: { [key: string]: Function };
   itemActionsHandlers?: Function[];
 };
 
@@ -33,7 +34,6 @@ const TableItemActions = ({
 
 type TableHeadPropsType<T> = {
   headers: Array<keyof T>; // Extract<keyof T, string>
-  // sorting: PacksSortParameterType | CardsSortParameterType;
   sorting: `0${keyof T & string}` | `1${keyof T & string}`;
   changeSorting: Function;
 };
@@ -43,9 +43,19 @@ const TableHead = <T,>({
   sorting,
   changeSorting,
 }: PropsWithChildren<TableHeadPropsType<T>>): ReactElement => {
-  const changeTableSorting = (event: MouseEvent<HTMLButtonElement>) => {
+  const reportNewSorting = (event: MouseEvent<HTMLButtonElement>) => {
     if (!event.currentTarget.textContent) return;
-    changeSorting(event.currentTarget.textContent);
+    const requiredSortingField = event.currentTarget.textContent;
+    let newSortingOption: typeof sorting;
+    if (sorting.includes(requiredSortingField)) {
+      newSortingOption =
+        sorting[FIRST_ITEM_INDEX] === '0'
+          ? (`1${requiredSortingField}` as typeof sorting)
+          : (`0${requiredSortingField}` as typeof sorting);
+    } else {
+      newSortingOption = `0${requiredSortingField}` as typeof sorting;
+    }
+    changeSorting(newSortingOption);
   };
 
   return (
@@ -54,7 +64,7 @@ const TableHead = <T,>({
         <th key={header as string}>
           <button
             type="button"
-            onClick={changeTableSorting}
+            onClick={reportNewSorting}
             className={`${styles.filterButton} ${
               sorting.includes(header as string) ? styles.activeFilterButton : ''
             }`}
@@ -133,10 +143,11 @@ const TableBody = <T extends { _id: string }>({
 
 type SortingTablePropsType<T> = {
   caption: string;
-  tableHeaders: Array<keyof T>;
+  tableHeaders: Array<keyof T>; // Extract<keyof T, string>
   sorting: `0${keyof T & string}` | `1${keyof T & string}`;
-  // sorting: PacksSortParameterType | CardsSortParameterType;
-  changeSorting: (sortingFieldName: keyof T) => void;
+  changeSorting: (
+    sortingFieldName: `0${keyof T & string}` | `1${keyof T & string}`,
+  ) => void;
   itemActionsNames: string[];
   // itemActionsHandlers?: { [key: string]: Function };
   itemActionsHandlers?: Function[];
