@@ -1,8 +1,8 @@
-import { PropsWithChildren, ReactElement, MouseEvent } from 'react';
+import { MouseEvent, PropsWithChildren, ReactElement } from 'react';
 
 import styles from './SortingTable.module.scss';
 
-import { useAppDispatch, useAppSelector } from 'hooks';
+import { CardsSortParameterType, PacksSortParameterType } from 'api/types';
 
 type TableItemActionsPropsType = {
   itemId: string;
@@ -35,27 +35,18 @@ const TableItemActions = ({
 
 type TableHeadPropsType<T> = {
   headers: Array<keyof T>;
+  sorting: PacksSortParameterType | CardsSortParameterType;
   changeSorting: Function;
 };
 
 const TableHead = <T,>({
   headers,
+  sorting,
   changeSorting,
 }: PropsWithChildren<TableHeadPropsType<T>>): ReactElement => {
-  const dispatch = useAppDispatch();
-  const currentSorting = useAppSelector(state => state.packs.sorting);
   const changeTableSorting = (event: MouseEvent<HTMLButtonElement>) => {
     if (!event.currentTarget.textContent) return;
-    let newSorting: string = '';
-    if (currentSorting.includes(event.currentTarget.textContent)) {
-      newSorting =
-        currentSorting[0] === '0'
-          ? `1${event.currentTarget.textContent}`
-          : `0${event.currentTarget.textContent}`;
-    } else {
-      newSorting = `0${event.currentTarget.textContent}`;
-    }
-    dispatch(changeSorting(newSorting));
+    changeSorting(event.currentTarget.textContent);
   };
   return (
     <>
@@ -84,8 +75,7 @@ const TableRow = <T extends { _id: string }>({
   data,
   itemActionNames,
   itemActionsHandlers,
-}: // ...restProps
-PropsWithChildren<TableRowPropsType<T>>): ReactElement => (
+}: PropsWithChildren<TableRowPropsType<T>>): ReactElement => (
   <>
     {tableHeaders.map(header => (
       <td key={header as string}>
@@ -119,7 +109,6 @@ const TableBody = <T extends { _id: string }>({
   tableHeaders,
   itemActionNames,
   itemActionsHandlers,
-  ...restProps
 }: PropsWithChildren<TableBodyPropsType<T>>): ReactElement => (
   <>
     {data.map(item => (
@@ -139,7 +128,9 @@ const TableBody = <T extends { _id: string }>({
 type SortingTablePropsType<T> = {
   caption: string;
   tableHeaders: Array<keyof T>;
-  changeSorting: Function;
+  // sorting: `0${keyof T}` | `1${keyof T}`;
+  sorting: PacksSortParameterType | CardsSortParameterType;
+  changeSorting: (sortingFieldName: keyof T) => void;
   itemActionsNames: string[];
   // itemActionsHandlers?: { [key: string]: Function };
   itemActionsHandlers?: Function[];
@@ -150,16 +141,20 @@ export const SortingTable = <T extends { _id: string }>({
   items,
   caption,
   tableHeaders,
+  sorting,
   changeSorting,
   itemActionsNames,
   itemActionsHandlers,
-  ...restProps
 }: PropsWithChildren<SortingTablePropsType<T>>): ReactElement => (
   <table className={styles.table}>
     <caption>{caption}</caption>
     <thead>
       <tr>
-        <TableHead headers={tableHeaders} changeSorting={changeSorting} />
+        <TableHead
+          headers={tableHeaders}
+          changeSorting={changeSorting}
+          sorting={sorting}
+        />
       </tr>
     </thead>
     <tbody>

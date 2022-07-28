@@ -97,6 +97,7 @@ export const Flashcards = (): ReactElement => {
     // keywordsFilter,
     // answerKeywordsFilter,
     questionKeywordsFilter,
+    sorting,
   } = useAppSelector(state => state.flashcards);
 
   const appIsBusy = useAppSelector(state => state.appReducer.isBusy);
@@ -143,7 +144,7 @@ export const Flashcards = (): ReactElement => {
           answer: cardData.answer,
         },
         {
-          cardsPack_id: packId || '62c45b8bbc623e0004e21154',
+          cardsPack_id: packId || '',
           min: minGradeFilter,
           max: maxGradeFilter,
           pageCount,
@@ -157,7 +158,7 @@ export const Flashcards = (): ReactElement => {
   const showAddDialog = async () => {
     setAddItemDialogActive(true);
     resetControlledPromise();
-    const command = await controlledPromise.promise;
+    await controlledPromise.promise;
     setAddItemDialogActive(false);
   };
 
@@ -207,6 +208,7 @@ export const Flashcards = (): ReactElement => {
         page={page}
         cardQuestion={questionKeywordsFilter}
         cardAnswer=""
+        sortCards={sorting || '0updated'}
       />
       {addItemDialogActive && (
         <Modal

@@ -1,8 +1,9 @@
-import { FC, memo, ReactElement, useEffect, useState, MouseEvent } from 'react';
+import { FC, memo, MouseEvent, ReactElement, useEffect, useState } from 'react';
 
 import styles from './FlashcardsList.module.scss';
 
-import { GetFlashcardsParameterType } from 'api/types';
+import { CardsSortParameterType, GetFlashcardsParameterType } from 'api/types';
+import { FIRST_ITEM_INDEX } from 'const';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { Modal } from 'features/ui/Modal';
 import { SortingTable } from 'features/ui/SortingTable';
@@ -12,6 +13,7 @@ import {
   setFlashcardsData,
   updateFlashcard,
 } from 'store/asyncActions/flashcards';
+import { flashcardsSortingApplied } from 'store/reducers/flashcards';
 import { selectFlashcardById } from 'store/selectors';
 
 type FlashcardsListPropsType = GetFlashcardsParameterType;
@@ -26,8 +28,7 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
     max,
     cardAnswer,
     cardQuestion,
-
-    // ...restProps
+    sortCards,
   }): ReactElement => {
     const dispatch = useAppDispatch();
 
@@ -45,11 +46,11 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
         max,
         cardAnswer,
         cardQuestion,
-        // ...restProps,
+        sortCards,
       };
       dispatch(setFlashcardsData(queryObject));
       // eslint-disable-next-line camelcase
-    }, [cardsPack_id, page, pageCount, min, max, cardAnswer, cardQuestion]);
+    }, [cardsPack_id, page, pageCount, min, max, cardAnswer, cardQuestion, sortCards]);
 
     const flashcardsList = useAppSelector(state => state.flashcards.cards);
 
@@ -68,6 +69,7 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
           cardQuestion,
           // eslint-disable-next-line camelcase
           cardsPack_id,
+          sortCards,
         }),
       );
     };
@@ -100,10 +102,35 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
       dispatch(
         updateFlashcard(
           { _id: id, question: `${new Date()} updated question` },
-          // eslint-disable-next-line camelcase
-          { page, pageCount, min, max, cardAnswer, cardQuestion, cardsPack_id },
+          {
+            page,
+            pageCount,
+            min,
+            max,
+            cardAnswer,
+            cardQuestion,
+            // eslint-disable-next-line camelcase
+            cardsPack_id,
+            sortCards,
+          },
         ),
       );
+    };
+
+    const changeSorting = (sortingField: string) => {
+      // eslint-disable-next-line no-debugger
+      debugger;
+      if (!sortingField || typeof sortCards !== 'string') return;
+      let newSorting: CardsSortParameterType;
+      if (sortCards.includes(sortingField)) {
+        newSorting =
+          sortCards[FIRST_ITEM_INDEX] === '0'
+            ? (`1${sortingField}` as CardsSortParameterType)
+            : (`0${sortingField}` as CardsSortParameterType);
+      } else {
+        newSorting = `0${sortingField}` as CardsSortParameterType;
+      }
+      dispatch(flashcardsSortingApplied(newSorting));
     };
 
     const flashcardHandlers = [showDeleteDialog, handleEditFlashcard];
@@ -117,7 +144,8 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
             itemActionsNames={['delete', 'edit']}
             itemActionsHandlers={flashcardHandlers}
             tableHeaders={['question', 'answer', 'updated', 'grade']}
-            changeSorting={() => {}}
+            changeSorting={changeSorting}
+            sorting={sortCards || '0updated'}
           />
         ) : (
           <p className={styles.defaultContent}>

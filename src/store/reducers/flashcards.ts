@@ -1,4 +1,8 @@
-import { FlashcardOnServerDataType, FlashcardOnServerType } from 'api/types';
+import {
+  CardsSortParameterType,
+  FlashcardOnServerDataType,
+  FlashcardOnServerType,
+} from 'api/types';
 
 // type flashcardsSliceInitialStateType = {
 //   cards: FlashcardOnServerType[];
@@ -31,6 +35,7 @@ const initialState = {
   packName: '',
   answerKeywordsFilter: '',
   questionKeywordsFilter: '',
+  sorting: '' as CardsSortParameterType | '',
 };
 
 type initialStateType = typeof initialState;
@@ -43,7 +48,8 @@ type FlashcardsActionType =
   | ReturnType<typeof flashcardsCurrentPageChanged>
   | ReturnType<typeof flashcardsItemsPerPageChanged>
   | ReturnType<typeof flashcardsPackNameDetermined>
-  | ReturnType<typeof flashcardsQuestionKeywordsFilterApplied>;
+  | ReturnType<typeof flashcardsQuestionKeywordsFilterApplied>
+  | ReturnType<typeof flashcardsSortingApplied>;
 
 export const flashcards = (
   state: initialStateType = initialState,
@@ -66,6 +72,9 @@ export const flashcards = (
       return { ...state, ...action.payload };
     case 'FLASHCARDS/QUESTION-KEYWORDS-FILTER-APPLIED':
       return { ...state, ...action.payload };
+    case 'FLASHCARDS/SORTING-APPLIED':
+      return { ...state, ...action.payload };
+
     default:
       return state;
   }
@@ -130,5 +139,13 @@ export const flashcardsQuestionKeywordsFilterApplied = (questionKeywordsFilter: 
     type: 'FLASHCARDS/QUESTION-KEYWORDS-FILTER-APPLIED',
     payload: {
       questionKeywordsFilter,
+    },
+  } as const);
+
+export const flashcardsSortingApplied = (sorting: CardsSortParameterType) =>
+  ({
+    type: 'FLASHCARDS/SORTING-APPLIED',
+    payload: {
+      sorting,
     },
   } as const);

@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 import styles from './PacksList.module.scss';
 
-import { GetPacksParameterType } from 'api/types';
+import { GetPacksParameterType, PacksSortParameterType } from 'api/types';
+import { FIRST_ITEM_INDEX } from 'const';
 import { SortingTable } from 'features/ui/SortingTable';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { deletePack, setPacksData, updatePack } from 'store/asyncActions/packs';
@@ -65,6 +66,20 @@ export const PacksList: FC<PacksListPropsType> = memo(
       dispatch(deletePack(id, { page, pageCount, min, max, user_id, packName }));
     };
 
+    const changeSorting = (sortingField: string) => {
+      if (!sortingField || typeof sortPacks !== 'string') return;
+      let newSorting: PacksSortParameterType;
+      if (sortPacks.includes(sortingField)) {
+        newSorting =
+          sortPacks[FIRST_ITEM_INDEX] === '0'
+            ? (`1${sortingField}` as PacksSortParameterType)
+            : (`0${sortingField}` as PacksSortParameterType);
+      } else {
+        newSorting = `0${sortingField}` as PacksSortParameterType;
+      }
+      dispatch(packsSortingApplied(newSorting));
+    };
+
     const packHandlers = [openPack, () => {}, editPack, handleDeletePack];
 
     return (
@@ -76,7 +91,8 @@ export const PacksList: FC<PacksListPropsType> = memo(
           itemActionsHandlers={packHandlers}
           // tableHeaders={['Name', 'Cards', 'Last updated', 'Created by', 'Actions']}
           tableHeaders={['name', 'cardsCount', 'updated', 'user_name', 'grade']}
-          changeSorting={packsSortingApplied}
+          changeSorting={changeSorting}
+          sorting={sortPacks || '0updated'}
         />
       </div>
     );
