@@ -2,8 +2,6 @@ import { MouseEvent, PropsWithChildren, ReactElement } from 'react';
 
 import styles from './SortingTable.module.scss';
 
-import { CardsSortParameterType, PacksSortParameterType } from 'api/types';
-
 type TableItemActionsPropsType = {
   itemId: string;
   // itemName: string;
@@ -34,8 +32,9 @@ const TableItemActions = ({
 );
 
 type TableHeadPropsType<T> = {
-  headers: Array<keyof T>;
-  sorting: PacksSortParameterType | CardsSortParameterType;
+  headers: Array<keyof T>; // Extract<keyof T, string>
+  // sorting: PacksSortParameterType | CardsSortParameterType;
+  sorting: `0${keyof T & string}` | `1${keyof T & string}`;
   changeSorting: Function;
 };
 
@@ -135,8 +134,8 @@ const TableBody = <T extends { _id: string }>({
 type SortingTablePropsType<T> = {
   caption: string;
   tableHeaders: Array<keyof T>;
-  // sorting: `0${keyof T}` | `1${keyof T}`;
-  sorting: PacksSortParameterType | CardsSortParameterType;
+  sorting: `0${keyof T & string}` | `1${keyof T & string}`;
+  // sorting: PacksSortParameterType | CardsSortParameterType;
   changeSorting: (sortingFieldName: keyof T) => void;
   itemActionsNames: string[];
   // itemActionsHandlers?: { [key: string]: Function };

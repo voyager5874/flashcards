@@ -3,8 +3,8 @@
   background-color: rgba(194, 170, 81, 0.62);
 
   button {
-    background-color: transparent;
-    cursor: pointer;
+    background-color: #0f8ad7;
+    cursor: crosshair;
   }
 
   * {
@@ -21,6 +21,8 @@
       }
     }
     .filterButton{
+      cursor: pointer;
+      background-color: transparent;
       border: none;
       outline: none;
       &.activeFilterButton{
