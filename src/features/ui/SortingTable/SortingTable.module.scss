@@ -20,6 +20,13 @@
 
       }
     }
+    .filterButton{
+      border: none;
+      outline: none;
+      &.activeFilterButton{
+        background-color: #00E6F6;
+      }
+    }
   }
 
   tbody {

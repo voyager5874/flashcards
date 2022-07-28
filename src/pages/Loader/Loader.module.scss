@@ -1,23 +1,22 @@
 @use 'src/styles/flat-design-colors';
 
 .wrapper {
-  position: absolute;
+  position: fixed;
   z-index: 1000;
-  top: calc(100vh - 50% - 50px);
-  left: calc(100vw - 50% - 150px);
-  height: 100px;
-  width: 300px;
-  background-color: flat-design-colors.$royalBlue;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  background-color: rgba(flat-design-colors.$blueHorizon, 0.5);
 
 
   h1 {
     margin: 0;
-    padding: 0;
-    display: inline-block;
-
+    padding: 50px;
+    background-color: flat-design-colors.$royalBlue;
   }
 }

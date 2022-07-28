@@ -48,11 +48,18 @@ const TableHead = <T,>({
     if (!event.currentTarget.textContent) return;
     changeSorting(event.currentTarget.textContent);
   };
+
   return (
     <>
       {headers.map(header => (
         <th key={header as string}>
-          <button type="button" onClick={changeTableSorting}>
+          <button
+            type="button"
+            onClick={changeTableSorting}
+            className={`${styles.filterButton} ${
+              sorting.includes(header as string) ? styles.activeFilterButton : ''
+            }`}
+          >
             {header as string}
           </button>
         </th>
