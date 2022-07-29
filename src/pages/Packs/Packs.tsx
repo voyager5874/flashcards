@@ -67,19 +67,7 @@ export const Packs = (): ReactElement => {
   };
 
   const handleCreatePack = () => {
-    dispatch(
-      createPack(
-        { name: 'v5874 new pack', private: true },
-        {
-          page,
-          pageCount,
-          user_id: (packsOfCurrentUserFilter && currentUserId) || '',
-          min: minCardsCountFilter,
-          max: maxCardsCountFilter,
-          packName: packNameFilter,
-        },
-      ),
-    );
+    dispatch(createPack({ name: 'v5874 new pack', private: true }));
   };
 
   const debouncedSearchString = useDebouncedValue(packName);

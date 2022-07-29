@@ -29,18 +29,7 @@ export const PacksList: FC<PacksListPropsType> = memo(
     const navigate = useNavigate();
 
     useEffect(() => {
-      const queryObject: GetPacksParameterType = {
-        max,
-        min,
-        // eslint-disable-next-line camelcase
-        user_id,
-        pageCount,
-        page,
-        packName,
-        sortPacks,
-        // ...restProps,
-      };
-      dispatch(setPacksData(queryObject));
+      dispatch(setPacksData());
       // eslint-disable-next-line camelcase
     }, [min, max, user_id, pageCount, page, packName, sortPacks]);
 
@@ -51,18 +40,11 @@ export const PacksList: FC<PacksListPropsType> = memo(
     };
 
     const editPack = (id: string) => {
-      dispatch(
-        updatePack(
-          { _id: id, name: `updated ${new Date()}` },
-          // eslint-disable-next-line camelcase
-          { page, pageCount, min, max, user_id, packName }, // queryObject
-        ),
-      );
+      dispatch(updatePack({ _id: id, name: `updated ${new Date()}` }));
     };
 
     const handleDeletePack = (id: string) => {
-      // eslint-disable-next-line camelcase
-      dispatch(deletePack(id, { page, pageCount, min, max, user_id, packName }));
+      dispatch(deletePack(id));
     };
 
     const changeSorting = (sortingField: PacksSortParameterType) => {

@@ -6,14 +6,17 @@ import { AppDispatch, RootState } from 'store/types';
 export const initializeApp =
   () => async (dispatch: AppDispatch, getState: () => RootState) => {
     dispatch(appIsBusy(true));
+    const { cardPacksTotalCount } = getState().packs;
     try {
       const list: Promise<any>[] = [dispatch(auth())];
       await Promise.all(list);
       const authorized = getState().login.isLoggedIn;
-      if (authorized) {
+      if (authorized && !cardPacksTotalCount) {
         // const itemsPerPage = getState().packs.pageCount;
         // dispatch(packsSetItemsPerPage(10));
-        dispatch(setPacksData({ pageCount: 10 }));
+        // I wanted to get common data with this request (totalCount, max, min) and override default items per page count (4)
+        // causes multiple requests with the same token (possibly set navigate after login to 'profile')
+        dispatch(setPacksData()); // either do it only for the first load -> check if slice is empty or save packName in flashcards slice.
       }
     } catch (error) {
       console.log(error);

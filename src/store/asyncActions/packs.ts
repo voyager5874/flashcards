@@ -14,19 +14,41 @@ import { AppDispatch, RootState } from 'store/types';
 import { processAsyncActionErrors } from 'utils';
 
 export const setPacksData =
-  (requestParameters: GetPacksParameterType) =>
-  async (dispatch: AppDispatch, getState: () => RootState) => {
+  () => async (dispatch: AppDispatch, getState: () => RootState) => {
+    // const { isBusy } = getState().appReducer;
+    // if (isBusy) return;
     dispatch(appIsBusy(true));
-    const currentMaxCardsCount = getState().packs.maxCardsCount;
-    const currentMinCardsCount = getState().packs.minCardsCount;
+    // eslint-disable-next-line no-underscore-dangle
+    const userId = getState().profile._id;
+    const {
+      page,
+      pageCount,
+      minCardsCountFilter,
+      minCardsCount,
+      maxCardsCountFilter,
+      maxCardsCount,
+      packsOfCurrentUserFilter,
+      packNameFilter,
+      sorting,
+    } = getState().packs;
+    const packsPageSettings: GetPacksParameterType = {
+      page,
+      pageCount,
+      min: minCardsCountFilter,
+      max: maxCardsCountFilter,
+      sortPacks: sorting,
+      packName: packNameFilter,
+      // @ts-ignore
+      user_id: packsOfCurrentUserFilter ? userId : '',
+    };
     try {
-      const response = await dataAPI.getPacks(requestParameters);
+      const response = await dataAPI.getPacks(packsPageSettings);
       if (response.token) {
         dispatch(packsDataReceived(response));
-        if (response.minCardsCount !== currentMinCardsCount) {
+        if (response.minCardsCount !== minCardsCount) {
           dispatch(packsSetMinCardsCountFilter(response.minCardsCount));
         }
-        if (response.maxCardsCount !== currentMaxCardsCount) {
+        if (response.maxCardsCount !== maxCardsCount) {
           dispatch(packsSetMaxCardsCountFilter(response.maxCardsCount));
         }
       } else {
@@ -40,12 +62,11 @@ export const setPacksData =
   };
 
 export const createPack =
-  (packData: CreatePackParameterType, viewSettings: GetPacksParameterType) =>
-  async (dispatch: AppDispatch) => {
+  (packData: CreatePackParameterType) => async (dispatch: AppDispatch) => {
     try {
       const response = await dataAPI.postPack(packData);
       if (response.token) {
-        await dispatch(setPacksData(viewSettings));
+        await dispatch(setPacksData());
         dispatch(setAppMessage('new pack created successfully'));
       }
     } catch (error) {
@@ -53,36 +74,33 @@ export const createPack =
     }
   };
 
-export const updatePack =
-  (data: PutPackDataType, currentViewSettings: GetPacksParameterType) =>
-  async (dispatch: AppDispatch) => {
-    dispatch(appIsBusy(true));
-    try {
-      const response = await dataAPI.putPackData(data);
-      if (response.statusText === 'OK') {
-        // just trying another approach with response codes
-        await dispatch(setPacksData(currentViewSettings));
-        dispatch(setAppMessage('pack updated successfully'));
-      }
-    } catch (error) {
-      processAsyncActionErrors(error, dispatch, 'error updating the pack');
-    } finally {
-      dispatch(appIsBusy(false));
+export const updatePack = (data: PutPackDataType) => async (dispatch: AppDispatch) => {
+  dispatch(appIsBusy(true));
+  try {
+    const response = await dataAPI.putPackData(data);
+    if (response.statusText === 'OK') {
+      // just trying another approach with response codes
+      await dispatch(setPacksData());
+      dispatch(setAppMessage('pack updated successfully'));
     }
-  };
+  } catch (error) {
+    processAsyncActionErrors(error, dispatch, 'error updating the pack');
+  } finally {
+    dispatch(appIsBusy(false));
+  }
+};
 
-export const deletePack =
-  (id: string, viewSettings: GetPacksParameterType) => async (dispatch: AppDispatch) => {
-    dispatch(appIsBusy(true));
-    try {
-      const response = await dataAPI.deletePack(id);
-      if (response.statusText === 'OK') {
-        await dispatch(setPacksData(viewSettings));
-        dispatch(setAppMessage('the pack deleted successfully'));
-      }
-    } catch (error) {
-      processAsyncActionErrors(error, dispatch, 'error deleting the pack');
-    } finally {
-      dispatch(appIsBusy(false));
+export const deletePack = (id: string) => async (dispatch: AppDispatch) => {
+  dispatch(appIsBusy(true));
+  try {
+    const response = await dataAPI.deletePack(id);
+    if (response.statusText === 'OK') {
+      await dispatch(setPacksData());
+      dispatch(setAppMessage('the pack deleted successfully'));
     }
-  };
+  } catch (error) {
+    processAsyncActionErrors(error, dispatch, 'error deleting the pack');
+  } finally {
+    dispatch(appIsBusy(false));
+  }
+};

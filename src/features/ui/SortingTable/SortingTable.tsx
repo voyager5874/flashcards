@@ -1,4 +1,4 @@
-import { MouseEvent, PropsWithChildren, ReactElement } from 'react';
+import { MouseEvent, PropsWithChildren, ReactElement, useCallback } from 'react';
 
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
@@ -61,15 +61,19 @@ const TableHead = <T,>({
     }
     changeSorting(newSortingOption);
   };
-  const determineSortingSign = (header: string) => {
-    if (sorting.slice(SECOND_ITEM_INDEX) === (header as string)) {
-      if (sorting[FIRST_ITEM_INDEX] === '0')
-        return <FontAwesomeIcon icon={faChevronDown} />;
-      if (sorting[FIRST_ITEM_INDEX] === '1')
-        return <FontAwesomeIcon icon={faChevronUp} />;
-    }
-    return <span />;
-  };
+
+  const determineSortingSign = useCallback(
+    (header: string) => {
+      if (sorting.slice(SECOND_ITEM_INDEX) === (header as string)) {
+        if (sorting[FIRST_ITEM_INDEX] === '0')
+          return <FontAwesomeIcon icon={faChevronDown} />;
+        if (sorting[FIRST_ITEM_INDEX] === '1')
+          return <FontAwesomeIcon icon={faChevronUp} />;
+      }
+      return <span />;
+    },
+    [sorting],
+  );
   // <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />;
 
   return (
