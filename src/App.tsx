@@ -29,6 +29,7 @@ const App = (): ReactElement => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    if (appIsInitialized) return;
     dispatch(initializeApp());
   }, []);
 
