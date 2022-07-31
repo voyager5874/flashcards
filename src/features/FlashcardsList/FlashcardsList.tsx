@@ -35,6 +35,10 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
 
     const { controlledPromise, resetControlledPromise } = useControlledPromise();
 
+    const { minGrade } = useAppSelector(state => state.flashcards);
+
+    const appIsBusy = useAppSelector(state => state.appReducer.isBusy);
+
     useEffect(() => {
       const queryObject: GetFlashcardsParameterType = {
         // eslint-disable-next-line camelcase
@@ -72,6 +76,23 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
         }),
       );
     };
+
+    const isEmpty =
+      min === minGrade &&
+      max &&
+      max >= 5 &&
+      cardQuestion === '' &&
+      cardAnswer === '' &&
+      !flashcardsList.length;
+
+    let pageContentReplacer: string;
+    if (appIsBusy) {
+      pageContentReplacer = '';
+    } else {
+      pageContentReplacer = isEmpty
+        ? 'the pack is empty'
+        : 'nothing found with current filters';
+    }
 
     const respondFromModal = (event: MouseEvent<HTMLButtonElement>): void => {
       if (!controlledPromise.resolve) return;
@@ -135,9 +156,7 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
             sorting={sortCards || '0updated'}
           />
         ) : (
-          <p className={styles.defaultContent}>
-            This pack is empty. Click add new flashcard to fill it
-          </p>
+          <p className={styles.defaultContent}>{pageContentReplacer}</p>
         )}
         {deleteItemDialogActive && (
           <Modal
