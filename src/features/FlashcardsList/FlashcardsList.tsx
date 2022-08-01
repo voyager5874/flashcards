@@ -2,11 +2,16 @@ import { FC, memo, MouseEvent, ReactElement, useEffect, useState } from 'react';
 
 import styles from './FlashcardsList.module.scss';
 
-import { CardsSortParameterType, GetFlashcardsParameterType } from 'api/types';
+import {
+  CardsSortParameterType,
+  GetFlashcardsParameterType,
+  PutFlashcardDataType,
+} from 'api/types';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { Modal } from 'features/ui/Modal';
 import { SortingTable } from 'features/ui/SortingTable';
 import { useAppDispatch, useAppSelector, useControlledPromise } from 'hooks';
+import { FlashcardEditForm } from 'pages/Flashcards/FlashcardEditForm/FlashcardEditForm';
 import {
   deleteFlashcard,
   setFlashcardsData,
@@ -32,6 +37,7 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
     const dispatch = useAppDispatch();
 
     const [deleteItemDialogActive, setDeleteItemDialogActive] = useState(false);
+    const [editItemDialogActive, setEditItemDialogActive] = useState(false);
 
     const { controlledPromise, resetControlledPromise } = useControlledPromise();
 
@@ -40,18 +46,7 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
     const appIsBusy = useAppSelector(state => state.appReducer.isBusy);
 
     useEffect(() => {
-      const queryObject: GetFlashcardsParameterType = {
-        // eslint-disable-next-line camelcase
-        cardsPack_id,
-        page,
-        pageCount,
-        min,
-        max,
-        cardAnswer,
-        cardQuestion,
-        sortCards,
-      };
-      dispatch(setFlashcardsData(queryObject));
+      dispatch(setFlashcardsData(cardsPack_id));
       // eslint-disable-next-line camelcase
     }, [cardsPack_id, page, pageCount, min, max, cardAnswer, cardQuestion, sortCards]);
 
@@ -62,19 +57,7 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
     const currentCard = useAppSelector(state => selectFlashcardById(state, currenCardId));
 
     const handleDeleteFlashcard = (id: string) => {
-      dispatch(
-        deleteFlashcard(id, {
-          page,
-          pageCount,
-          min,
-          max,
-          cardAnswer,
-          cardQuestion,
-          // eslint-disable-next-line camelcase
-          cardsPack_id,
-          sortCards,
-        }),
-      );
+      dispatch(deleteFlashcard(id, cardsPack_id));
     };
 
     const isEmpty =
@@ -117,31 +100,23 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
       setDeleteItemDialogActive(false);
     };
 
-    const handleEditFlashcard = (id: string) => {
+    const handleEditFlashcard = (data: PutFlashcardDataType) => {
+      dispatch(updateFlashcard(data, cardsPack_id));
+    };
+
+    const showEditFlashcardDialog = async (id: string) => {
       setCurrentCardId(id);
-      dispatch(
-        updateFlashcard(
-          { _id: id, question: `${new Date()} updated question` },
-          {
-            page,
-            pageCount,
-            min,
-            max,
-            cardAnswer,
-            cardQuestion,
-            // eslint-disable-next-line camelcase
-            cardsPack_id,
-            sortCards,
-          },
-        ),
-      );
+      setEditItemDialogActive(true);
+      resetControlledPromise();
+      await controlledPromise.promise;
+      setEditItemDialogActive(false);
     };
 
     const changeSorting = (sortingField: CardsSortParameterType) => {
       dispatch(flashcardsSortingApplied(sortingField));
     };
 
-    const flashcardHandlers = [showDeleteDialog, handleEditFlashcard];
+    const flashcardHandlers = [showDeleteDialog, showEditFlashcardDialog];
 
     return (
       <div className={styles.wrapper}>
@@ -173,6 +148,19 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
                 No, I changed my mind
               </ButtonFlatDesign>
             </div>
+          </Modal>
+        )}
+        {editItemDialogActive && (
+          <Modal
+            caption="Edit flashcard"
+            active={editItemDialogActive}
+            displayControlCallback={setEditItemDialogActive}
+          >
+            <FlashcardEditForm
+              promiseToControl={controlledPromise}
+              submitCallback={handleEditFlashcard}
+              initialValues={currentCard}
+            />
           </Modal>
         )}
       </div>

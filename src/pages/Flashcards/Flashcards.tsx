@@ -2,7 +2,6 @@ import { ChangeEvent, ReactElement, useEffect, useState } from 'react';
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons/faChevronLeft';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useFormik } from 'formik';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 import { CreateFlashcardParameterType } from 'api/types';
@@ -19,7 +18,7 @@ import {
   useControlledPromise,
   useDebouncedValue,
 } from 'hooks';
-import { ControlledPromiseType } from 'hooks/useControlledPromise';
+import { FlashcardEditForm } from 'pages/Flashcards/FlashcardEditForm/FlashcardEditForm';
 import styles from 'pages/Flashcards/Flashcards.module.scss';
 import { createFlashcard } from 'store/asyncActions/flashcards';
 import {
@@ -30,53 +29,6 @@ import {
   flashcardsQuestionKeywordsFilterApplied,
 } from 'store/reducers/flashcards';
 import { selectPackById } from 'store/selectors/selectPackById';
-
-type AddFlashcardFormPropsType = {
-  promiseToControl: ControlledPromiseType;
-  submitCallback: (data: Partial<CreateFlashcardParameterType>) => void;
-};
-
-const AddFlashcardForm = ({
-  promiseToControl,
-  submitCallback,
-}: AddFlashcardFormPropsType) => {
-  // const dispatch = useAppDispatch();
-
-  const formik = useFormik({
-    initialValues: {
-      answer: '',
-      question: '',
-    } as Partial<CreateFlashcardParameterType>,
-    onSubmit: (values, formikHelpers) => {
-      submitCallback(values);
-      if (promiseToControl.resolve) promiseToControl.resolve(true);
-    },
-  });
-  return (
-    <form onSubmit={formik.handleSubmit}>
-      <TextInput
-        placeholder="question"
-        name="question"
-        value={formik.values.question}
-        onChange={formik.handleChange}
-      />
-      <TextInput
-        name="answer"
-        placeholder="answer"
-        value={formik.values.answer}
-        onChange={formik.handleChange}
-      />
-      <ButtonFlatDesign className={styles.button} type="submit">
-        Save
-      </ButtonFlatDesign>
-      <ButtonFlatDesign
-        onClick={() => promiseToControl.resolve && promiseToControl.resolve(false)}
-      >
-        Cancel
-      </ButtonFlatDesign>
-    </form>
-  );
-};
 
 export const Flashcards = (): ReactElement => {
   const dispatch = useAppDispatch();
@@ -142,7 +94,7 @@ export const Flashcards = (): ReactElement => {
     setQuestionSearchString(event.currentTarget.value);
   };
 
-  const handleCreateFlashcard = (cardData: Partial<CreateFlashcardParameterType>) => {
+  const handleCreateFlashcard = (cardData: CreateFlashcardParameterType) => {
     if (!packId) return;
     dispatch(
       createFlashcard(
@@ -151,14 +103,7 @@ export const Flashcards = (): ReactElement => {
           question: cardData.question,
           answer: cardData.answer,
         },
-        {
-          cardsPack_id: packId || '',
-          min: minGradeFilter,
-          max: maxGradeFilter,
-          pageCount,
-          page,
-          cardQuestion: questionKeywordsFilter,
-        },
+        packId || '',
       ),
     );
   };
@@ -224,9 +169,10 @@ export const Flashcards = (): ReactElement => {
           active={addItemDialogActive}
           displayControlCallback={setAddItemDialogActive}
         >
-          <AddFlashcardForm
+          <FlashcardEditForm
             promiseToControl={controlledPromise}
             submitCallback={handleCreateFlashcard}
+            initialValues={{ answer: '', question: '', cardsPack_id: packId || '' }}
           />
         </Modal>
       )}

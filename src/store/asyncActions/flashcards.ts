@@ -6,14 +6,33 @@ import {
 } from 'api/types';
 import { appIsBusy, setAppMessage } from 'store/reducers/app';
 import { flashcardsDataReceived } from 'store/reducers/flashcards';
-import { AppDispatch } from 'store/types';
+import { AppDispatch, RootState } from 'store/types';
 import { processAsyncActionErrors } from 'utils';
 
 export const setFlashcardsData =
-  (requestParameters: GetFlashcardsParameterType) => async (dispatch: AppDispatch) => {
+  (packId: string) => async (dispatch: AppDispatch, getState: () => RootState) => {
     dispatch(appIsBusy(true));
+    const {
+      page,
+      pageCount,
+      minGradeFilter,
+      maxGradeFilter,
+      sorting,
+      questionKeywordsFilter,
+      answerKeywordsFilter,
+    } = getState().flashcards;
+    const flashcardPageSettings: GetFlashcardsParameterType = {
+      cardsPack_id: packId,
+      page,
+      pageCount,
+      min: minGradeFilter,
+      max: maxGradeFilter,
+      cardQuestion: questionKeywordsFilter,
+      sortCards: sorting,
+      cardAnswer: answerKeywordsFilter,
+    };
     try {
-      const response = await dataAPI.getFlashcards(requestParameters);
+      const response = await dataAPI.getFlashcards(flashcardPageSettings);
       if (response.token) {
         dispatch(flashcardsDataReceived(response));
       }
@@ -25,14 +44,14 @@ export const setFlashcardsData =
   };
 
 export const createFlashcard =
-  (newCardData: CreateFlashcardParameterType, viewSettings: GetFlashcardsParameterType) =>
+  (newCardData: CreateFlashcardParameterType, packId: string) =>
   async (dispatch: AppDispatch) => {
     dispatch(appIsBusy(true));
 
     try {
       const response = await dataAPI.postFlashcard(newCardData);
       if (response.data.token) {
-        await dispatch(setFlashcardsData(viewSettings));
+        await dispatch(setFlashcardsData(packId));
         dispatch(setAppMessage('flashcard created successfully'));
       }
     } catch (error) {
@@ -43,14 +62,13 @@ export const createFlashcard =
   };
 
 export const updateFlashcard =
-  (data: PutFlashcardDataType, viewSettings: GetFlashcardsParameterType) =>
-  async (dispatch: AppDispatch) => {
+  (data: PutFlashcardDataType, packId: string) => async (dispatch: AppDispatch) => {
     dispatch(appIsBusy(true));
 
     try {
       const response = await dataAPI.putFlashcardData(data);
       if (response.statusText === 'OK') {
-        dispatch(setFlashcardsData(viewSettings));
+        dispatch(setFlashcardsData(packId));
       }
     } catch (error) {
       processAsyncActionErrors(error, dispatch, 'error updating the flashcard');
@@ -60,13 +78,12 @@ export const updateFlashcard =
   };
 
 export const deleteFlashcard =
-  (id: string, viewSettings: GetFlashcardsParameterType) =>
-  async (dispatch: AppDispatch) => {
+  (id: string, packId: string) => async (dispatch: AppDispatch) => {
     dispatch(appIsBusy(true));
     try {
       const response = await dataAPI.deleteFlashcard(id);
       if (response.statusText === 'OK') {
-        await dispatch(setFlashcardsData(viewSettings));
+        await dispatch(setFlashcardsData(packId));
         dispatch(setAppMessage('flashcard deleted successfully'));
       }
     } catch (error) {
