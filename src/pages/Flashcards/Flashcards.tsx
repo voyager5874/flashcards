@@ -3,7 +3,7 @@ import { ChangeEvent, ReactElement, useEffect, useState } from 'react';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons/faChevronLeft';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useFormik } from 'formik';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import { CreateFlashcardParameterType } from 'api/types';
 import { FIRST_ITEM_INDEX, SECOND_ITEM_INDEX } from 'const';
@@ -85,8 +85,9 @@ export const Flashcards = (): ReactElement => {
 
   const { packId } = params;
 
+  const [pageUrl, setPageUrl] = useSearchParams();
+
   const {
-    // packName, // remove from the slice
     page,
     pageCount,
     cardsTotalCount,
@@ -102,7 +103,14 @@ export const Flashcards = (): ReactElement => {
 
   const appIsBusy = useAppSelector(state => state.appReducer.isBusy);
 
-  const packName = useAppSelector(state => selectPackById(state, packId || '').name);
+  const packNameFromPacksSlice = useAppSelector(
+    state => selectPackById(state, packId || '').name,
+  );
+
+  useEffect(() => {
+    if (!packNameFromPacksSlice) return;
+    setPageUrl({ packName: packNameFromPacksSlice }, { replace: true });
+  }, [packNameFromPacksSlice]);
 
   const [questionSearchString, setQuestionSearchString] =
     useState(questionKeywordsFilter);
@@ -167,7 +175,7 @@ export const Flashcards = (): ReactElement => {
       <div className={styles.form}>
         <h2>
           <FontAwesomeIcon icon={faChevronLeft} />
-          <span>{packName}</span>
+          <span>{pageUrl.get('packName')}</span>
         </h2>
         <TextInput
           disabled={appIsBusy}

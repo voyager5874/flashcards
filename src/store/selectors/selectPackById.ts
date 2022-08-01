@@ -4,7 +4,7 @@ import { RootState } from 'store/types';
 
 export const selectPackById = (state: RootState, packId: string): PackInAppType => {
   const notFound: PackInAppType = {
-    name: 'unknown',
+    name: null,
     _id: packId,
     user_name: null,
     type: 'pack',

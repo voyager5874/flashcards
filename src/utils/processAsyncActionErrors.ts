@@ -1,6 +1,7 @@
 import { AxiosError } from 'axios';
 
 import { appErrorOccurred } from 'store/reducers/app';
+import { userLoggedIn } from 'store/reducers/login';
 import { AppDispatch } from 'store/types';
 
 export const processAsyncActionErrors = (
@@ -13,6 +14,9 @@ export const processAsyncActionErrors = (
   } else if (error instanceof AxiosError) {
     const errorMessage = error?.response?.data?.error ?? error.message;
     dispatch(appErrorOccurred(errorMessage));
+    if (error.response?.status === 401) {
+      dispatch(userLoggedIn(false));
+    }
   } else if (defaultMessage) {
     dispatch(appErrorOccurred(defaultMessage));
   }

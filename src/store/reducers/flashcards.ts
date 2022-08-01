@@ -32,10 +32,9 @@ const initialState = {
   minGradeFilter: 0,
   maxGradeFilter: 5,
   keywordsFilter: '',
-  packName: '',
   answerKeywordsFilter: '',
   questionKeywordsFilter: '',
-  sorting: '' as CardsSortParameterType | '',
+  sorting: '0updated' as CardsSortParameterType,
 };
 
 type initialStateType = typeof initialState;
@@ -47,7 +46,6 @@ type FlashcardsActionType =
   | ReturnType<typeof flashcardsMinGradeFilterApplied>
   | ReturnType<typeof flashcardsCurrentPageChanged>
   | ReturnType<typeof flashcardsItemsPerPageChanged>
-  | ReturnType<typeof flashcardsPackNameDetermined>
   | ReturnType<typeof flashcardsQuestionKeywordsFilterApplied>
   | ReturnType<typeof flashcardsSortingApplied>;
 
@@ -67,8 +65,6 @@ export const flashcards = (
     case 'FLASHCARDS/CURRENT-PAGE-CHANGED':
       return { ...state, ...action.payload };
     case 'FLASHCARDS/ITEMS-PER-PAGE-CHANGED':
-      return { ...state, ...action.payload };
-    case 'FLASHCARDS/PACK-NAME-DETERMINED':
       return { ...state, ...action.payload };
     case 'FLASHCARDS/QUESTION-KEYWORDS-FILTER-APPLIED':
       return { ...state, ...action.payload };
@@ -123,14 +119,6 @@ export const flashcardsItemsPerPageChanged = (pageCount: number) =>
     type: 'FLASHCARDS/ITEMS-PER-PAGE-CHANGED',
     payload: {
       pageCount,
-    },
-  } as const);
-
-export const flashcardsPackNameDetermined = (packName: string) =>
-  ({
-    type: 'FLASHCARDS/PACK-NAME-DETERMINED',
-    payload: {
-      packName,
     },
   } as const);
 
