@@ -4,11 +4,16 @@ import { useNavigate } from 'react-router-dom';
 
 import styles from './PacksList.module.scss';
 
-import { GetPacksParameterType, PacksSortParameterType } from 'api/types';
+import {
+  GetPacksParameterType,
+  PacksSortParameterType,
+  PutPackDataType,
+} from 'api/types';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { Modal } from 'features/ui/Modal';
 import { SortingTable } from 'features/ui/SortingTable';
 import { useAppDispatch, useAppSelector, useControlledPromise } from 'hooks';
+import { PackEditForm } from 'pages/Packs/PackEditForm/PackEditForm';
 import { deletePack, setPacksData, updatePack } from 'store/asyncActions/packs';
 import { packsSortingApplied } from 'store/reducers/packs';
 import { selectPackById } from 'store/selectors';
@@ -34,6 +39,7 @@ export const PacksList: FC<PacksListPropsType> = memo(
     const { controlledPromise, resetControlledPromise } = useControlledPromise();
 
     const [deleteItemDialogActive, setDeleteItemDialogActive] = useState(false);
+    const [editItemDialogActive, setEditItemDialogActive] = useState(false);
 
     const [underActionItemId, setUnderActionItemId] = useState('');
 
@@ -52,8 +58,16 @@ export const PacksList: FC<PacksListPropsType> = memo(
       navigate(`/flashcards/${id}`);
     };
 
-    const editPack = (id: string) => {
-      dispatch(updatePack({ _id: id, name: `updated ${new Date()}` }));
+    const handleEditPack = (data: PutPackDataType) => {
+      dispatch(updatePack(data));
+    };
+
+    const showEditItemDialog = async (id: string) => {
+      setUnderActionItemId(id);
+      setEditItemDialogActive(true);
+      resetControlledPromise();
+      await controlledPromise.promise;
+      setEditItemDialogActive(false);
     };
 
     const handleDeletePack = (id: string) => {
@@ -84,7 +98,7 @@ export const PacksList: FC<PacksListPropsType> = memo(
       }
     };
 
-    const packHandlers = [openPack, () => {}, editPack, showDeleteDialog];
+    const packHandlers = [openPack, () => {}, showEditItemDialog, showDeleteDialog];
 
     return (
       <div className={styles.wrapper}>
@@ -100,11 +114,11 @@ export const PacksList: FC<PacksListPropsType> = memo(
         />
         {deleteItemDialogActive && (
           <Modal
-            caption="Delete flashcard"
+            caption="Delete pack"
             active={deleteItemDialogActive}
             displayControlCallback={setDeleteItemDialogActive}
           >
-            <p>Do you really wanna delete {underActionPack.name} pack?</p>
+            <p>Do you really wanna delete &apos;{underActionPack.name}&apos; pack?</p>
             <div>
               <ButtonFlatDesign className={styles.button} onClick={respondFromModal}>
                 Yes
@@ -113,6 +127,25 @@ export const PacksList: FC<PacksListPropsType> = memo(
                 No, I changed my mind
               </ButtonFlatDesign>
             </div>
+          </Modal>
+        )}
+        {editItemDialogActive && (
+          <Modal
+            caption="Edit pack"
+            active={editItemDialogActive}
+            displayControlCallback={setEditItemDialogActive}
+          >
+            <PackEditForm
+              promiseToControl={controlledPromise}
+              submitCallback={handleEditPack}
+              // initialValues={underActionPack}
+              initialValues={{
+                name: underActionPack.name || '',
+                // eslint-disable-next-line no-underscore-dangle
+                _id: underActionPack._id,
+                private: underActionPack.private ?? false,
+              }}
+            />
           </Modal>
         )}
       </div>

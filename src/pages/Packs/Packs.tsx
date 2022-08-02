@@ -2,6 +2,7 @@ import { ChangeEvent, ReactElement, useEffect, useState } from 'react';
 
 import styles from './Packs.module.scss';
 
+import { CreatePackParameterType } from 'api/types';
 import {
   DEFAULT_MAX_ITEMS_FILTER_VALUE,
   DEFAULT_MIN,
@@ -14,8 +15,15 @@ import { ButtonFlatDesign } from 'features/ui/Button';
 import { CheckboxFlatDesign } from 'features/ui/Checkbox/CheckboxFlatDesign';
 import { TextInput } from 'features/ui/flat-design';
 import { RangeDoubleSlider } from 'features/ui/flat-design/RangeDoubleSlider';
+import { Modal } from 'features/ui/Modal';
 import { Pagination } from 'features/ui/Pagination';
-import { useAppDispatch, useAppSelector, useDebouncedValue } from 'hooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+  useControlledPromise,
+  useDebouncedValue,
+} from 'hooks';
+import { PackEditForm } from 'pages/Packs/PackEditForm/PackEditForm';
 import { createPack } from 'store/asyncActions/packs';
 import {
   packsCurrentPageChanged,
@@ -28,6 +36,8 @@ import {
 
 export const Packs = (): ReactElement => {
   const dispatch = useAppDispatch();
+
+  const { controlledPromise, resetControlledPromise } = useControlledPromise();
 
   const {
     pageCount,
@@ -49,6 +59,8 @@ export const Packs = (): ReactElement => {
 
   const [packName, setPackName] = useState(packNameFilter);
 
+  const [addItemDialogActive, setAddItemDialogActive] = useState(false);
+
   const changePacksFilterValues = (newFilterValues: [number, number]) => {
     dispatch(packsSetMaxCardsCountFilter(newFilterValues[SECOND_ITEM_INDEX]));
     dispatch(packsSetMinCardsCountFilter(newFilterValues[FIRST_ITEM_INDEX]));
@@ -66,8 +78,15 @@ export const Packs = (): ReactElement => {
     dispatch(packsCurrentPageChanged(toPage));
   };
 
-  const handleCreatePack = () => {
-    dispatch(createPack({ name: 'v5874 new pack', private: true }));
+  const handleCreatePack = (data: CreatePackParameterType) => {
+    dispatch(createPack(data));
+  };
+
+  const showCreatePackDialog = async () => {
+    setAddItemDialogActive(true);
+    resetControlledPromise();
+    await controlledPromise.promise;
+    setAddItemDialogActive(false);
   };
 
   const debouncedSearchString = useDebouncedValue(packName);
@@ -91,7 +110,9 @@ export const Packs = (): ReactElement => {
           value={packName}
           onChange={changePackNameFilter}
         />
-        <ButtonFlatDesign onClick={handleCreatePack}>create new pack</ButtonFlatDesign>
+        <ButtonFlatDesign onClick={showCreatePackDialog}>
+          create new pack
+        </ButtonFlatDesign>
       </div>
 
       <div className={styles.controls}>
@@ -131,6 +152,17 @@ export const Packs = (): ReactElement => {
         packName={packNameFilter}
         sortPacks={sorting}
       />
+      <Modal
+        active={addItemDialogActive}
+        displayControlCallback={setAddItemDialogActive}
+        caption="Create new pack"
+      >
+        <PackEditForm
+          promiseToControl={controlledPromise}
+          submitCallback={handleCreatePack}
+          initialValues={{ name: '', deckCover: '', private: true }}
+        />
+      </Modal>
     </div>
   );
 };
