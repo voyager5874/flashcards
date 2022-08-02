@@ -47,21 +47,22 @@ const App = (): ReactElement => {
         <Route path="/*" element={<NotFound />} />
         <Route path="/" element={isLoggedIn ? <Layout /> : <Navigate to="login" />}>
           {/* <Route path="/" element={<Layout />}> */}
-          <Route index element={<Profile />} />
+          <Route index element={<Navigate to="profile" />} />
           <Route path="profile" element={<Profile />} />
           <Route path="packs" element={<Packs />} />
-          <Route path="flashcards" element={<Flashcards />}>
+          <Route path="flashcards">
             <Route path=":packId" element={<Flashcards />} />
           </Route>
           <Route path="heap-test" element={<ComponentsTest />} />
           <Route path="flat-test" element={<FlatDesignTestPage />} />
           {/* <Route path="*" element={<NotFound />} /> */}
         </Route>
-        <Route path="password-reset/" element={<PasswordReset />}>
+        <Route path="password-reset">
+          <Route index element={<NotFound />} />
           <Route path=":token" element={<PasswordReset />} />
         </Route>
         <Route path="password-forgotten" element={<PasswordForgotten />} />
-        <Route path="instructions" element={<InfoOnPasswordRecovery />}>
+        <Route path="instructions">
           <Route path=":email" element={<InfoOnPasswordRecovery />} />
         </Route>
         <Route path="login" element={<Login />} />
