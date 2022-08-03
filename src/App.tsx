@@ -10,6 +10,7 @@ import { ComponentsTest } from 'pages/ComponentsTest';
 import { Flashcards } from 'pages/Flashcards/Flashcards';
 import { FlatDesignTestPage } from 'pages/FlatDesignTest/FlatDesignTestPage';
 import { InfoOnPasswordRecovery } from 'pages/InfoOnPasswordRecovery';
+import { Learn } from 'pages/Learn/Learn';
 import { Loader } from 'pages/Loader';
 import { Login } from 'pages/Login';
 import { NotFound } from 'pages/NotFound';
@@ -46,25 +47,22 @@ const App = (): ReactElement => {
       <Routes>
         <Route path="/*" element={<NotFound />} />
         <Route path="/" element={isLoggedIn ? <Layout /> : <Navigate to="login" />}>
-          {/* <Route path="/" element={<Layout />}> */}
           <Route index element={<Navigate to="profile" />} />
           <Route path="profile" element={<Profile />} />
           <Route path="packs" element={<Packs />} />
           <Route path="flashcards">
             <Route path=":packId" element={<Flashcards />} />
           </Route>
+          <Route path="learn/:packId" element={<Learn />} />
           <Route path="heap-test" element={<ComponentsTest />} />
           <Route path="flat-test" element={<FlatDesignTestPage />} />
-          {/* <Route path="*" element={<NotFound />} /> */}
         </Route>
         <Route path="password-reset">
           <Route index element={<NotFound />} />
           <Route path=":token" element={<PasswordReset />} />
         </Route>
         <Route path="password-forgotten" element={<PasswordForgotten />} />
-        <Route path="instructions">
-          <Route path=":email" element={<InfoOnPasswordRecovery />} />
-        </Route>
+        <Route path="instructions/:email" element={<InfoOnPasswordRecovery />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
       </Routes>

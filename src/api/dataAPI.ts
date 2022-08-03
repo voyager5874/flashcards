@@ -9,6 +9,8 @@ import {
   PackDataOnServerType,
   PutFlashcardDataResponseType,
   PutFlashcardDataType,
+  PutFlashcardGradeParameterType,
+  PutFlashcardGradeResponseType,
   PutPackDataResponseType,
   PutPackDataType,
 } from 'api/types';
@@ -50,6 +52,9 @@ export const dataAPI = {
       card: data,
       // card: { ...data },
     });
+  },
+  putFlashcardGrade(data: PutFlashcardGradeParameterType) {
+    return axiosInstance.put<PutFlashcardGradeResponseType>('cards/grade', data);
   },
   deletePack(id: string) {
     return axiosInstance.delete(`cards/pack?id=${id}`);

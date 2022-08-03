@@ -3,9 +3,14 @@ import {
   CreateFlashcardParameterType,
   GetFlashcardsParameterType,
   PutFlashcardDataType,
+  PutFlashcardGradeParameterType,
 } from 'api/types';
 import { appIsBusy, setAppMessage } from 'store/reducers/app';
-import { flashcardsDataReceived } from 'store/reducers/flashcards';
+import {
+  flashcardsCardDataUpdated,
+  flashcardsCardGradeUpdated,
+  flashcardsDataReceived,
+} from 'store/reducers/flashcards';
 import { AppDispatch, RootState } from 'store/types';
 import { processAsyncActionErrors } from 'utils';
 
@@ -64,11 +69,13 @@ export const createFlashcard =
 export const updateFlashcard =
   (data: PutFlashcardDataType, packId: string) => async (dispatch: AppDispatch) => {
     dispatch(appIsBusy(true));
-
+    // eslint-disable-next-line no-debugger
+    debugger;
     try {
       const response = await dataAPI.putFlashcardData(data);
       if (response.statusText === 'OK') {
-        dispatch(setFlashcardsData(packId));
+        // dispatch(setFlashcardsData(packId));
+        dispatch(flashcardsCardDataUpdated(response.data.updatedCard));
       }
     } catch (error) {
       processAsyncActionErrors(error, dispatch, 'error updating the flashcard');
@@ -88,6 +95,23 @@ export const deleteFlashcard =
       }
     } catch (error) {
       processAsyncActionErrors(error, dispatch, 'error deleting flashcard');
+    } finally {
+      dispatch(appIsBusy(false));
+    }
+  };
+
+export const updateFlashcardGrade =
+  (data: PutFlashcardGradeParameterType) => async (dispatch: AppDispatch) => {
+    dispatch(appIsBusy(true));
+    // eslint-disable-next-line no-debugger
+    debugger;
+    try {
+      const response = await dataAPI.putFlashcardGrade(data);
+      if (response.statusText === 'OK') {
+        dispatch(flashcardsCardGradeUpdated(response.data));
+      }
+    } catch (error) {
+      processAsyncActionErrors(error, dispatch, 'error updating flashcard grade');
     } finally {
       dispatch(appIsBusy(false));
     }

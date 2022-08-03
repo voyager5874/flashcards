@@ -2,6 +2,8 @@ import {
   CardsSortParameterType,
   FlashcardOnServerDataType,
   FlashcardOnServerType,
+  PutFlashcardDataType,
+  PutFlashcardGradeResponseType,
 } from 'api/types';
 
 // type flashcardsSliceInitialStateType = {
@@ -47,7 +49,11 @@ type FlashcardsActionType =
   | ReturnType<typeof flashcardsCurrentPageChanged>
   | ReturnType<typeof flashcardsItemsPerPageChanged>
   | ReturnType<typeof flashcardsQuestionKeywordsFilterApplied>
-  | ReturnType<typeof flashcardsSortingApplied>;
+  | ReturnType<typeof flashcardsSortingApplied>
+  | ReturnType<typeof flashcardsAllFiltersCleared>
+  | ReturnType<typeof flashcardsAllDataReset>
+  | ReturnType<typeof flashcardsCardDataUpdated>
+  | ReturnType<typeof flashcardsCardGradeUpdated>;
 
 export const flashcards = (
   state: initialStateType = initialState,
@@ -70,7 +76,34 @@ export const flashcards = (
       return { ...state, ...action.payload };
     case 'FLASHCARDS/SORTING-APPLIED':
       return { ...state, ...action.payload };
-
+    case 'FLASHCARDS/ALL-FILTERS-CLEARED':
+      return { ...state, ...action.payload };
+    case 'FLASHCARDS/ALL-DATA-RESET':
+      return { ...action.payload };
+    case 'FLASHCARDS/CARD-DATA-UPDATED':
+      // eslint-disable-next-line no-debugger
+      debugger;
+      return {
+        ...state,
+        cards: state.cards.map(card =>
+          // eslint-disable-next-line no-underscore-dangle
+          card._id === action.payload._id ? { ...card, ...action.payload } : card,
+        ),
+      };
+    case 'FLASHCARDS/CARD-GRADE-UPDATED':
+      return {
+        ...state,
+        cards: state.cards.map(card =>
+          // eslint-disable-next-line no-underscore-dangle
+          card._id === action.payload.card_id
+            ? {
+                ...card,
+                grade: action.payload.grade,
+                shots: action.payload.shots,
+              }
+            : card,
+        ),
+      };
     default:
       return state;
   }
@@ -136,4 +169,33 @@ export const flashcardsSortingApplied = (sorting: CardsSortParameterType) =>
     payload: {
       sorting,
     },
+  } as const);
+
+export const flashcardsAllFiltersCleared = () =>
+  ({
+    type: 'FLASHCARDS/ALL-FILTERS-CLEARED',
+    payload: {
+      questionKeywordsFilter: '',
+      answerKeywordsFilter: '',
+      minGradeFilter: 0,
+      maxGradeFilter: 5,
+    },
+  } as const);
+
+export const flashcardsAllDataReset = () =>
+  ({
+    type: 'FLASHCARDS/ALL-DATA-RESET',
+    payload: initialState,
+  } as const);
+
+export const flashcardsCardDataUpdated = (data: PutFlashcardDataType) =>
+  ({
+    type: 'FLASHCARDS/CARD-DATA-UPDATED',
+    payload: data,
+  } as const);
+
+export const flashcardsCardGradeUpdated = (data: PutFlashcardGradeResponseType) =>
+  ({
+    type: 'FLASHCARDS/CARD-GRADE-UPDATED',
+    payload: { ...data.updatedGrade },
   } as const);

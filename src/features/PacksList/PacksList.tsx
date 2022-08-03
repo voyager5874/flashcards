@@ -58,6 +58,10 @@ export const PacksList: FC<PacksListPropsType> = memo(
       navigate(`/flashcards/${id}`);
     };
 
+    const learnPack = (id: string) => {
+      navigate(`/learn/${id}`);
+    };
+
     const handleEditPack = (data: PutPackDataType) => {
       dispatch(updatePack(data));
     };
@@ -98,7 +102,7 @@ export const PacksList: FC<PacksListPropsType> = memo(
       }
     };
 
-    const packHandlers = [openPack, () => {}, showEditItemDialog, showDeleteDialog];
+    const packHandlers = [openPack, learnPack, showEditItemDialog, showDeleteDialog];
 
     return (
       <div className={styles.wrapper}>

@@ -315,7 +315,7 @@ export type PutFlashcardDataType = {
   // user_id: string;
   answer?: string;
   question?: string;
-  // grade: number;
+  grade?: number;
   // shots: number;
   // comments: string;
   // type: string;
@@ -330,27 +330,51 @@ export type PutFlashcardDataType = {
   questionVideo?: string;
 };
 
+// export type PutFlashcardDataResponseType = {
+//   updatedCard: {
+//     _id: string;
+//     cardsPack_id: string;
+//     user_id: string;
+//     answer: string;
+//     question: string;
+//     grade: number;
+//     shots: number;
+//     comments: string;
+//     type: string;
+//     rating: number;
+//     more_id: string;
+//     created: string;
+//     updated: string;
+//     __v: number;
+//     answerImg: string;
+//     answerVideo: string;
+//     questionImg: string;
+//     questionVideo: string;
+//   };
+//   token: string;
+//   tokenDeathTime: number;
+// };
+
 export type PutFlashcardDataResponseType = {
-  updatedCard: {
-    _id: string;
-    cardsPack_id: string;
-    user_id: string;
-    answer: string;
-    question: string;
-    grade: number;
-    shots: number;
-    comments: string;
-    type: string;
-    rating: number;
-    more_id: string;
-    created: string;
-    updated: string;
-    __v: number;
-    answerImg: string;
-    answerVideo: string;
-    questionImg: string;
-    questionVideo: string;
-  };
+  updatedCard: FlashcardOnServerType;
   token: string;
   tokenDeathTime: number;
+};
+
+export type FlashcardGradeType = 1 | 2 | 3 | 4 | 5;
+
+export type PutFlashcardGradeParameterType = {
+  grade: FlashcardGradeType;
+  card_id: string;
+};
+
+export type PutFlashcardGradeResponseType = {
+  updatedGrade: {
+    _id: string;
+    cardsPack_id: string;
+    card_id: string;
+    user_id: string;
+    grade: number;
+    shots: number;
+  };
 };
