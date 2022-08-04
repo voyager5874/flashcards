@@ -115,6 +115,11 @@ export const Flashcards = (): ReactElement => {
     setAddItemDialogActive(false);
   };
 
+  useEffect(() => {
+    dispatch(flashcardsMinGradeFilterApplied(minGrade));
+    dispatch(flashcardsMaxGradeFilterApplied(maxGrade));
+  }, []);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.form}>
