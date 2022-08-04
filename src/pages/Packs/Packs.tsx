@@ -99,6 +99,12 @@ export const Packs = (): ReactElement => {
     setPackName(event.currentTarget.value);
   };
 
+  // useEffect(() => {
+  //   dispatch(packsSetMinCardsCountFilter(0));
+  //   if (!maxCardsCountFilter) return;
+  //   dispatch(packsSetMaxCardsCountFilter(maxCardsCountFilter));
+  // }, []);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.form}>

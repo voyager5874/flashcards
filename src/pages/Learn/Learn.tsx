@@ -95,7 +95,7 @@ export const Learn = (): ReactElement => {
   useEffect(() => {
     showNextCard();
     if (learnedPack.name) {
-      setPackData({ packName: learnedPack.name as string });
+      setPackData({ packName: learnedPack.name as string }, { replace: true });
     }
   }, [cardsTotalCount]);
 

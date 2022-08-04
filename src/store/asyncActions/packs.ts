@@ -45,7 +45,10 @@ export const setPacksData =
       const response = await dataAPI.getPacks(packsPageSettings);
       if (response.token) {
         dispatch(packsDataReceived(response));
-        if (response.minCardsCount !== minCardsCount) {
+        if (
+          response.minCardsCount !== minCardsCount ||
+          minCardsCountFilter >= response.maxCardsCount
+        ) {
           dispatch(packsSetMinCardsCountFilter(response.minCardsCount));
         }
         if (response.maxCardsCount !== maxCardsCount) {
