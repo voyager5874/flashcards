@@ -1,4 +1,4 @@
-import { FC, ReactNode, useRef } from 'react';
+import { FC, ReactNode, useEffect, useRef } from 'react';
 
 import styles from './Modal.module.scss';
 
@@ -24,6 +24,17 @@ export const Modal: FC<ModalPropsType> = ({
   };
 
   useOutsideClickDetect(modalContentRef, hideModal);
+
+  useEffect(() => {
+    // native event!
+    const closeModal = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        displayControlCallback(false);
+      }
+    };
+    window.addEventListener('keydown', closeModal);
+    return () => window.removeEventListener('keydown', closeModal);
+  }, []);
 
   const wrapperStyle = `${styles.wrapper} ${active ? styles.active : ''}`;
 
