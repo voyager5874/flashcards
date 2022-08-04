@@ -9,8 +9,8 @@ export const processAsyncActionErrors = (
   dispatch: AppDispatch,
   defaultMessage?: string,
 ): void => {
-  if (typeof error === 'string') {
-    dispatch(appErrorOccurred(error));
+  if (error instanceof Error) {
+    dispatch(appErrorOccurred(error.message));
   } else if (error instanceof AxiosError) {
     const errorMessage = error?.response?.data?.error ?? error.message;
     dispatch(appErrorOccurred(errorMessage));

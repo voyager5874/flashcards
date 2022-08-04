@@ -21,6 +21,7 @@ import {
 import { FlashcardEditForm } from 'pages/Flashcards/FlashcardEditForm/FlashcardEditForm';
 import styles from 'pages/Flashcards/Flashcards.module.scss';
 import { createFlashcard } from 'store/asyncActions/flashcards';
+import { appErrorOccurred } from 'store/reducers/app';
 import {
   flashcardsCurrentPageChanged,
   flashcardsItemsPerPageChanged,
@@ -95,7 +96,12 @@ export const Flashcards = (): ReactElement => {
   };
 
   const handleCreateFlashcard = (cardData: CreateFlashcardParameterType) => {
-    if (!packId) return;
+    if (!packId) {
+      dispatch(
+        appErrorOccurred("info about the pack missed somehow - couldn't access pack id"),
+      );
+      return;
+    }
     dispatch(
       createFlashcard(
         {
@@ -103,7 +109,7 @@ export const Flashcards = (): ReactElement => {
           question: cardData.question,
           answer: cardData.answer,
         },
-        packId || '',
+        packId,
       ),
     );
   };
@@ -159,7 +165,7 @@ export const Flashcards = (): ReactElement => {
         />
       </div>
       <FlashcardsList
-        cardsPack_id={packId || '62c45b8bbc623e0004e21154'}
+        cardsPack_id={packId || ''}
         min={minGradeFilter}
         max={maxGradeFilter}
         pageCount={pageCount}

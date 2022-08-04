@@ -5,7 +5,7 @@ import { UpdateProfileParameterType } from 'api/types';
 import { appErrorOccurred, appIsBusy } from 'store/reducers/app';
 import { profileDataReceived } from 'store/reducers/profile';
 import { AppDispatch } from 'store/types';
-import { processAsyncActionErrors, toBase64 } from 'utils';
+import { processAsyncActionErrors, toBase64, validateImage } from 'utils';
 
 export const setUpdatedProfileData =
   (data: UpdateProfileParameterType) => async (dispatch: AppDispatch) => {
@@ -33,8 +33,16 @@ export const uploadAvatar =
     dispatch(appIsBusy(true));
     try {
       const response = await toBase64(dataFromInput);
-      if (response) dispatch(setUpdatedProfileData({ avatar: response }));
+      const validImage = await validateImage(response);
+      // await dispatch(setUpdatedProfileData({ avatar: response }));
+      if (validImage) {
+        await dispatch(setUpdatedProfileData({ avatar: response }));
+      } else {
+        dispatch(appErrorOccurred('not an image file'));
+      }
     } catch (error) {
       processAsyncActionErrors(error, dispatch, 'error during conversion to base64');
+    } finally {
+      dispatch(appIsBusy(false));
     }
   };

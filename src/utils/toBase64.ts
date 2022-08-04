@@ -8,6 +8,7 @@ export const toBase64 = (event: ChangeEvent<HTMLInputElement>): Promise<string> 
       reject(new Error('no files received from the input'));
     } else {
       const targetFile = event.target.files[FIRST_ITEM_INDEX];
+      if (targetFile.size > 1000000) reject(new Error('max image file size exceeded'));
       const reader = new FileReader();
       // const formData = new FormData();
       // formData.append('base64Representation', targetFile);
