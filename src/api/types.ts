@@ -361,7 +361,10 @@ export type PutFlashcardDataResponseType = {
   tokenDeathTime: number;
 };
 
-export type FlashcardGradeType = 1 | 2 | 3 | 4 | 5;
+// export type FlashcardGradeType = 1 | 2 | 3 | 4 | 5;
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+const grades = [1, 2, 3, 4, 5] as const;
+export type FlashcardGradeType = typeof grades[number];
 
 export type PutFlashcardGradeParameterType = {
   grade: FlashcardGradeType;

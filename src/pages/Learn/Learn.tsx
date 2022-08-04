@@ -5,6 +5,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import styles from './Learn.module.scss';
 
 import { FlashcardGradeType, FlashcardOnServerType } from 'api/types';
+import { FIRST_ITEM_INDEX } from 'const';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { RadioGroupFlatDesign } from 'features/ui/Radio/RadioGroupFlatDesign';
 import { useAppDispatch, useAppSelector } from 'hooks';
@@ -20,7 +21,7 @@ const grades = [
   'Very easy',
 ];
 
-const getCard = (cards: FlashcardOnServerType[]) => {
+const chooseCard = (cards: FlashcardOnServerType[]) => {
   const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0);
   const rand = Math.random() * sum;
   const res = cards.reduce(
@@ -49,9 +50,11 @@ export const Learn = (): ReactElement => {
 
   const [packData, setPackData] = useSearchParams();
 
-  const [cardGrade, setCardGrade] = useState<string>(grades[0]);
+  const [cardGrade, setCardGrade] = useState<string>(grades[FIRST_ITEM_INDEX]);
 
   useEffect(() => {
+    console.log('cardsTotalCount', cardsTotalCount);
+    console.log('pageCount', pageCount);
     // eslint-disable-next-line no-debugger
     debugger;
     dispatch(setFlashcardsData(packId || ''));
@@ -65,6 +68,8 @@ export const Learn = (): ReactElement => {
   };
 
   const handleCardGradeUpdate = () => {
+    const grade = grades.indexOf(cardGrade) >= 0 ? grades.indexOf(cardGrade) + 1 : 0;
+    if (!grade) return;
     // eslint-disable-next-line no-debugger
     debugger;
     // eslint-disable-next-line no-underscore-dangle
@@ -73,9 +78,9 @@ export const Learn = (): ReactElement => {
       updateFlashcardGrade({
         // eslint-disable-next-line no-underscore-dangle
         card_id: showedCard._id,
-        grade: (grades.indexOf(cardGrade) + 1) as FlashcardGradeType,
+        grade: grade as FlashcardGradeType,
       }),
-    );
+    ).then(() => setCardGrade(grades[0]));
   };
 
   const showNextCard = () => {
@@ -83,7 +88,7 @@ export const Learn = (): ReactElement => {
     debugger;
     if (!cards.length) return;
     handleCardGradeUpdate();
-    setShowedCard(getCard(cards));
+    setShowedCard(chooseCard(cards));
     setShowedCardChecked(false);
   };
 
@@ -96,24 +101,27 @@ export const Learn = (): ReactElement => {
 
   return (
     <div className={styles.wrapper}>
-      <h1>{packData.get('packName')}</h1>
-      {showedCardChecked ? (
-        <div>
-          <p>{showedCard && showedCard.answer}</p>
-          <RadioGroupFlatDesign
-            options={grades}
-            value={cardGrade}
-            name="card-grade"
-            onChangeOption={setCardGrade}
-          />
-          <ButtonFlatDesign onClick={showNextCard}>Next</ButtonFlatDesign>
-        </div>
-      ) : (
-        <div>
-          <p>{showedCard && showedCard.question}</p>
-          <ButtonFlatDesign onClick={showAnswer}>Show answer</ButtonFlatDesign>
-        </div>
-      )}
+      <div className={styles.form}>
+        <h1>{packData.get('packName')}</h1>
+        {showedCardChecked ? (
+          <div>
+            <p>{showedCard && showedCard.answer}</p>
+            <RadioGroupFlatDesign
+              className={styles.radios}
+              options={grades}
+              value={cardGrade}
+              name="card-grade"
+              onChangeOption={setCardGrade}
+            />
+            <ButtonFlatDesign onClick={showNextCard}>Next</ButtonFlatDesign>
+          </div>
+        ) : (
+          <div>
+            <p>{showedCard && showedCard.question}</p>
+            <ButtonFlatDesign onClick={showAnswer}>Show answer</ButtonFlatDesign>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

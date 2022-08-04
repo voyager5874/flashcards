@@ -1,0 +1,25 @@
+@use 'src/styles/layout-variables';
+@use 'src/styles/flat-design-colors';
+@import 'src/styles/flat-design-forms';
+
+
+.wrapper {
+  @extend .container;
+  min-height: 50vh;
+
+  .form {
+    @extend .form;
+    width: 600px;
+
+    .radios {
+      max-height: 100px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+  }
+
+}
