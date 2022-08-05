@@ -1,6 +1,6 @@
 import { FC, memo, MouseEvent, ReactElement, useEffect, useState } from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 
 import styles from './PacksList.module.scss';
 
@@ -56,6 +56,13 @@ export const PacksList: FC<PacksListPropsType> = memo(
 
     const openPack = (id: string) => {
       navigate(`/flashcards/${id}`);
+      // setUnderActionItemId(id);
+      // if (!underActionPack.name) return;
+      // navigate({pathname: `/flashcards/${id}`, search: createSearchParams(underActionPack)});
+      // navigate({
+      //   pathname: `/flashcards/${id}`,
+      //   search: `?${createSearchParams({ packName: underActionPack.name })}`,
+      // });
     };
 
     const learnPack = (id: string) => {

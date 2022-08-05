@@ -69,8 +69,6 @@ export const createFlashcard =
 export const updateFlashcard =
   (data: PutFlashcardDataType, packId: string) => async (dispatch: AppDispatch) => {
     dispatch(appIsBusy(true));
-    // eslint-disable-next-line no-debugger
-    debugger;
     try {
       const response = await dataAPI.putFlashcardData(data);
       if (response.statusText === 'OK') {
@@ -103,8 +101,6 @@ export const deleteFlashcard =
 export const updateFlashcardGrade =
   (data: PutFlashcardGradeParameterType) => async (dispatch: AppDispatch) => {
     dispatch(appIsBusy(true));
-    // eslint-disable-next-line no-debugger
-    debugger;
     try {
       const response = await dataAPI.putFlashcardGrade(data);
       if (response.statusText === 'OK') {

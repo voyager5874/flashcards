@@ -55,8 +55,6 @@ export const Learn = (): ReactElement => {
   useEffect(() => {
     console.log('cardsTotalCount', cardsTotalCount);
     console.log('pageCount', pageCount);
-    // eslint-disable-next-line no-debugger
-    debugger;
     dispatch(setFlashcardsData(packId || ''));
     if (cardsTotalCount > pageCount) {
       dispatch(flashcardsItemsPerPageChanged(cardsTotalCount));
@@ -70,8 +68,6 @@ export const Learn = (): ReactElement => {
   const handleCardGradeUpdate = () => {
     const grade = grades.indexOf(cardGrade) >= 0 ? grades.indexOf(cardGrade) + 1 : 0;
     if (!grade) return;
-    // eslint-disable-next-line no-debugger
-    debugger;
     // eslint-disable-next-line no-underscore-dangle
     if (!showedCard?._id) return;
     dispatch(
@@ -84,8 +80,6 @@ export const Learn = (): ReactElement => {
   };
 
   const showNextCard = () => {
-    // eslint-disable-next-line no-debugger
-    debugger;
     if (!cards.length) return;
     handleCardGradeUpdate();
     setShowedCard(chooseCard(cards));

@@ -34,11 +34,18 @@ import { selectPackById } from 'store/selectors/selectPackById';
 export const Flashcards = (): ReactElement => {
   const dispatch = useAppDispatch();
 
-  const params = useParams();
-
-  const { packId } = params;
+  const { packId } = useParams();
 
   const [pageUrl, setPageUrl] = useSearchParams();
+  const [addItemDialogActive, setAddItemDialogActive] = useState(false);
+
+  const { controlledPromise, resetControlledPromise } = useControlledPromise();
+
+  const appIsBusy = useAppSelector(state => state.appReducer.isBusy);
+
+  const packNameFromPacksSlice = useAppSelector(
+    state => selectPackById(state, packId).name,
+  );
 
   const {
     page,
@@ -54,23 +61,14 @@ export const Flashcards = (): ReactElement => {
     sorting,
   } = useAppSelector(state => state.flashcards);
 
-  const appIsBusy = useAppSelector(state => state.appReducer.isBusy);
-
-  const packNameFromPacksSlice = useAppSelector(
-    state => selectPackById(state, packId || '').name,
-  );
-
-  useEffect(() => {
-    if (!packNameFromPacksSlice) return;
-    setPageUrl({ packName: packNameFromPacksSlice }, { replace: true });
-  }, [packNameFromPacksSlice]);
-
   const [questionSearchString, setQuestionSearchString] =
     useState(questionKeywordsFilter);
 
-  const [addItemDialogActive, setAddItemDialogActive] = useState(false);
+  const debouncedQuestionSearchString = useDebouncedValue(questionSearchString);
 
-  const { controlledPromise, resetControlledPromise } = useControlledPromise();
+  const changeKeyWordsFilter = (event: ChangeEvent<HTMLInputElement>) => {
+    setQuestionSearchString(event.currentTarget.value);
+  };
 
   const changeGradeFilterValues = (newFilterValues: [number, number]) => {
     dispatch(flashcardsMaxGradeFilterApplied(newFilterValues[SECOND_ITEM_INDEX]));
@@ -85,17 +83,7 @@ export const Flashcards = (): ReactElement => {
     dispatch(flashcardsCurrentPageChanged(pageNumber));
   };
 
-  const debouncedQuestionSearchString = useDebouncedValue(questionSearchString);
-
-  useEffect(() => {
-    dispatch(flashcardsQuestionKeywordsFilterApplied(debouncedQuestionSearchString));
-  }, [debouncedQuestionSearchString]);
-
-  const changeKeyWordsFilter = (event: ChangeEvent<HTMLInputElement>) => {
-    setQuestionSearchString(event.currentTarget.value);
-  };
-
-  const handleCreateFlashcard = (cardData: CreateFlashcardParameterType) => {
+  const handleAddFlashcard = (cardData: CreateFlashcardParameterType) => {
     if (!packId) {
       dispatch(
         appErrorOccurred("info about the pack missed somehow - couldn't access pack id"),
@@ -114,12 +102,21 @@ export const Flashcards = (): ReactElement => {
     );
   };
 
-  const showAddDialog = async () => {
+  const showAddFlashcardDialog = async () => {
     setAddItemDialogActive(true);
     resetControlledPromise();
     await controlledPromise.promise;
     setAddItemDialogActive(false);
   };
+
+  useEffect(() => {
+    if (!packNameFromPacksSlice) return;
+    setPageUrl({ packName: packNameFromPacksSlice }, { replace: true });
+  }, [packNameFromPacksSlice]);
+
+  useEffect(() => {
+    dispatch(flashcardsQuestionKeywordsFilterApplied(debouncedQuestionSearchString));
+  }, [debouncedQuestionSearchString]);
 
   useEffect(() => {
     dispatch(flashcardsMinGradeFilterApplied(minGrade));
@@ -140,7 +137,9 @@ export const Flashcards = (): ReactElement => {
           value={questionSearchString}
           onChange={changeKeyWordsFilter}
         />
-        <ButtonFlatDesign onClick={showAddDialog}>Add flashcard</ButtonFlatDesign>
+        <ButtonFlatDesign onClick={showAddFlashcardDialog}>
+          Add flashcard
+        </ButtonFlatDesign>
       </div>
 
       <div className={styles.controls}>
@@ -182,7 +181,7 @@ export const Flashcards = (): ReactElement => {
         >
           <FlashcardEditForm
             promiseToControl={controlledPromise}
-            submitCallback={handleCreateFlashcard}
+            submitCallback={handleAddFlashcard}
             initialValues={{ answer: '', question: '', cardsPack_id: packId || '' }}
           />
         </Modal>

@@ -2,10 +2,13 @@ import { FIRST_ITEM_INDEX, ZERO_LENGTH } from 'const';
 import { PackInAppType } from 'features/Pack/types';
 import { RootState } from 'store/types';
 
-export const selectPackById = (state: RootState, packId: string): PackInAppType => {
+export const selectPackById = (
+  state: RootState,
+  packId: string | undefined | null,
+): PackInAppType => {
   const notFound: PackInAppType = {
     name: null,
-    _id: packId,
+    _id: packId || 'no pack id provided',
     user_name: null,
     type: 'pack',
     created: null,
@@ -20,7 +23,7 @@ export const selectPackById = (state: RootState, packId: string): PackInAppType 
     shots: null,
     user_id: null,
   };
-  // eslint-disable-next-line no-underscore-dangle
+  if (!packId) return notFound;
   const result = state.packs.cardPacks.filter(pack => pack._id === packId);
   return result.length > ZERO_LENGTH ? result[FIRST_ITEM_INDEX] : notFound;
 };

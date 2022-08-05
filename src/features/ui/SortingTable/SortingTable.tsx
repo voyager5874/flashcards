@@ -125,7 +125,6 @@ const TableRow = <T extends { _id: string }>({
       <TableItemActions
         itemActionsNames={itemActionNames}
         itemActionsHandlers={itemActionsHandlers}
-        // eslint-disable-next-line no-underscore-dangle
         itemId={data._id}
         // itemName={data.name ? data.name : ''}
       />
@@ -149,7 +148,6 @@ const TableBody = <T extends { _id: string }>({
 }: PropsWithChildren<TableBodyPropsType<T>>): ReactElement => (
   <>
     {data.map(item => (
-      // eslint-disable-next-line no-underscore-dangle
       <tr key={item._id}>
         <TableRow
           tableHeaders={tableHeaders}

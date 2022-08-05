@@ -25,6 +25,7 @@
   ],
   "rules": {
     "no-shadow": "off",
+    "no-underscore-dangle": "off",
     "no-alert": "error",
     "no-debugger": "error",
     "no-plusplus": "error",

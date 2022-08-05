@@ -52,7 +52,6 @@ export const Packs = (): ReactElement => {
     sorting,
   } = useAppSelector(state => state.packs);
 
-  // eslint-disable-next-line no-underscore-dangle
   const currentUserId = useAppSelector(state => state.profile._id);
 
   const appIsBusy = useAppSelector(state => state.appReducer.isBusy);

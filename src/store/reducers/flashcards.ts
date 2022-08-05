@@ -81,8 +81,6 @@ export const flashcards = (
     case 'FLASHCARDS/ALL-DATA-RESET':
       return { ...action.payload };
     case 'FLASHCARDS/CARD-DATA-UPDATED':
-      // eslint-disable-next-line no-debugger
-      debugger;
       return {
         ...state,
         cards: state.cards.map(card =>
