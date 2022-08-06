@@ -64,7 +64,8 @@ export const DropdownSelect: FC<RadioPropsType> = ({
 
   const onChangeCallback = (e: ChangeEvent<HTMLInputElement>): void => {
     if (onChange) onChange(e);
-    if (onChangeOption) onChangeOption(e.currentTarget.value);
+    if (!onChangeOption) return;
+    onChangeOption(e.currentTarget.value);
     hideOptions();
   };
 

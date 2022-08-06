@@ -74,8 +74,8 @@ export const Flashcards = (): ReactElement => {
     dispatch(flashcardsMinGradeFilterApplied(newFilterValues[FIRST_ITEM_INDEX]));
   };
 
-  const changeCardsPerPageCount = (perPageCount: number) => {
-    dispatch(flashcardsItemsPerPageChanged(perPageCount));
+  const changeCardsPerPageCount = (perPageCount: number | string) => {
+    dispatch(flashcardsItemsPerPageChanged(Number(perPageCount)));
   };
 
   const changeCurrentPage = (pageNumber: number) => {

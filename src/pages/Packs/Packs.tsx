@@ -69,8 +69,8 @@ export const Packs = (): ReactElement => {
     dispatch(packsSetCurrentUserPacksFilter(event.currentTarget.checked));
   };
 
-  const changePacksPerPageCount = (perPageCount: number) => {
-    dispatch(packsSetItemsPerPage(+perPageCount));
+  const changePacksPerPageCount = (perPageCount: number | string) => {
+    dispatch(packsSetItemsPerPage(Number(perPageCount)));
   };
 
   const changeCurrentPage = (toPage: number) => {

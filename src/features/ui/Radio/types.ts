@@ -6,8 +6,8 @@ type DefaultRadioPropsType = DetailedHTMLProps<
 >;
 
 export type RadioPropsType = DefaultRadioPropsType & {
-  options?: string[] | number[];
-  onChangeOption?: (option: any) => void;
-  // children?: ReactElement[];
+  options?: string[];
+  onChangeOption?: (option: string) => void;
+  // children?: ReactNode;
   buttonText?: string;
 };

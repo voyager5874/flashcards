@@ -1,7 +1,7 @@
 import { FC, ReactElement } from 'react';
 
-import { faHiking } from '@fortawesome/free-solid-svg-icons';
-import { faBookOpen } from '@fortawesome/free-solid-svg-icons/faBookOpen';
+// import { faHiking } from '@fortawesome/free-solid-svg-icons';
+// import { faBookOpen } from '@fortawesome/free-solid-svg-icons/faBookOpen';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons/faChevronLeft';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons/faChevronRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,10 +18,11 @@ type PaginationPropsType = {
   totalItemsCount: number;
   currentItemsPerPageValue: number;
   onPageChange: (pageNumber: number) => void;
-  onItemsPerPageChange: (itemsPerPage: number) => void;
+  onItemsPerPageChange: (itemsPerPage: number | string) => void;
   disabled: boolean;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
 // const pageCountOptions = [5, 10, 20, 50, 100];
 const pageCountOptions = ['5', '10', '20', '50', '100'];
 // options={['five', 'ten', 'twelve', 'fifty', 'hundred']}
@@ -36,6 +37,7 @@ export const Pagination: FC<PaginationPropsType> = ({
   disabled,
 }): ReactElement => {
   const pagesCount = Math.ceil(totalItemsCount / currentItemsPerPageValue);
+
   const changePageNext = () => {
     if (currentPage + STEP_TO_NEXT <= pagesCount) {
       onPageChange(currentPage + STEP_TO_NEXT);
