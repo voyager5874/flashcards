@@ -8,27 +8,28 @@ import styles from './SortingTable.module.scss';
 
 import { FIRST_ITEM_INDEX, SECOND_ITEM_INDEX } from 'const';
 
-type TableItemActionsPropsType = {
-  itemId: string;
-  // itemName: string;
+type TableItemActionsPropsType<T> = {
+  // itemId: string;
+  itemData: T;
   itemActionsNames: string[];
-  itemActionsHandlers?: Function[];
+  // itemActionsHandlers?: Function[];
+  itemActionsHandlers?: Array<(data: T) => void>;
 };
 
-const TableItemActions = ({
-  itemId,
-  // itemName,
+const TableItemActions = <T,>({
+  // itemId,
+  itemData,
   itemActionsNames,
   itemActionsHandlers,
-}: TableItemActionsPropsType) => (
+}: PropsWithChildren<TableItemActionsPropsType<T>>) => (
   <>
     {itemActionsNames.map((action, index) => (
       <button
         type="button"
         key={action}
         // @ts-ignore
-        // onClick={() => itemActionsHandlers[index](itemId, itemName)}
-        onClick={() => itemActionsHandlers[index](itemId)}
+        // onClick={() => itemActionsHandlers[index](itemId)}
+        onClick={() => itemActionsHandlers[index](itemData)}
       >
         {action}
       </button>
@@ -104,7 +105,8 @@ type TableRowPropsType<T> = {
   data: T;
   itemActionNames: string[];
   // itemActionsHandlers?: { [key: string]: Function };
-  itemActionsHandlers?: Function[];
+  // itemActionsHandlers?: Function[];
+  itemActionsHandlers?: Array<(data: T) => void>;
 };
 
 const TableRow = <T extends { _id: string }>({
@@ -117,7 +119,8 @@ const TableRow = <T extends { _id: string }>({
     {tableHeaders.map(header => (
       <td key={header as string}>
         <span className={styles.tdSizeLimiter}>
-          {JSON.stringify(data[header as keyof T])}
+          {/* {JSON.stringify(data[header as keyof T])} */}
+          {String(data[header as keyof T])}
         </span>
       </td>
     ))}
@@ -125,7 +128,8 @@ const TableRow = <T extends { _id: string }>({
       <TableItemActions
         itemActionsNames={itemActionNames}
         itemActionsHandlers={itemActionsHandlers}
-        itemId={data._id}
+        // itemId={data._id}
+        itemData={data}
         // itemName={data.name ? data.name : ''}
       />
     </td>
@@ -137,7 +141,8 @@ type TableBodyPropsType<T> = {
   tableHeaders: Array<keyof T>;
   itemActionNames: string[];
   // itemActionsHandlers?: { [key: string]: Function };
-  itemActionsHandlers?: Function[];
+  // itemActionsHandlers?: Function[];
+  itemActionsHandlers?: Array<(data: T) => void>;
 };
 
 const TableBody = <T extends { _id: string }>({
@@ -169,7 +174,8 @@ type SortingTablePropsType<T> = {
   ) => void;
   itemActionsNames: string[];
   // itemActionsHandlers?: { [key: string]: Function };
-  itemActionsHandlers?: Function[];
+  // itemActionsHandlers?: Function[];
+  itemActionsHandlers?: Array<(data: T) => void>;
   items: T[];
 };
 

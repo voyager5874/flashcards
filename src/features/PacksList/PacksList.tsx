@@ -9,14 +9,16 @@ import {
   PacksSortParameterType,
   PutPackDataType,
 } from 'api/types';
+import { PackInAppType } from 'features/Pack/types';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { Modal } from 'features/ui/Modal';
 import { SortingTable } from 'features/ui/SortingTable';
 import { useAppDispatch, useAppSelector, useControlledPromise } from 'hooks';
 import { PackEditForm } from 'pages/Packs/PackEditForm/PackEditForm';
 import { deletePack, setPacksData, updatePack } from 'store/asyncActions/packs';
+import { flashcardsItemsPerPageChanged } from 'store/reducers/flashcards';
 import { packsSortingApplied } from 'store/reducers/packs';
-import { selectPackById } from 'store/selectors';
+import { Nullable } from 'types';
 
 type PacksListPropsType = GetPacksParameterType;
 
@@ -41,40 +43,55 @@ export const PacksList: FC<PacksListPropsType> = memo(
     const [deleteItemDialogActive, setDeleteItemDialogActive] = useState(false);
     const [editItemDialogActive, setEditItemDialogActive] = useState(false);
 
-    const [underActionItemId, setUnderActionItemId] = useState('');
+    // const [underActionItemId, setUnderActionItemId] = useState('');
 
-    const underActionPack = useAppSelector(state =>
-      selectPackById(state, underActionItemId),
-    );
+    // const underActionPack = useAppSelector(state =>
+    //   selectPackById(state, underActionItemId),
+    // );
+
+    const [underActionPack, setUnderActionPack] = useState<Nullable<PackInAppType>>(null);
 
     useEffect(() => {
+      console.log(min, max, user_id, pageCount, page, packName, sortPacks);
+      // eslint-disable-next-line no-debugger
+      debugger;
       dispatch(setPacksData());
       // eslint-disable-next-line camelcase
     }, [min, max, user_id, pageCount, page, packName, sortPacks]);
 
     const packsList = useAppSelector(state => state.packs.cardPacks);
 
-    const openPack = (id: string) => {
-      navigate(`/flashcards/${id}`);
+    const openPack = (data: PackInAppType) => {
+      // eslint-disable-next-line no-debugger
+      debugger;
+      // navigate(`/flashcards/${id}`);
       // setUnderActionItemId(id);
-      // if (!underActionPack.name) return;
-      // navigate({pathname: `/flashcards/${id}`, search: createSearchParams(underActionPack)});
-      // navigate({
-      //   pathname: `/flashcards/${id}`,
-      //   search: `?${createSearchParams({ packName: underActionPack.name })}`,
-      // });
+      if (!data.name) return;
+      navigate({
+        pathname: `/flashcards/${data._id}`,
+        search: `?${createSearchParams({ packName: data.name })}`,
+      });
     };
 
-    const learnPack = (id: string) => {
-      navigate(`/learn/${id}`);
+    const learnPack = (data: PackInAppType) => {
+      // navigate(`/learn/${id}`);
+      if (data.name === null || data.cardsCount === null) return;
+      dispatch(flashcardsItemsPerPageChanged(data.cardsCount));
+      navigate({
+        pathname: `/learn/${data._id}`,
+        search: `?${createSearchParams({
+          packName: data.name,
+          cardsTotalCount: `${data?.cardsCount || 0}`,
+        })}`,
+      });
     };
 
     const handleEditPack = (data: PutPackDataType) => {
       dispatch(updatePack(data));
     };
 
-    const showEditItemDialog = async (id: string) => {
-      setUnderActionItemId(id);
+    const showEditItemDialog = async (data: PackInAppType) => {
+      setUnderActionPack(data);
       setEditItemDialogActive(true);
       resetControlledPromise();
       await controlledPromise.promise;
@@ -85,13 +102,13 @@ export const PacksList: FC<PacksListPropsType> = memo(
       dispatch(deletePack(id));
     };
 
-    const showDeleteDialog = async (id: string) => {
-      setUnderActionItemId(id);
+    const showDeleteDialog = async (data: PackInAppType) => {
+      setUnderActionPack(data);
       setDeleteItemDialogActive(true);
       resetControlledPromise();
       const command = await controlledPromise.promise;
       if (command) {
-        handleDeletePack(id);
+        handleDeletePack(data._id);
       }
       setDeleteItemDialogActive(false);
     };
@@ -129,7 +146,10 @@ export const PacksList: FC<PacksListPropsType> = memo(
             active={deleteItemDialogActive}
             displayControlCallback={setDeleteItemDialogActive}
           >
-            <p>Do you really wanna delete &apos;{underActionPack.name}&apos; pack?</p>
+            <p>
+              Do you really wanna delete &apos;
+              {underActionPack && underActionPack.name}&apos; pack?
+            </p>
             <div>
               <ButtonFlatDesign className={styles.button} onClick={respondFromModal}>
                 Yes
@@ -151,10 +171,9 @@ export const PacksList: FC<PacksListPropsType> = memo(
               submitCallback={handleEditPack}
               // initialValues={underActionPack}
               initialValues={{
-                name: underActionPack.name || '',
-                // eslint-disable-next-line no-underscore-dangle
-                _id: underActionPack._id,
-                private: underActionPack.private ?? false,
+                name: underActionPack?.name || '',
+                _id: underActionPack?._id || '',
+                private: underActionPack?.private ?? false,
               }}
             />
           </Modal>

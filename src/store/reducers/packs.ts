@@ -19,7 +19,7 @@ type InitialStateType = {
   maxCardsCountFilter: number;
   packsOfCurrentUserFilter: boolean;
   packNameFilter: string;
-  sorting: PacksSortParameterType | '';
+  sorting: PacksSortParameterType;
 };
 
 const initialState: InitialStateType = {
@@ -27,15 +27,15 @@ const initialState: InitialStateType = {
   page: 1,
   pageCount: 10,
   cardPacksTotalCount: null,
-  minCardsCount: 0,
+  minCardsCount: 0, // this could be not 0 but low probability
   maxCardsCount: null,
   token: null,
   tokenDeathTime: null,
   minCardsCountFilter: 0,
-  maxCardsCountFilter: 10,
+  maxCardsCountFilter: 110, // this is current max on the server
   packsOfCurrentUserFilter: false,
   packNameFilter: '',
-  sorting: '',
+  sorting: '0updated',
 };
 
 type PacksActionType =

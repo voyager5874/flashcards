@@ -3,6 +3,8 @@ const initialState = {
   isBusy: false,
   error: '',
   message: '',
+  isFetchingData: false,
+  isSendingData: false,
 };
 
 type InitialStateType = typeof initialState;
@@ -11,7 +13,9 @@ type AppActionType =
   | ReturnType<typeof appIsBusy>
   | ReturnType<typeof appErrorOccurred>
   | ReturnType<typeof setAppMessage>
-  | ReturnType<typeof appInitialized>;
+  | ReturnType<typeof appInitialized>
+  | ReturnType<typeof appIsFetchingData>
+  | ReturnType<typeof appIsSendingData>;
 
 export const appReducer = (
   state: InitialStateType = initialState,
@@ -68,5 +72,21 @@ export const setAppMessage = (message: string) =>
     type: 'APP/SET-MESSAGE',
     payload: {
       message,
+    },
+  } as const);
+
+export const appIsFetchingData = (isFetchingData: boolean) =>
+  ({
+    type: 'APP/SET-FETCHING-STATE',
+    payload: {
+      isFetchingData,
+    },
+  } as const);
+
+export const appIsSendingData = (isSendingData: boolean) =>
+  ({
+    type: 'APP/SET-SENDING-STATE',
+    payload: {
+      isSendingData,
     },
   } as const);

@@ -5,7 +5,7 @@ import {
   PutFlashcardDataType,
   PutFlashcardGradeParameterType,
 } from 'api/types';
-import { appIsBusy, setAppMessage } from 'store/reducers/app';
+import { appErrorOccurred, appIsBusy, setAppMessage } from 'store/reducers/app';
 import {
   flashcardsCardDataUpdated,
   flashcardsCardGradeUpdated,
@@ -16,6 +16,11 @@ import { processAsyncActionErrors } from 'utils';
 
 export const setFlashcardsData =
   (packId: string) => async (dispatch: AppDispatch, getState: () => RootState) => {
+    // const { isBusy } = getState().appReducer;
+    // if (isBusy) {
+    //   dispatch(appErrorOccurred('concurrent requests!'));
+    //   return;
+    // }
     dispatch(appIsBusy(true));
     const {
       page,

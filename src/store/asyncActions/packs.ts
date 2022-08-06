@@ -16,9 +16,11 @@ import { processAsyncActionErrors } from 'utils';
 export const setPacksData =
   () => async (dispatch: AppDispatch, getState: () => RootState) => {
     // const { isBusy } = getState().appReducer;
-    // if (isBusy) return;
+    // if (isBusy) {
+    //   dispatch(appErrorOccurred('concurrent requests!'));
+    //   return;
+    // }
     dispatch(appIsBusy(true));
-    // eslint-disable-next-line no-underscore-dangle
     const userId = getState().profile._id;
     const {
       page,
@@ -51,11 +53,12 @@ export const setPacksData =
         ) {
           dispatch(packsSetMinCardsCountFilter(response.minCardsCount));
         }
-        if (response.maxCardsCount !== maxCardsCount) {
+        if (
+          maxCardsCountFilter > response.maxCardsCount ||
+          response.maxCardsCount !== maxCardsCount
+        ) {
           dispatch(packsSetMaxCardsCountFilter(response.maxCardsCount));
         }
-      } else {
-        dispatch(appErrorOccurred(JSON.stringify(response)));
       }
     } catch (error) {
       processAsyncActionErrors(error, dispatch, 'error getting packs from the server');

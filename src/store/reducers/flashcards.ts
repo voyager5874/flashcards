@@ -6,21 +6,6 @@ import {
   PutFlashcardGradeResponseType,
 } from 'api/types';
 
-// type flashcardsSliceInitialStateType = {
-//   cards: FlashcardOnServerType[];
-//   packUserId: string;
-//   page: number;
-//   pageCount: number;
-//   cardsTotalCount: number;
-//   minGrade: number;
-//   maxGrade: number;
-//   token: string;
-//   tokenDeathTime: number;
-//   minGradeFilter: number;
-//   maxGradeFilter: number;
-//   keyWordsFilter: string;
-// };
-
 const initialState = {
   cards: [] as FlashcardOnServerType[],
   packUserId: '',
@@ -28,11 +13,11 @@ const initialState = {
   pageCount: 10,
   cardsTotalCount: 0,
   minGrade: 0,
-  maxGrade: 5,
+  maxGrade: 6, // maxGrade=6 comes from server, though it should be 5
   token: '',
   tokenDeathTime: 0,
   minGradeFilter: 0,
-  maxGradeFilter: 5,
+  maxGradeFilter: 6,
   keywordsFilter: '',
   answerKeywordsFilter: '',
   questionKeywordsFilter: '',

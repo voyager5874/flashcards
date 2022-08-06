@@ -10,12 +10,11 @@ import { ButtonFlatDesign } from 'features/ui/Button';
 import { RadioGroupFlatDesign } from 'features/ui/Radio/RadioGroupFlatDesign';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { setFlashcardsData, updateFlashcardGrade } from 'store/asyncActions/flashcards';
-import { flashcardsItemsPerPageChanged } from 'store/reducers/flashcards';
-import { selectPackById } from 'store/selectors';
+import { appErrorOccurred } from 'store/reducers/app';
 
 const grades = [
   "Didn't ring a bell",
-  'Forgot',
+  "Couldn't remember",
   'Was hard to remember',
   'Easy enough',
   'Very easy',
@@ -39,27 +38,14 @@ export const Learn = (): ReactElement => {
   const dispatch = useAppDispatch();
 
   const [showedCardChecked, setShowedCardChecked] = useState(false);
-  // const [first, setFirst] = useState(true);
   const [showedCard, setShowedCard] = useState<FlashcardOnServerType>();
+  const [cardGrade, setCardGrade] = useState<string>(grades[FIRST_ITEM_INDEX]);
 
   const { cards, cardsTotalCount, pageCount } = useAppSelector(state => state.flashcards);
 
   const { packId } = useParams();
 
-  const learnedPack = useAppSelector(state => selectPackById(state, packId || ''));
-
-  const [packData, setPackData] = useSearchParams();
-
-  const [cardGrade, setCardGrade] = useState<string>(grades[FIRST_ITEM_INDEX]);
-
-  useEffect(() => {
-    console.log('cardsTotalCount', cardsTotalCount);
-    console.log('pageCount', pageCount);
-    dispatch(setFlashcardsData(packId || ''));
-    if (cardsTotalCount > pageCount) {
-      dispatch(flashcardsItemsPerPageChanged(cardsTotalCount));
-    }
-  }, [cardsTotalCount, packId, pageCount]);
+  const [packData] = useSearchParams();
 
   const showAnswer = () => {
     setShowedCardChecked(true);
@@ -67,12 +53,9 @@ export const Learn = (): ReactElement => {
 
   const handleCardGradeUpdate = () => {
     const grade = grades.indexOf(cardGrade) >= 0 ? grades.indexOf(cardGrade) + 1 : 0;
-    if (!grade) return;
-    // eslint-disable-next-line no-underscore-dangle
-    if (!showedCard?._id) return;
+    if (!grade || !showedCard?._id) return;
     dispatch(
       updateFlashcardGrade({
-        // eslint-disable-next-line no-underscore-dangle
         card_id: showedCard._id,
         grade: grade as FlashcardGradeType,
       }),
@@ -87,10 +70,18 @@ export const Learn = (): ReactElement => {
   };
 
   useEffect(() => {
-    showNextCard();
-    if (learnedPack.name) {
-      setPackData({ packName: learnedPack.name as string }, { replace: true });
+    if (!packId) {
+      dispatch(appErrorOccurred("internal error - couldn't identify the pack"));
+      return;
     }
+    console.log('cardsTotalCount', cardsTotalCount);
+    console.log('pageCount', pageCount);
+    dispatch(setFlashcardsData(packId));
+    // dispatch(setFlashcardsData(packId)).then(() => showNextCard());
+  }, []);
+
+  useEffect(() => {
+    showNextCard();
   }, [cardsTotalCount]);
 
   return (

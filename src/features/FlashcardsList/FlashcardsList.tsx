@@ -4,6 +4,7 @@ import styles from './FlashcardsList.module.scss';
 
 import {
   CardsSortParameterType,
+  FlashcardOnServerType,
   GetFlashcardsParameterType,
   PutFlashcardDataType,
 } from 'api/types';
@@ -18,7 +19,7 @@ import {
   updateFlashcard,
 } from 'store/asyncActions/flashcards';
 import { flashcardsSortingApplied } from 'store/reducers/flashcards';
-import { selectFlashcardById } from 'store/selectors';
+import { Nullable } from 'types';
 
 type FlashcardsListPropsType = GetFlashcardsParameterType;
 
@@ -46,15 +47,29 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
     const appIsBusy = useAppSelector(state => state.appReducer.isBusy);
 
     useEffect(() => {
+      console.log(
+        cardsPack_id,
+        page,
+        pageCount,
+        min,
+        max,
+        cardAnswer,
+        cardQuestion,
+        sortCards,
+      );
+      // eslint-disable-next-line no-debugger
+      debugger;
       dispatch(setFlashcardsData(cardsPack_id));
       // eslint-disable-next-line camelcase
     }, [cardsPack_id, page, pageCount, min, max, cardAnswer, cardQuestion, sortCards]);
 
     const flashcardsList = useAppSelector(state => state.flashcards.cards);
 
-    const [currenCardId, setCurrentCardId] = useState('');
+    // const [currenCardId, setCurrentCardId] = useState('');
+    const [underActionCard, setUnderActionCard] =
+      useState<Nullable<FlashcardOnServerType>>(null);
 
-    const currentCard = useAppSelector(state => selectFlashcardById(state, currenCardId));
+    // const currentCard = useAppSelector(state => selectFlashcardById(state, currenCardId));
 
     const handleDeleteFlashcard = (id: string) => {
       dispatch(deleteFlashcard(id, cardsPack_id));
@@ -89,13 +104,13 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
       }
     };
 
-    const showDeleteDialog = async (id: string) => {
-      setCurrentCardId(id);
+    const showDeleteDialog = async (data: FlashcardOnServerType) => {
+      setUnderActionCard(data);
       setDeleteItemDialogActive(true);
       resetControlledPromise();
       const command = await controlledPromise.promise;
       if (command) {
-        handleDeleteFlashcard(id);
+        handleDeleteFlashcard(data._id);
       }
       setDeleteItemDialogActive(false);
     };
@@ -104,8 +119,8 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
       dispatch(updateFlashcard(data, cardsPack_id));
     };
 
-    const showEditFlashcardDialog = async (id: string) => {
-      setCurrentCardId(id);
+    const showEditFlashcardDialog = async (data: FlashcardOnServerType) => {
+      setUnderActionCard(data);
       setEditItemDialogActive(true);
       resetControlledPromise();
       await controlledPromise.promise;
@@ -139,7 +154,10 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
             active={deleteItemDialogActive}
             displayControlCallback={setDeleteItemDialogActive}
           >
-            <p>Do you really wanna delete {currentCard.question}?</p>
+            <p>
+              Do you really wanna delete
+              {underActionCard && underActionCard.question}?
+            </p>
             <div>
               <ButtonFlatDesign className={styles.button} onClick={respondFromModal}>
                 Yes
@@ -159,7 +177,11 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
             <FlashcardEditForm
               promiseToControl={controlledPromise}
               submitCallback={handleEditFlashcard}
-              initialValues={currentCard}
+              initialValues={{
+                _id: underActionCard?._id || '',
+                question: underActionCard?.question || '',
+                answer: underActionCard?.answer || '',
+              }}
             />
           </Modal>
         )}

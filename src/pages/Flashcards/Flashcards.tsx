@@ -29,23 +29,22 @@ import {
   flashcardsMinGradeFilterApplied,
   flashcardsQuestionKeywordsFilterApplied,
 } from 'store/reducers/flashcards';
-import { selectPackById } from 'store/selectors/selectPackById';
 
 export const Flashcards = (): ReactElement => {
   const dispatch = useAppDispatch();
 
   const { packId } = useParams();
 
-  const [pageUrl, setPageUrl] = useSearchParams();
+  const [pageUrl] = useSearchParams();
   const [addItemDialogActive, setAddItemDialogActive] = useState(false);
 
   const { controlledPromise, resetControlledPromise } = useControlledPromise();
 
   const appIsBusy = useAppSelector(state => state.appReducer.isBusy);
 
-  const packNameFromPacksSlice = useAppSelector(
-    state => selectPackById(state, packId).name,
-  );
+  // const packNameFromPacksSlice = useAppSelector(
+  //   state => selectPackById(state, packId).name,
+  // );
 
   const {
     page,
@@ -109,18 +108,22 @@ export const Flashcards = (): ReactElement => {
     setAddItemDialogActive(false);
   };
 
-  useEffect(() => {
-    if (!packNameFromPacksSlice) return;
-    setPageUrl({ packName: packNameFromPacksSlice }, { replace: true });
-  }, [packNameFromPacksSlice]);
+  // useEffect(() => {
+  //   if (!packNameFromPacksSlice) return;
+  //   setPageUrl({ packName: packNameFromPacksSlice }, { replace: true });
+  // }, [packNameFromPacksSlice]);
 
   useEffect(() => {
     dispatch(flashcardsQuestionKeywordsFilterApplied(debouncedQuestionSearchString));
   }, [debouncedQuestionSearchString]);
 
   useEffect(() => {
-    dispatch(flashcardsMinGradeFilterApplied(minGrade));
-    dispatch(flashcardsMaxGradeFilterApplied(maxGrade));
+    if (minGradeFilter > minGrade) {
+      dispatch(flashcardsMinGradeFilterApplied(minGrade));
+    }
+    if (maxGradeFilter < maxGrade) {
+      dispatch(flashcardsMaxGradeFilterApplied(maxGrade));
+    }
   }, []);
 
   return (
