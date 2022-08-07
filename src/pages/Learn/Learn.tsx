@@ -5,12 +5,12 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import styles from './Learn.module.scss';
 
 import { FlashcardGradeType, FlashcardOnServerType } from 'api/types';
-import { FIRST_ITEM_INDEX } from 'const';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { RadioGroupFlatDesign } from 'features/ui/Radio/RadioGroupFlatDesign';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { setFlashcardsData, updateFlashcardGrade } from 'store/asyncActions/flashcards';
 import { appErrorOccurred } from 'store/reducers/app';
+import { Nullable } from 'types';
 
 const grades = [
   "Didn't ring a bell",
@@ -19,6 +19,7 @@ const grades = [
   'Easy enough',
   'Very easy',
 ];
+// type TextGrades = typeof grades[number];
 
 const chooseCard = (cards: FlashcardOnServerType[]) => {
   const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0);
@@ -39,7 +40,7 @@ export const Learn = (): ReactElement => {
 
   const [showedCardChecked, setShowedCardChecked] = useState(false);
   const [showedCard, setShowedCard] = useState<FlashcardOnServerType>();
-  const [cardGrade, setCardGrade] = useState<string>(grades[FIRST_ITEM_INDEX]);
+  const [cardGrade, setCardGrade] = useState<Nullable<string>>(null);
 
   const { cards, cardsTotalCount, pageCount } = useAppSelector(state => state.flashcards);
 
@@ -52,14 +53,15 @@ export const Learn = (): ReactElement => {
   };
 
   const handleCardGradeUpdate = () => {
-    const grade = grades.indexOf(cardGrade) >= 0 ? grades.indexOf(cardGrade) + 1 : 0;
+    if (!cardGrade) return;
+    const grade = grades.indexOf(cardGrade) + 1;
     if (!grade || !showedCard?._id) return;
     dispatch(
       updateFlashcardGrade({
         card_id: showedCard._id,
         grade: grade as FlashcardGradeType,
       }),
-    ).then(() => setCardGrade(grades[0]));
+    ).then(() => setCardGrade(null));
   };
 
   const showNextCard = () => {
@@ -74,8 +76,6 @@ export const Learn = (): ReactElement => {
       dispatch(appErrorOccurred("internal error - couldn't identify the pack"));
       return;
     }
-    console.log('cardsTotalCount', cardsTotalCount);
-    console.log('pageCount', pageCount);
     dispatch(setFlashcardsData(packId));
     // dispatch(setFlashcardsData(packId)).then(() => showNextCard());
   }, []);
@@ -94,11 +94,13 @@ export const Learn = (): ReactElement => {
             <RadioGroupFlatDesign
               className={styles.radios}
               options={grades}
-              value={cardGrade}
+              value={cardGrade || undefined}
               name="card-grade"
               onChangeOption={setCardGrade}
             />
-            <ButtonFlatDesign onClick={showNextCard}>Next</ButtonFlatDesign>
+            <ButtonFlatDesign onClick={showNextCard} disabled={!cardGrade}>
+              Next
+            </ButtonFlatDesign>
           </div>
         ) : (
           <div>
