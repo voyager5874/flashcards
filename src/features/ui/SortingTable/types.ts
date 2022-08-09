@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 
-export type TableCellType<T> = {
+export type TableColumnModifierType<T extends {}> = {
   [Property in keyof T]?: {
     headerName: string;
-    cellDataModifier?: (param: string | number) => string | ReactNode;
+    cellDataModifier?: (param: T[keyof T]) => string | ReactNode;
   };
 };

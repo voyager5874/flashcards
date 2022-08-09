@@ -1,4 +1,10 @@
-import { MouseEvent, PropsWithChildren, ReactElement, useCallback } from 'react';
+import {
+  MouseEvent,
+  PropsWithChildren,
+  ReactElement,
+  ReactNode,
+  useCallback,
+} from 'react';
 
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
@@ -35,15 +41,18 @@ const TableItemActions = <T,>({
 type TableHeadPropsType<T> = {
   sorting: `0${keyof T & string}` | `1${keyof T & string}`;
   changeSorting: Function;
-  tableCells: {
-    [Property in keyof T]?: { headerName: string; cellDataModifier?: Function };
+  tableColumns: {
+    [Property in keyof T]?: {
+      headerName: string;
+      cellDataModifier?: (param: T[keyof T]) => string | ReactNode;
+    };
   };
 };
 
 const TableHead = <T,>({
   sorting,
   changeSorting,
-  tableCells,
+  tableColumns,
 }: PropsWithChildren<TableHeadPropsType<T>>): ReactElement => {
   const reportNewSorting = (event: MouseEvent<HTMLButtonElement>) => {
     if (!event.currentTarget.name) return;
@@ -73,7 +82,7 @@ const TableHead = <T,>({
     [sorting],
   );
   // <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />;
-  const headers = Object.keys(tableCells);
+  const headers = Object.keys(tableColumns);
   return (
     <>
       {headers.map(header => (
@@ -88,7 +97,7 @@ const TableHead = <T,>({
                 : ''
             }`}
           >
-            {tableCells[header as keyof T]?.headerName}
+            {tableColumns[header as keyof T]?.headerName}
             {determineSortingSign(header as string)}
           </button>
         </th>
@@ -102,8 +111,11 @@ type TableRowPropsType<T> = {
   data: T;
   itemActionNames: string[];
   itemActionsHandlers: Array<(data: T) => void>;
-  tableCells: {
-    [Property in keyof T]?: { headerName: string; cellDataModifier?: Function };
+  tableColumns: {
+    [Property in keyof T]?: {
+      headerName: string;
+      cellDataModifier?: (param: T[keyof T]) => string | ReactNode;
+    };
   };
 };
 
@@ -111,9 +123,9 @@ const TableRow = <T extends { _id: string }>({
   data,
   itemActionNames,
   itemActionsHandlers,
-  tableCells,
+  tableColumns,
 }: PropsWithChildren<TableRowPropsType<T>>): ReactElement => {
-  const headers = Object.keys(tableCells);
+  const headers = Object.keys(tableColumns);
 
   return (
     <>
@@ -121,7 +133,7 @@ const TableRow = <T extends { _id: string }>({
         ? headers.map(header => (
             <td key={header as string}>
               <span className={styles.tdSizeLimiter}>
-                {tableCells[header as keyof T]?.cellDataModifier?.(
+                {tableColumns[header as keyof T]?.cellDataModifier?.(
                   data[header as keyof T],
                 ) || String(data[header as keyof T])}
               </span>
@@ -143,8 +155,11 @@ type TableBodyPropsType<T> = {
   data: T[];
   itemActionNames: string[];
   itemActionsHandlers: Array<(data: T) => void>;
-  tableCells: {
-    [Property in keyof T]?: { headerName: string; cellDataModifier?: Function };
+  tableColumns: {
+    [Property in keyof T]?: {
+      headerName: string;
+      cellDataModifier?: (param: T[keyof T]) => string | ReactNode;
+    };
   };
 };
 
@@ -152,13 +167,13 @@ const TableBody = <T extends { _id: string }>({
   data,
   itemActionNames,
   itemActionsHandlers,
-  tableCells,
+  tableColumns,
 }: PropsWithChildren<TableBodyPropsType<T>>): ReactElement => (
   <>
     {data.map(item => (
       <tr key={item._id}>
         <TableRow
-          tableCells={tableCells}
+          tableColumns={tableColumns}
           data={item}
           itemActionNames={itemActionNames}
           itemActionsHandlers={itemActionsHandlers}
@@ -170,8 +185,11 @@ const TableBody = <T extends { _id: string }>({
 
 type SortingTablePropsType<T> = {
   caption: string;
-  tableCells: {
-    [Property in keyof T]?: { headerName: string; cellDataModifier?: Function };
+  tableColumns: {
+    [Property in keyof T]?: {
+      headerName: string;
+      cellDataModifier?: (param: T[keyof T]) => string | ReactNode;
+    };
   };
   sorting: `0${keyof T & string}` | `1${keyof T & string}`;
   changeSorting: (
@@ -185,7 +203,7 @@ type SortingTablePropsType<T> = {
 export const SortingTable = <T extends { _id: string }>({
   items,
   caption,
-  tableCells,
+  tableColumns,
   sorting,
   changeSorting,
   itemActionsNames,
@@ -196,7 +214,7 @@ export const SortingTable = <T extends { _id: string }>({
     <thead>
       <tr>
         <TableHead
-          tableCells={tableCells}
+          tableColumns={tableColumns}
           changeSorting={changeSorting}
           sorting={sorting}
         />
@@ -204,7 +222,7 @@ export const SortingTable = <T extends { _id: string }>({
     </thead>
     <tbody>
       <TableBody
-        tableCells={tableCells}
+        tableColumns={tableColumns}
         data={items}
         itemActionNames={itemActionsNames}
         itemActionsHandlers={itemActionsHandlers}

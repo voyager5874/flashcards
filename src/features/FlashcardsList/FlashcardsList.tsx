@@ -11,7 +11,7 @@ import {
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { Modal } from 'features/ui/Modal';
 import { SortingTable } from 'features/ui/SortingTable';
-import { TableCellType } from 'features/ui/SortingTable/types';
+import { TableColumnModifierType } from 'features/ui/SortingTable/types';
 import { useAppDispatch, useAppSelector, useControlledPromise } from 'hooks';
 import { FlashcardEditForm } from 'pages/Flashcards/FlashcardEditForm/FlashcardEditForm';
 import {
@@ -135,7 +135,7 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
 
     const flashcardHandlers = [showDeleteDialog, showEditFlashcardDialog];
 
-    const cells: TableCellType<FlashcardOnServerType> = {
+    const columns: TableColumnModifierType<FlashcardOnServerType> = {
       question: { headerName: 'Question' },
       answer: { headerName: 'Answer' },
       updated: { headerName: 'Last updated', cellDataModifier: prettifyDate },
@@ -146,12 +146,11 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
       <div className={styles.wrapper}>
         {flashcardsList.length ? (
           <SortingTable
-            tableCells={cells}
+            tableColumns={columns}
             caption="flashcards list"
             items={flashcardsList}
             itemActionsNames={['delete', 'edit']}
             itemActionsHandlers={flashcardHandlers}
-            // tableHeaders={['question', 'answer', 'updated', 'grade']}
             changeSorting={changeSorting}
             sorting={sortCards || '0updated'}
           />

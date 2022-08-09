@@ -13,7 +13,7 @@ import { PackInAppType } from 'features/Pack/types';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { Modal } from 'features/ui/Modal';
 import { SortingTable } from 'features/ui/SortingTable';
-import { TableCellType } from 'features/ui/SortingTable/types';
+import { TableColumnModifierType } from 'features/ui/SortingTable/types';
 import { useAppDispatch, useAppSelector, useControlledPromise } from 'hooks';
 import { PackEditForm } from 'pages/Packs/PackEditForm/PackEditForm';
 import { deletePack, setPacksData, updatePack } from 'store/asyncActions/packs';
@@ -124,12 +124,12 @@ export const PacksList: FC<PacksListPropsType> = memo(
       }
     };
 
-    const cell: TableCellType<PackInAppType> = {
+    const columns: TableColumnModifierType<PackInAppType> = {
       name: { headerName: 'Pack name' },
       cardsCount: { headerName: 'Number of flashcards' },
-      updated: { headerName: 'Last Updated', cellDataModifier: prettifyDate },
-      user_name: { headerName: 'User name' },
-      grade: { headerName: 'Grade' },
+      updated: { headerName: 'Last updated', cellDataModifier: prettifyDate },
+      user_name: { headerName: 'Created by' },
+      // grade: { headerName: 'Grade' },
     };
 
     const packHandlers = [openPack, learnPack, showEditItemDialog, showDeleteDialog];
@@ -137,13 +137,11 @@ export const PacksList: FC<PacksListPropsType> = memo(
     return (
       <div className={styles.wrapper}>
         <SortingTable
-          tableCells={cell}
+          tableColumns={columns}
           caption="packs list"
           items={packsList}
           itemActionsNames={['open', 'learn', 'edit name', 'delete']}
           itemActionsHandlers={packHandlers}
-          // tableHeaders={['Name', 'Cards', 'Last updated', 'Created by', 'Actions']}
-          // tableHeaders={['name', 'cardsCount', 'updated', 'user_name', 'grade']}
           changeSorting={changeSorting}
           sorting={sortPacks || '0updated'}
         />
