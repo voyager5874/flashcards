@@ -9,15 +9,12 @@ import styles from './SortingTable.module.scss';
 import { FIRST_ITEM_INDEX, SECOND_ITEM_INDEX } from 'const';
 
 type TableItemActionsPropsType<T> = {
-  // itemId: string;
   itemData: T;
   itemActionsNames: string[];
-  // itemActionsHandlers?: Function[];
-  itemActionsHandlers?: Array<(data: T) => void>;
+  itemActionsHandlers: Array<(data: T) => void>;
 };
 
 const TableItemActions = <T,>({
-  // itemId,
   itemData,
   itemActionsNames,
   itemActionsHandlers,
@@ -27,8 +24,6 @@ const TableItemActions = <T,>({
       <button
         type="button"
         key={action}
-        // @ts-ignore
-        // onClick={() => itemActionsHandlers[index](itemId)}
         onClick={() => itemActionsHandlers[index](itemData)}
       >
         {action}
@@ -38,19 +33,21 @@ const TableItemActions = <T,>({
 );
 
 type TableHeadPropsType<T> = {
-  headers: Array<keyof T>; // Extract<keyof T, string>
   sorting: `0${keyof T & string}` | `1${keyof T & string}`;
   changeSorting: Function;
+  tableCells: {
+    [Property in keyof T]?: { headerName: string; cellDataModifier?: Function };
+  };
 };
 
 const TableHead = <T,>({
-  headers,
   sorting,
   changeSorting,
+  tableCells,
 }: PropsWithChildren<TableHeadPropsType<T>>): ReactElement => {
   const reportNewSorting = (event: MouseEvent<HTMLButtonElement>) => {
-    if (!event.currentTarget.textContent) return;
-    const requiredSortingField = event.currentTarget.textContent;
+    if (!event.currentTarget.name) return;
+    const requiredSortingField = event.currentTarget.name;
     let newSortingOption: typeof sorting;
     if (sorting.slice(SECOND_ITEM_INDEX) === requiredSortingField) {
       newSortingOption =
@@ -76,12 +73,13 @@ const TableHead = <T,>({
     [sorting],
   );
   // <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />;
-
+  const headers = Object.keys(tableCells);
   return (
     <>
       {headers.map(header => (
         <th key={header as string}>
           <button
+            name={header as string}
             type="button"
             onClick={reportNewSorting}
             className={`${styles.filterButton} ${
@@ -90,7 +88,7 @@ const TableHead = <T,>({
                 : ''
             }`}
           >
-            {header as string}
+            {tableCells[header as keyof T]?.headerName}
             {determineSortingSign(header as string)}
           </button>
         </th>
@@ -101,61 +99,66 @@ const TableHead = <T,>({
 };
 
 type TableRowPropsType<T> = {
-  tableHeaders: Array<keyof T>;
   data: T;
   itemActionNames: string[];
-  // itemActionsHandlers?: { [key: string]: Function };
-  // itemActionsHandlers?: Function[];
-  itemActionsHandlers?: Array<(data: T) => void>;
+  itemActionsHandlers: Array<(data: T) => void>;
+  tableCells: {
+    [Property in keyof T]?: { headerName: string; cellDataModifier?: Function };
+  };
 };
 
 const TableRow = <T extends { _id: string }>({
-  tableHeaders,
   data,
   itemActionNames,
   itemActionsHandlers,
-}: PropsWithChildren<TableRowPropsType<T>>): ReactElement => (
-  <>
-    {tableHeaders.map(header => (
-      <td key={header as string}>
-        <span className={styles.tdSizeLimiter}>
-          {/* {JSON.stringify(data[header as keyof T])} */}
-          {String(data[header as keyof T])}
-        </span>
+  tableCells,
+}: PropsWithChildren<TableRowPropsType<T>>): ReactElement => {
+  const headers = Object.keys(tableCells);
+
+  return (
+    <>
+      {headers.length
+        ? headers.map(header => (
+            <td key={header as string}>
+              <span className={styles.tdSizeLimiter}>
+                {tableCells[header as keyof T]?.cellDataModifier?.(
+                  data[header as keyof T],
+                ) || String(data[header as keyof T])}
+              </span>
+            </td>
+          ))
+        : []}
+      <td>
+        <TableItemActions
+          itemActionsNames={itemActionNames}
+          itemActionsHandlers={itemActionsHandlers}
+          itemData={data}
+        />
       </td>
-    ))}
-    <td>
-      <TableItemActions
-        itemActionsNames={itemActionNames}
-        itemActionsHandlers={itemActionsHandlers}
-        // itemId={data._id}
-        itemData={data}
-        // itemName={data.name ? data.name : ''}
-      />
-    </td>
-  </>
-);
+    </>
+  );
+};
 
 type TableBodyPropsType<T> = {
   data: T[];
-  tableHeaders: Array<keyof T>;
   itemActionNames: string[];
-  // itemActionsHandlers?: { [key: string]: Function };
-  // itemActionsHandlers?: Function[];
-  itemActionsHandlers?: Array<(data: T) => void>;
+  itemActionsHandlers: Array<(data: T) => void>;
+  tableCells: {
+    [Property in keyof T]?: { headerName: string; cellDataModifier?: Function };
+  };
 };
 
 const TableBody = <T extends { _id: string }>({
   data,
-  tableHeaders,
   itemActionNames,
   itemActionsHandlers,
+  tableCells,
 }: PropsWithChildren<TableBodyPropsType<T>>): ReactElement => (
   <>
     {data.map(item => (
       <tr key={item._id}>
         <TableRow
-          tableHeaders={tableHeaders}
+          tableCells={tableCells}
           data={item}
           itemActionNames={itemActionNames}
           itemActionsHandlers={itemActionsHandlers}
@@ -167,22 +170,22 @@ const TableBody = <T extends { _id: string }>({
 
 type SortingTablePropsType<T> = {
   caption: string;
-  tableHeaders: Array<keyof T>; // Extract<keyof T, string>
+  tableCells: {
+    [Property in keyof T]?: { headerName: string; cellDataModifier?: Function };
+  };
   sorting: `0${keyof T & string}` | `1${keyof T & string}`;
   changeSorting: (
     sortingFieldName: `0${keyof T & string}` | `1${keyof T & string}`,
   ) => void;
   itemActionsNames: string[];
-  // itemActionsHandlers?: { [key: string]: Function };
-  // itemActionsHandlers?: Function[];
-  itemActionsHandlers?: Array<(data: T) => void>;
+  itemActionsHandlers: Array<(data: T) => void>;
   items: T[];
 };
 
 export const SortingTable = <T extends { _id: string }>({
   items,
   caption,
-  tableHeaders,
+  tableCells,
   sorting,
   changeSorting,
   itemActionsNames,
@@ -193,7 +196,7 @@ export const SortingTable = <T extends { _id: string }>({
     <thead>
       <tr>
         <TableHead
-          headers={tableHeaders}
+          tableCells={tableCells}
           changeSorting={changeSorting}
           sorting={sorting}
         />
@@ -201,8 +204,8 @@ export const SortingTable = <T extends { _id: string }>({
     </thead>
     <tbody>
       <TableBody
+        tableCells={tableCells}
         data={items}
-        tableHeaders={tableHeaders}
         itemActionNames={itemActionsNames}
         itemActionsHandlers={itemActionsHandlers}
       />

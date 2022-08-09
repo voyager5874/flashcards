@@ -19,6 +19,7 @@ const grades = [
   'Easy enough',
   'Very easy',
 ];
+// grades as const
 // type TextGrades = typeof grades[number];
 
 const chooseCard = (cards: FlashcardOnServerType[]) => {
@@ -42,7 +43,7 @@ export const Learn = (): ReactElement => {
   const [showedCard, setShowedCard] = useState<FlashcardOnServerType>();
   const [cardGrade, setCardGrade] = useState<Nullable<string>>(null);
 
-  const { cards, cardsTotalCount, pageCount } = useAppSelector(state => state.flashcards);
+  const { cards, cardsTotalCount } = useAppSelector(state => state.flashcards);
 
   const { packId } = useParams();
 

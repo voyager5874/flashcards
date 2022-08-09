@@ -13,12 +13,14 @@ import { PackInAppType } from 'features/Pack/types';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { Modal } from 'features/ui/Modal';
 import { SortingTable } from 'features/ui/SortingTable';
+import { TableCellType } from 'features/ui/SortingTable/types';
 import { useAppDispatch, useAppSelector, useControlledPromise } from 'hooks';
 import { PackEditForm } from 'pages/Packs/PackEditForm/PackEditForm';
 import { deletePack, setPacksData, updatePack } from 'store/asyncActions/packs';
 import { flashcardsItemsPerPageChanged } from 'store/reducers/flashcards';
 import { packsSortingApplied } from 'store/reducers/packs';
 import { Nullable } from 'types';
+import { prettifyDate } from 'utils';
 
 type PacksListPropsType = GetPacksParameterType;
 
@@ -62,10 +64,6 @@ export const PacksList: FC<PacksListPropsType> = memo(
     const packsList = useAppSelector(state => state.packs.cardPacks);
 
     const openPack = (data: PackInAppType) => {
-      // eslint-disable-next-line no-debugger
-      debugger;
-      // navigate(`/flashcards/${id}`);
-      // setUnderActionItemId(id);
       if (!data.name) return;
       navigate({
         pathname: `/flashcards/${data._id}`,
@@ -126,17 +124,26 @@ export const PacksList: FC<PacksListPropsType> = memo(
       }
     };
 
+    const cell: TableCellType<PackInAppType> = {
+      name: { headerName: 'Pack name' },
+      cardsCount: { headerName: 'Number of flashcards' },
+      updated: { headerName: 'Last Updated', cellDataModifier: prettifyDate },
+      user_name: { headerName: 'User name' },
+      grade: { headerName: 'Grade' },
+    };
+
     const packHandlers = [openPack, learnPack, showEditItemDialog, showDeleteDialog];
 
     return (
       <div className={styles.wrapper}>
         <SortingTable
+          tableCells={cell}
           caption="packs list"
           items={packsList}
           itemActionsNames={['open', 'learn', 'edit name', 'delete']}
           itemActionsHandlers={packHandlers}
           // tableHeaders={['Name', 'Cards', 'Last updated', 'Created by', 'Actions']}
-          tableHeaders={['name', 'cardsCount', 'updated', 'user_name', 'grade']}
+          // tableHeaders={['name', 'cardsCount', 'updated', 'user_name', 'grade']}
           changeSorting={changeSorting}
           sorting={sortPacks || '0updated'}
         />

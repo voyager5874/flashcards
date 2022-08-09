@@ -17,15 +17,17 @@
     tr {
 
       th {
-
+        padding: 10px;
       }
     }
-    .filterButton{
+
+    .filterButton {
       cursor: pointer;
       background-color: transparent;
       border: none;
       outline: none;
-      &.activeFilterButton{
+
+      &.activeFilterButton {
         background-color: #00E6F6;
       }
     }
