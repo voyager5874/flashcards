@@ -44,7 +44,7 @@ type TableHeadPropsType<T> = {
   tableColumns: {
     [Property in keyof T]?: {
       headerName: string;
-      cellDataModifier?: (param: T[keyof T]) => string | ReactNode;
+      cellDataModifier?: (param: T[Property]) => string | ReactNode;
     };
   };
 };
@@ -114,7 +114,7 @@ type TableRowPropsType<T> = {
   tableColumns: {
     [Property in keyof T]?: {
       headerName: string;
-      cellDataModifier?: (param: T[keyof T]) => string | ReactNode;
+      cellDataModifier?: (param: T[Property]) => string | ReactNode;
     };
   };
 };
@@ -158,7 +158,7 @@ type TableBodyPropsType<T> = {
   tableColumns: {
     [Property in keyof T]?: {
       headerName: string;
-      cellDataModifier?: (param: T[keyof T]) => string | ReactNode;
+      cellDataModifier?: (param: T[Property]) => string | ReactNode;
     };
   };
 };
@@ -188,7 +188,7 @@ type SortingTablePropsType<T> = {
   tableColumns: {
     [Property in keyof T]?: {
       headerName: string;
-      cellDataModifier?: (param: T[keyof T]) => string | ReactNode;
+      cellDataModifier?: (param: T[Property]) => string | ReactNode;
     };
   };
   sorting: `0${keyof T & string}` | `1${keyof T & string}`;

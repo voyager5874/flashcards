@@ -1,5 +1,6 @@
-export const prettifyDate = (rawDate: unknown): string => {
-  if (typeof rawDate !== 'string' && typeof rawDate !== 'number') return 'unknown date';
+export const prettifyDate = (rawDate: number | string | null): string => {
+  // if (typeof rawDate !== 'string' && typeof rawDate !== 'number') return 'unknown date';
+  if (!rawDate) return 'unknown date';
   const msec = typeof rawDate === 'string' ? Date.parse(rawDate) : rawDate;
   const date = new Date(msec);
   return date.toLocaleDateString(undefined, {
