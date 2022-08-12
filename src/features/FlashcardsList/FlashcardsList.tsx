@@ -9,7 +9,9 @@ import {
   PutFlashcardDataType,
 } from 'api/types';
 import { ButtonFlatDesign } from 'features/ui/Button';
+import { FillBar } from 'features/ui/FillBar/FillBar';
 import { Modal } from 'features/ui/Modal';
+import { PrettyFormattedDate } from 'features/ui/PrettyFormattedDate/PrettyFormattedDate';
 import { SortingTable } from 'features/ui/SortingTable';
 import { TableColumnModifierType } from 'features/ui/SortingTable/types';
 import { useAppDispatch, useAppSelector, useControlledPromise } from 'hooks';
@@ -134,12 +136,12 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
     };
 
     const flashcardHandlers = [showDeleteDialog, showEditFlashcardDialog];
-
     const columns: TableColumnModifierType<FlashcardOnServerType> = {
       question: { headerName: 'Question' },
       answer: { headerName: 'Answer' },
-      updated: { headerName: 'Last updated', cellDataModifier: prettifyDate },
-      grade: { headerName: 'Grade' },
+      // @ts-ignore
+      updated: { headerName: 'Last updated', cellDataModifier: PrettyFormattedDate },
+      grade: { headerName: 'Acquisition', cellDataModifier: FillBar },
     };
 
     return (

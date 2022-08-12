@@ -12,6 +12,7 @@ import {
 import { PackInAppType } from 'features/Pack/types';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { Modal } from 'features/ui/Modal';
+import { PrettyFormattedDate } from 'features/ui/PrettyFormattedDate/PrettyFormattedDate';
 import { SortingTable } from 'features/ui/SortingTable';
 import { TableColumnModifierType } from 'features/ui/SortingTable/types';
 import { useAppDispatch, useAppSelector, useControlledPromise } from 'hooks';
@@ -44,13 +45,6 @@ export const PacksList: FC<PacksListPropsType> = memo(
 
     const [deleteItemDialogActive, setDeleteItemDialogActive] = useState(false);
     const [editItemDialogActive, setEditItemDialogActive] = useState(false);
-
-    // const [underActionItemId, setUnderActionItemId] = useState('');
-
-    // const underActionPack = useAppSelector(state =>
-    //   selectPackById(state, underActionItemId),
-    // );
-
     const [underActionPack, setUnderActionPack] = useState<Nullable<PackInAppType>>(null);
 
     useEffect(() => {
@@ -72,14 +66,13 @@ export const PacksList: FC<PacksListPropsType> = memo(
     };
 
     const learnPack = (data: PackInAppType) => {
-      // navigate(`/learn/${id}`);
-      if (data.name === null || data.cardsCount === null) return;
+      if (data.name === null || !data.cardsCount) return;
       dispatch(flashcardsItemsPerPageChanged(data.cardsCount));
       navigate({
         pathname: `/learn/${data._id}`,
         search: `?${createSearchParams({
           packName: data.name,
-          cardsTotalCount: `${data?.cardsCount || 0}`,
+          cardsTotalCount: `${data.cardsCount}`,
         })}`,
       });
     };
@@ -100,7 +93,7 @@ export const PacksList: FC<PacksListPropsType> = memo(
       dispatch(deletePack(id));
     };
 
-    const showDeleteDialog = async (data: PackInAppType) => {
+    const showDeleteItemDialog = async (data: PackInAppType) => {
       setUnderActionPack(data);
       setDeleteItemDialogActive(true);
       resetControlledPromise();
@@ -127,12 +120,12 @@ export const PacksList: FC<PacksListPropsType> = memo(
     const columns: TableColumnModifierType<PackInAppType> = {
       name: { headerName: 'Pack name' },
       cardsCount: { headerName: 'Number of flashcards' },
-      updated: { headerName: 'Last updated', cellDataModifier: prettifyDate },
+      updated: { headerName: 'Last updated', cellDataModifier: PrettyFormattedDate },
       user_name: { headerName: 'Created by' },
       // grade: { headerName: 'Grade' },
     };
 
-    const packHandlers = [openPack, learnPack, showEditItemDialog, showDeleteDialog];
+    const packHandlers = [openPack, learnPack, showEditItemDialog, showDeleteItemDialog];
 
     return (
       <div className={styles.wrapper}>
@@ -174,7 +167,6 @@ export const PacksList: FC<PacksListPropsType> = memo(
             <PackEditForm
               promiseToControl={controlledPromise}
               submitCallback={handleEditPack}
-              // initialValues={underActionPack}
               initialValues={{
                 name: underActionPack?.name || '',
                 _id: underActionPack?._id || '',

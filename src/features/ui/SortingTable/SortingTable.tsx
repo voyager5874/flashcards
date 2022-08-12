@@ -1,4 +1,5 @@
 import {
+  FC,
   MouseEvent,
   PropsWithChildren,
   ReactElement,
@@ -44,7 +45,8 @@ type TableHeadPropsType<T> = {
   tableColumns: {
     [Property in keyof T]?: {
       headerName: string;
-      cellDataModifier?: (param: T[Property]) => string | ReactNode;
+      // cellDataModifier?: FC<any>;
+      cellDataModifier?: FC<{ [Key in Property]: T[Property] }>;
     };
   };
 };
@@ -114,7 +116,8 @@ type TableRowPropsType<T> = {
   tableColumns: {
     [Property in keyof T]?: {
       headerName: string;
-      cellDataModifier?: (param: T[Property]) => string | ReactNode;
+      // cellDataModifier?: FC<any>;
+      cellDataModifier?: FC<{ [Key in Property]: T[Property] }>;
     };
   };
 };
@@ -125,7 +128,7 @@ const TableRow = <T extends { _id: string }>({
   itemActionsHandlers,
   tableColumns,
 }: PropsWithChildren<TableRowPropsType<T>>): ReactElement => {
-  const headers = Object.keys(tableColumns);
+  const headers = Object.keys(tableColumns) as Array<keyof T>;
 
   return (
     <>
@@ -133,9 +136,11 @@ const TableRow = <T extends { _id: string }>({
         ? headers.map(header => (
             <td key={header as string}>
               <span className={styles.tdSizeLimiter}>
-                {tableColumns[header as keyof T]?.cellDataModifier?.(
-                  data[header as keyof T],
-                ) || String(data[header as keyof T])}
+                {
+                  // @ts-ignore
+                  tableColumns[header]?.cellDataModifier?.({ [header]: data[header] }) ||
+                    String(data[header])
+                }
               </span>
             </td>
           ))
@@ -158,7 +163,8 @@ type TableBodyPropsType<T> = {
   tableColumns: {
     [Property in keyof T]?: {
       headerName: string;
-      cellDataModifier?: (param: T[Property]) => string | ReactNode;
+      // cellDataModifier?: FC<any>;
+      cellDataModifier?: FC<{ [Key in Property]: T[Property] }>;
     };
   };
 };
@@ -188,7 +194,7 @@ type SortingTablePropsType<T> = {
   tableColumns: {
     [Property in keyof T]?: {
       headerName: string;
-      cellDataModifier?: (param: T[Property]) => string | ReactNode;
+      cellDataModifier?: FC<{ [Key in Property]: T[Property] }>;
     };
   };
   sorting: `0${keyof T & string}` | `1${keyof T & string}`;
