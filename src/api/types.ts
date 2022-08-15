@@ -26,7 +26,7 @@ export type LogoutResponseType = {
   error?: string;
 };
 
-export type PackOnServerType = {
+export type PackType = {
   _id: string;
   user_id: string;
   user_name: string;
@@ -44,7 +44,7 @@ export type PackOnServerType = {
   __v: number;
 };
 
-export type FlashcardOnServerType = {
+export type FlashcardType = {
   _id: string;
   cardsPack_id: string;
   user_id: string;
@@ -59,14 +59,14 @@ export type FlashcardOnServerType = {
   created: string;
   updated: string;
   __v: number;
-  answerImg: string;
-  answerVideo: string;
-  questionImg: string;
-  questionVideo: string;
+  answerImg?: string;
+  answerVideo?: string;
+  questionImg?: string;
+  questionVideo?: string;
 };
 
 export type PackDataOnServerType = {
-  cardPacks: PackOnServerType[];
+  cardPacks: PackType[];
   page: number;
   pageCount: number;
   cardPacksTotalCount: number;
@@ -77,12 +77,10 @@ export type PackDataOnServerType = {
 };
 
 // Template Literal Types
-export type PacksSortParameterType =
-  | `0${keyof PackOnServerType}`
-  | `1${keyof PackOnServerType}`;
+export type PacksSortParameterType = `0${keyof PackType}` | `1${keyof PackType}`;
 
 export type FlashcardOnServerDataType = {
-  cards: FlashcardOnServerType[];
+  cards: FlashcardType[];
   packUserId: string;
   page: number;
   pageCount: number;
@@ -104,8 +102,8 @@ export type GetPacksParameterType = {
 };
 
 export type CardsSortParameterType =
-  | `0${keyof FlashcardOnServerType}`
-  | `1${keyof FlashcardOnServerType}`;
+  | `0${keyof FlashcardType}`
+  | `1${keyof FlashcardType}`;
 
 export type GetFlashcardsParameterType = {
   cardsPack_id: string;
@@ -272,7 +270,7 @@ export type ServerErrorMessageType = {
 export type PutPackDataType = {
   _id: string;
   // user_id: string;
-  // user_name: number;
+  // user_name: string;
   private?: boolean;
   name?: string;
   path?: string;
@@ -356,7 +354,7 @@ export type PutFlashcardDataType = {
 // };
 
 export type PutFlashcardDataResponseType = {
-  updatedCard: FlashcardOnServerType;
+  updatedCard: FlashcardType;
   token: string;
   tokenDeathTime: number;
 };

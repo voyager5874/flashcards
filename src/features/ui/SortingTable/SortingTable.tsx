@@ -1,11 +1,4 @@
-import {
-  FC,
-  MouseEvent,
-  PropsWithChildren,
-  ReactElement,
-  ReactNode,
-  useCallback,
-} from 'react';
+import { FC, MouseEvent, PropsWithChildren, ReactElement, useCallback } from 'react';
 
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
@@ -83,7 +76,6 @@ const TableHead = <T,>({
     },
     [sorting],
   );
-  // <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />;
   const headers = Object.keys(tableColumns);
   return (
     <>

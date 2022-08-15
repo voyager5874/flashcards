@@ -1,13 +1,13 @@
 import {
   CardsSortParameterType,
   FlashcardOnServerDataType,
-  FlashcardOnServerType,
+  FlashcardType,
   PutFlashcardDataType,
   PutFlashcardGradeResponseType,
 } from 'api/types';
 
 const initialState = {
-  cards: [] as FlashcardOnServerType[],
+  cards: [] as FlashcardType[],
   packUserId: '',
   page: 1,
   pageCount: 10,

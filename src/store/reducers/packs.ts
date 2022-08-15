@@ -1,13 +1,8 @@
-import {
-  PackDataOnServerType,
-  PackOnServerType,
-  PacksSortParameterType,
-} from 'api/types';
-import { PackInAppType } from 'features/Pack/types';
+import { PackDataOnServerType, PackType, PacksSortParameterType } from 'api/types';
 import { Nullable } from 'types';
 
 type InitialStateType = {
-  cardPacks: PackInAppType[];
+  cardPacks: PackType[];
   page: number;
   pageCount: number;
   cardPacksTotalCount: Nullable<number>;
@@ -32,10 +27,10 @@ const initialState: InitialStateType = {
   token: null,
   tokenDeathTime: null,
   minCardsCountFilter: 0,
-  maxCardsCountFilter: 110, // this is current max on the server
+  maxCardsCountFilter: 110, // this is current max on the server, probably should be updated once in a while and persisted
   packsOfCurrentUserFilter: false,
   packNameFilter: '',
-  sorting: '0updated',
+  sorting: '0updated' as PacksSortParameterType,
 };
 
 type PacksActionType =
@@ -57,7 +52,7 @@ export const packs = (
     case 'PACKS/DATA-RECEIVED':
       return { ...state, ...action.payload };
     case 'PACKS/NEW-PACK-CREATED':
-      return { ...state, cardPacks: [...state.cardPacks, action.payload] };
+      return { ...state, cardPacks: [action.payload, ...state.cardPacks] };
     case 'PACKS/SET-ITEMS-PER-PAGE':
       return { ...state, ...action.payload };
     case 'PACKS/SET-MIN-CARDS-COUNT-FILTER':
@@ -84,12 +79,10 @@ export const packsDataReceived = (packsData: PackDataOnServerType) =>
     payload: packsData,
   } as const);
 
-export const packsNewPackCreated = (pack: PackOnServerType) =>
+export const packsNewPackCreated = (pack: PackType) =>
   ({
     type: 'PACKS/NEW-PACK-CREATED',
-    payload: {
-      ...pack,
-    },
+    payload: pack,
   } as const);
 
 export const packsSetItemsPerPage = (pageCount: number) =>

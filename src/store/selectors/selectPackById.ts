@@ -1,27 +1,27 @@
+import { PackType } from 'api/types';
 import { FIRST_ITEM_INDEX, ZERO_LENGTH } from 'const';
-import { PackInAppType } from 'features/Pack/types';
 import { RootState } from 'store/types';
 
 export const selectPackById = (
   state: RootState,
   packId: string | undefined | null,
-): PackInAppType => {
-  const notFound: PackInAppType = {
-    name: null,
+): PackType => {
+  const notFound: PackType = {
+    name: '',
     _id: packId || 'no pack id provided',
-    user_name: null,
+    user_name: '',
     type: 'pack',
-    created: null,
-    updated: null,
+    created: '',
+    updated: '',
     __v: 0,
-    cardsCount: null,
-    grade: null,
-    path: null,
-    more_id: null,
-    private: null,
-    rating: null,
-    shots: null,
-    user_id: null,
+    cardsCount: 0,
+    grade: 0,
+    path: '',
+    more_id: '',
+    private: false,
+    rating: 0,
+    shots: 0,
+    user_id: '',
   };
   if (!packId) return notFound;
   const result = state.packs.cardPacks.filter(pack => pack._id === packId);

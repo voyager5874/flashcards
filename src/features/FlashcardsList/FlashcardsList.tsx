@@ -4,7 +4,7 @@ import styles from './FlashcardsList.module.scss';
 
 import {
   CardsSortParameterType,
-  FlashcardOnServerType,
+  FlashcardType,
   GetFlashcardsParameterType,
   PutFlashcardDataType,
 } from 'api/types';
@@ -23,7 +23,6 @@ import {
 } from 'store/asyncActions/flashcards';
 import { flashcardsSortingApplied } from 'store/reducers/flashcards';
 import { Nullable } from 'types';
-import { prettifyDate } from 'utils';
 
 type FlashcardsListPropsType = GetFlashcardsParameterType;
 
@@ -69,11 +68,7 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
 
     const flashcardsList = useAppSelector(state => state.flashcards.cards);
 
-    // const [currenCardId, setCurrentCardId] = useState('');
-    const [underActionCard, setUnderActionCard] =
-      useState<Nullable<FlashcardOnServerType>>(null);
-
-    // const currentCard = useAppSelector(state => selectFlashcardById(state, currenCardId));
+    const [underActionCard, setUnderActionCard] = useState<Nullable<FlashcardType>>(null);
 
     const handleDeleteFlashcard = (id: string) => {
       dispatch(deleteFlashcard(id, cardsPack_id));
@@ -87,6 +82,7 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
       cardAnswer === '' &&
       !flashcardsList.length;
 
+    // pageContentReplacer should be in useState ?
     let pageContentReplacer: string;
     if (appIsBusy) {
       pageContentReplacer = '';
@@ -108,7 +104,7 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
       }
     };
 
-    const showDeleteDialog = async (data: FlashcardOnServerType) => {
+    const showDeleteDialog = async (data: FlashcardType) => {
       setUnderActionCard(data);
       setDeleteItemDialogActive(true);
       resetControlledPromise();
@@ -123,7 +119,7 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
       dispatch(updateFlashcard(data, cardsPack_id));
     };
 
-    const showEditFlashcardDialog = async (data: FlashcardOnServerType) => {
+    const showEditFlashcardDialog = async (data: FlashcardType) => {
       setUnderActionCard(data);
       setEditItemDialogActive(true);
       resetControlledPromise();
@@ -136,10 +132,9 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
     };
 
     const flashcardHandlers = [showDeleteDialog, showEditFlashcardDialog];
-    const columns: TableColumnModifierType<FlashcardOnServerType> = {
+    const columns: TableColumnModifierType<FlashcardType> = {
       question: { headerName: 'Question' },
       answer: { headerName: 'Answer' },
-      // @ts-ignore
       updated: { headerName: 'Last updated', cellDataModifier: PrettyFormattedDate },
       grade: { headerName: 'Acquisition', cellDataModifier: FillBar },
     };

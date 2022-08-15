@@ -1,12 +1,9 @@
+import { FlashcardType } from 'api/types';
 import { FIRST_ITEM_INDEX, ZERO_LENGTH } from 'const';
-import { FlashcardInAppType } from 'features/Flashcard/types';
 import { RootState } from 'store/types';
 
-export const selectFlashcardById = (
-  state: RootState,
-  cardId: string,
-): FlashcardInAppType => {
-  const notFound: FlashcardInAppType = {
+export const selectFlashcardById = (state: RootState, cardId: string): FlashcardType => {
+  const notFound: FlashcardType = {
     _id: cardId,
     question: 'unknown',
     answer: 'unknown',
@@ -22,7 +19,7 @@ export const selectFlashcardById = (
     cardsPack_id: 'unknown',
     comments: '',
   };
-  // eslint-disable-next-line no-underscore-dangle
+  if (!cardId) return notFound;
   const result = state.flashcards.cards.filter(card => card._id === cardId);
   return result.length > ZERO_LENGTH ? result[FIRST_ITEM_INDEX] : notFound;
 };

@@ -4,7 +4,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 
 import styles from './Learn.module.scss';
 
-import { FlashcardGradeType, FlashcardOnServerType } from 'api/types';
+import { FlashcardGradeType, FlashcardType } from 'api/types';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { RadioGroupFlatDesign } from 'features/ui/Radio/RadioGroupFlatDesign';
 import { useAppDispatch, useAppSelector } from 'hooks';
@@ -22,7 +22,7 @@ const grades = [
 // grades as const
 // type TextGrades = typeof grades[number];
 
-const chooseCard = (cards: FlashcardOnServerType[]) => {
+const chooseCard = (cards: FlashcardType[]) => {
   const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0);
   const rand = Math.random() * sum;
   const res = cards.reduce(
@@ -40,7 +40,7 @@ export const Learn = (): ReactElement => {
   const dispatch = useAppDispatch();
 
   const [showedCardChecked, setShowedCardChecked] = useState(false);
-  const [showedCard, setShowedCard] = useState<FlashcardOnServerType>();
+  const [showedCard, setShowedCard] = useState<FlashcardType>();
   const [cardGrade, setCardGrade] = useState<Nullable<string>>(null);
 
   const { cards, cardsTotalCount } = useAppSelector(state => state.flashcards);

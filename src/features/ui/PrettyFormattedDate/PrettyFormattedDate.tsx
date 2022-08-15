@@ -1,11 +1,10 @@
 import { FC, ReactElement } from 'react';
 
 import styles from 'features/ui/PrettyFormattedDate/PrettyFormattedDate.module.scss';
-import { Nullable } from 'types';
 import { formatDate } from 'utils';
 
 type PrettyFormattedDatePropsType = {
-  updated: Nullable<string>;
+  updated: string;
 };
 
 export const PrettyFormattedDate: FC<PrettyFormattedDatePropsType> = ({

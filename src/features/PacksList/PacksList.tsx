@@ -6,10 +6,10 @@ import styles from './PacksList.module.scss';
 
 import {
   GetPacksParameterType,
+  PackType,
   PacksSortParameterType,
   PutPackDataType,
 } from 'api/types';
-import { PackInAppType } from 'features/Pack/types';
 import { ButtonFlatDesign } from 'features/ui/Button';
 import { Modal } from 'features/ui/Modal';
 import { PrettyFormattedDate } from 'features/ui/PrettyFormattedDate/PrettyFormattedDate';
@@ -21,7 +21,6 @@ import { deletePack, setPacksData, updatePack } from 'store/asyncActions/packs';
 import { flashcardsItemsPerPageChanged } from 'store/reducers/flashcards';
 import { packsSortingApplied } from 'store/reducers/packs';
 import { Nullable } from 'types';
-import { prettifyDate } from 'utils';
 
 type PacksListPropsType = GetPacksParameterType;
 
@@ -35,7 +34,6 @@ export const PacksList: FC<PacksListPropsType> = memo(
     page,
     packName,
     sortPacks,
-    // ...restProps
   }): ReactElement => {
     const dispatch = useAppDispatch();
 
@@ -45,7 +43,7 @@ export const PacksList: FC<PacksListPropsType> = memo(
 
     const [deleteItemDialogActive, setDeleteItemDialogActive] = useState(false);
     const [editItemDialogActive, setEditItemDialogActive] = useState(false);
-    const [underActionPack, setUnderActionPack] = useState<Nullable<PackInAppType>>(null);
+    const [underActionPack, setUnderActionPack] = useState<Nullable<PackType>>(null);
 
     useEffect(() => {
       console.log(min, max, user_id, pageCount, page, packName, sortPacks);
@@ -57,7 +55,7 @@ export const PacksList: FC<PacksListPropsType> = memo(
 
     const packsList = useAppSelector(state => state.packs.cardPacks);
 
-    const openPack = (data: PackInAppType) => {
+    const openPack = (data: PackType) => {
       if (!data.name) return;
       navigate({
         pathname: `/flashcards/${data._id}`,
@@ -65,7 +63,7 @@ export const PacksList: FC<PacksListPropsType> = memo(
       });
     };
 
-    const learnPack = (data: PackInAppType) => {
+    const learnPack = (data: PackType) => {
       if (data.name === null || !data.cardsCount) return;
       dispatch(flashcardsItemsPerPageChanged(data.cardsCount));
       navigate({
@@ -81,7 +79,7 @@ export const PacksList: FC<PacksListPropsType> = memo(
       dispatch(updatePack(data));
     };
 
-    const showEditItemDialog = async (data: PackInAppType) => {
+    const showEditItemDialog = async (data: PackType) => {
       setUnderActionPack(data);
       setEditItemDialogActive(true);
       resetControlledPromise();
@@ -93,7 +91,7 @@ export const PacksList: FC<PacksListPropsType> = memo(
       dispatch(deletePack(id));
     };
 
-    const showDeleteItemDialog = async (data: PackInAppType) => {
+    const showDeleteItemDialog = async (data: PackType) => {
       setUnderActionPack(data);
       setDeleteItemDialogActive(true);
       resetControlledPromise();
@@ -117,7 +115,7 @@ export const PacksList: FC<PacksListPropsType> = memo(
       }
     };
 
-    const columns: TableColumnModifierType<PackInAppType> = {
+    const columns: TableColumnModifierType<PackType> = {
       name: { headerName: 'Pack name' },
       cardsCount: { headerName: 'Number of flashcards' },
       updated: { headerName: 'Last updated', cellDataModifier: PrettyFormattedDate },
