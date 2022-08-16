@@ -16,10 +16,7 @@ const initialValues = {
   confirmPassword: '',
 };
 
-// createValidationSchema made to accept an object as parameter for passing initialValues
-// but current implementation of the function needs to skip some of the properties (here 'confirmPassword')
-// values don't matter - the function uses Object.keys method
-const validationSchema = createValidationSchema({ email: '', password: '' });
+const validationSchema = createValidationSchema(initialValues);
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -102,7 +99,11 @@ export const Register = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.confirmPassword}
-          error={formik.errors.confirmPassword ? formik.errors.confirmPassword : ''}
+          error={
+            formik.touched.confirmPassword && formik.errors.confirmPassword
+              ? formik.errors.confirmPassword
+              : ''
+          }
         />
         <ButtonFlatDesign type="submit" disabled={formik.isSubmitting || !formik.isValid}>
           Sign up

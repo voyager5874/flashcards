@@ -9,7 +9,7 @@ import { login } from 'store/asyncActions/login';
 import { FormikCheckbox } from 'tmp/FormikComponentLogin/FormikCheckbox';
 import { FormikTextInput } from 'tmp/FormikComponentLogin/FormikTextInput';
 import styles from 'tmp/FormikComponentLogin/Login.module.scss';
-import { validationSchema } from 'utils';
+import { createValidationSchema } from 'utils';
 
 type FormValuesType = {
   email: string;
@@ -22,6 +22,8 @@ const initialValues = {
   password: process.env.REACT_APP_PASSWORD || 'test@test.ru',
   rememberMe: false,
 };
+
+const validationSchema = createValidationSchema(initialValues);
 
 export const Login = (): ReactElement => {
   const navigate = useNavigate();

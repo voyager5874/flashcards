@@ -17,10 +17,7 @@ const initialValues = {
   token: '',
 };
 
-const formValidationSchema = createValidationSchema({
-  password: initialValues.password,
-  token: initialValues.token,
-});
+const formValidationSchema = createValidationSchema(initialValues);
 
 export const PasswordReset = () => {
   const navigate = useNavigate();

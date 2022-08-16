@@ -23,10 +23,7 @@ const initialValues: LoginParameterType = {
   rememberMe: false,
 };
 
-const validationSchema = createValidationSchema({
-  email: '',
-  password: '',
-});
+const validationSchema = createValidationSchema(initialValues);
 
 export const Login = (): ReactElement => {
   const navigate = useNavigate();
