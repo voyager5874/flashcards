@@ -1,0 +1,56 @@
+@use '../../styles/flat-design-colors';
+@use '../../styles/flat-design-decorators';
+
+
+$checkedBackground: flat-design-colors.$checkboxCheckedBackground;
+$uncheckedBackground: flat-design-colors.$checkboxUncheckedBackground;
+$checkMark: flat-design-colors.$checkboxCheckmark;
+
+@mixin check-mark {
+  position: absolute;
+  left: 0;
+  background-color: $checkMark;
+  border-radius: 2px;
+  content: "";
+  transform: translateX(10px) rotate(-45deg);
+  transform-origin: left bottom;
+}
+
+.wrapper {
+  //border: 1px solid;
+  display: flex;
+  align-items: flex-end;
+
+  input {
+    position: relative;
+    height: 20px;
+    cursor: pointer;
+    border-radius: 3px;
+    width: 20px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    vertical-align: middle;
+    margin-right: 10px;
+    background: $uncheckedBackground;
+    @include flat-design-decorators.insetShadow;
+
+
+    &:checked {
+      background: $checkedBackground;
+      &::before {
+        @include check-mark;
+        top: 50%;
+        height: 50%;
+        width: 3px;
+      }
+
+      &::after {
+        @include check-mark;
+        bottom: 0;
+        height: 3px;
+        width: 100%;
+      }
+    }
+  }
+
+}

@@ -3,8 +3,8 @@ import { PropsWithChildren } from 'react';
 import { useFormik } from 'formik';
 
 import { CreateFlashcardParameterType, PutFlashcardDataType } from 'api/types';
-import { ButtonFlatDesign } from 'features/ui/Button';
-import { TextInput } from 'features/ui/flat-design';
+import { ButtonFlatDesign } from 'components/Button';
+import { TextInput } from 'components/TextInput';
 import { ControlledPromiseType } from 'hooks/useControlledPromise';
 import styles from 'pages/Flashcards/Flashcards.module.scss';
 

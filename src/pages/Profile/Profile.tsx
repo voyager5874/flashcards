@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import defaultAvatar from 'assets/no-avatar.png';
 import invalidAvatar from 'assets/wtf.jpg';
-import { EditableText } from 'features/ui/EditableText';
+import { EditableText } from 'components/EditableText';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import styles from 'pages/Profile/Profile.module.scss';
 import { setUpdatedProfileData, uploadAvatar } from 'store/asyncActions/profile';

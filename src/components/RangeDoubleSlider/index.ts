@@ -1,0 +1,1 @@
+export { RangeDoubleSlider } from './RangeDoubleSlider';

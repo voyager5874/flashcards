@@ -1,1 +1,0 @@
-export { SortingTable } from './SortingTable';

@@ -3,15 +3,13 @@ import { ReactElement, useEffect } from 'react';
 
 import { Navigate, Route, Routes } from 'react-router-dom';
 
-import { AppMessagesPopup } from 'features/AppMessagesPopup';
-import { Layout } from 'features/ui/Layout';
+import { AppMessagesPopup } from 'components/AppMessagesPopup';
+import { Loader } from 'components/Loader';
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { ComponentsTest } from 'pages/ComponentsTest';
 import { Flashcards } from 'pages/Flashcards/Flashcards';
-import { FlatDesignTestPage } from 'pages/FlatDesignTest/FlatDesignTestPage';
 import { InfoOnPasswordRecovery } from 'pages/InfoOnPasswordRecovery';
+import { Layout } from 'pages/Layout';
 import { Learn } from 'pages/Learn/Learn';
-import { Loader } from 'pages/Loader';
 import { Login } from 'pages/Login';
 import { NotFound } from 'pages/NotFound';
 import { Packs } from 'pages/Packs/Packs';
@@ -55,8 +53,6 @@ const App = (): ReactElement => {
             <Route path=":packId" element={<Flashcards />} />
           </Route>
           <Route path="learn/:packId" element={<Learn />} />
-          <Route path="heap-test" element={<ComponentsTest />} />
-          <Route path="flat-test" element={<FlatDesignTestPage />} />
         </Route>
         <Route path="password-reset">
           <Route index element={<NotFound />} />

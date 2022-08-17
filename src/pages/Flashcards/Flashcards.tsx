@@ -5,13 +5,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 import { CreateFlashcardParameterType } from 'api/types';
+import { ButtonFlatDesign } from 'components/Button';
+import { Modal } from 'components/Modal';
+import { Pagination } from 'components/Pagination';
+import { RangeDoubleSlider } from 'components/RangeDoubleSlider/RangeDoubleSlider';
+import { TextInput } from 'components/TextInput';
 import { FIRST_ITEM_INDEX, SECOND_ITEM_INDEX } from 'const';
 import { FlashcardsList } from 'features/FlashcardsList';
-import { ButtonFlatDesign } from 'features/ui/Button';
-import { TextInput } from 'features/ui/flat-design';
-import { RangeDoubleSlider } from 'features/ui/flat-design/RangeDoubleSlider';
-import { Modal } from 'features/ui/Modal';
-import { Pagination } from 'features/ui/Pagination';
 import {
   useAppDispatch,
   useAppSelector,

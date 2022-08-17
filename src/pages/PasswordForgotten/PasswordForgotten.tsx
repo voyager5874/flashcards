@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-import { ButtonFlatDesign } from 'features/ui/Button';
-import { TextInput } from 'features/ui/flat-design';
+import { ButtonFlatDesign } from 'components/Button';
+import { TextInput } from 'components/TextInput';
 import { useAppDispatch, useDebouncedValue } from 'hooks';
 import styles from 'pages/PasswordForgotten/PasswordForgotten.module.scss';
 import { startPasswordRecovery } from 'store/asyncActions/password';

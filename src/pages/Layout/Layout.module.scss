@@ -1,0 +1,13 @@
+@use '../../styles/layout-variables';
+@use '../../styles/flat-design-colors';
+
+.page {
+  background-color: flat-design-colors.$mainColor;
+  //background-color: flat-design-colors.$secondaryColor;
+  min-height: calc(100vh - #{layout-variables.$headerHeight
+});
+  box-sizing: border-box;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}

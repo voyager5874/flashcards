@@ -1,0 +1,148 @@
+@use '../../styles/flat-design-decorators';
+@use '../../styles/flat-design-colors';
+@use '../../styles/layout-variables';
+
+
+//component colors interface
+
+//$thumbColor: flat-design-colors.$checkMarkColor;
+$thumbColor: flat-design-colors.$rangeThumbInactive;
+$thumbColorActive : flat-design-colors.$rangeThumbActive;
+$thumbActiveBacklight: flat-design-colors.$rangeThumbActiveShadow;
+$trackColor: none;
+$rangeFillColor: flat-design-colors.$rangeFill;
+
+//component shape interface
+
+@mixin thumbShape($round: true) {
+  @if $round {
+    border-radius: 50%;
+  } @else {
+    border-radius: layout-variables.$elementsBorderRadius;
+  }
+}
+
+$roundThumb: true;
+
+$trackHeight: 18px;
+
+@mixin trackShape($round: true) {
+  @if $round {
+    border-radius: calc(#{$trackHeight} / 2);
+  } @else {
+    border-radius: layout-variables.$elementsBorderRadius;
+  }
+}
+
+$roundTrack: true;
+
+
+//functionality mixins
+
+@mixin currentValueDisplay {
+  content: attr(data-value);
+  position: absolute;
+  font-weight: 600;
+  font-size: 16px;
+  z-index: 10;
+  top: calc(#{$trackHeight} + 5px);
+}
+
+@mixin input-thumb-override {
+  background-color: $thumbColor;
+  border: none;
+  @include thumbShape($roundThumb);
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  height: calc(#{$trackHeight} + 8px);
+  width: calc(#{$trackHeight} + 8px);
+  margin-top: calc(#{$trackHeight} / 2 - 2px);
+  pointer-events: all;
+  position: relative;
+  &:active{
+    background-color: $thumbColorActive;
+    box-shadow: 0 0 10px 0 rgba($thumbActiveBacklight, 0.9);
+  }
+}
+
+
+.wrapper {
+  position: relative;
+  //border: 1px solid;
+  width: 400px;
+  height: 45px;
+
+  .rangeLeftPart::before {
+    @include currentValueDisplay;
+  }
+
+  .rangeRightPart::after {
+    @include currentValueDisplay;
+    right: 5px;
+  }
+
+
+}
+
+.slider {
+  position: relative;
+  width: 100%;
+
+  .sliderTrack,
+  .sliderRange {
+    position: absolute;
+    @include trackShape($roundTrack);
+  }
+
+  .sliderTrack {
+    background-color: $trackColor;
+    @include flat-design-decorators.insetShadow;
+    height: $trackHeight;
+    width: 100%;
+    z-index: 1;
+  }
+
+  .sliderRange {
+    height: $trackHeight;
+    background-color: $rangeFillColor;
+    z-index: 2;
+  }
+}
+
+.thumb,
+.thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.thumb {
+  pointer-events: none;
+  position: absolute;
+  height: 0;
+  width: 100%;
+  outline: none;
+  z-index: 3;
+  top: 4px;
+  left: -2px;
+
+  &::-webkit-slider-thumb {
+    @include input-thumb-override;
+
+    //&::before {
+    //  //@include currentValueDisplay;
+    //  //right: 10px;
+    //  content: "";
+    //  position: absolute;
+    //  width: 10px;
+    //  height: 10px;
+    //  background-color: white;
+    //  bottom: 10px;
+    //  left: 10px;
+    //  color: white;
+    //}
+  }
+
+  &::-moz-range-thumb {
+    @include input-thumb-override;
+  }
+}

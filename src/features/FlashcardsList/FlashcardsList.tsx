@@ -8,12 +8,12 @@ import {
   GetFlashcardsParameterType,
   PutFlashcardDataType,
 } from 'api/types';
-import { ButtonFlatDesign } from 'features/ui/Button';
-import { FillBar } from 'features/ui/FillBar/FillBar';
-import { Modal } from 'features/ui/Modal';
-import { PrettyFormattedDate } from 'features/ui/PrettyFormattedDate/PrettyFormattedDate';
-import { SortingTable } from 'features/ui/SortingTable';
-import { TableColumnModifierType } from 'features/ui/SortingTable/types';
+import { ButtonFlatDesign } from 'components/Button';
+import { Modal } from 'components/Modal';
+import { SortingTable } from 'components/SortingTable';
+import { FillBar } from 'components/SortingTable/FillBar/FillBar';
+import { PrettyFormattedDate } from 'components/SortingTable/PrettyFormattedDate/PrettyFormattedDate';
+import { TableColumnModifierType } from 'components/SortingTable/types';
 import { useAppDispatch, useAppSelector, useControlledPromise } from 'hooks';
 import { FlashcardEditForm } from 'pages/Flashcards/FlashcardEditForm/FlashcardEditForm';
 import {

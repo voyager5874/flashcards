@@ -3,6 +3,12 @@ import { ChangeEvent, ReactElement, useEffect, useState } from 'react';
 import styles from './Packs.module.scss';
 
 import { CreatePackParameterType } from 'api/types';
+import { ButtonFlatDesign } from 'components/Button';
+import { Checkbox } from 'components/Checkbox/Checkbox';
+import { Modal } from 'components/Modal';
+import { Pagination } from 'components/Pagination';
+import { RangeDoubleSlider } from 'components/RangeDoubleSlider/RangeDoubleSlider';
+import { TextInput } from 'components/TextInput';
 import {
   DEFAULT_MAX_ITEMS_FILTER_VALUE,
   DEFAULT_MIN,
@@ -11,12 +17,6 @@ import {
   SERVER_MAX_ITEMS_PER_REQUEST,
 } from 'const';
 import { PacksList } from 'features/PacksList';
-import { ButtonFlatDesign } from 'features/ui/Button';
-import { CheckboxFlatDesign } from 'features/ui/Checkbox/CheckboxFlatDesign';
-import { TextInput } from 'features/ui/flat-design';
-import { RangeDoubleSlider } from 'features/ui/flat-design/RangeDoubleSlider';
-import { Modal } from 'features/ui/Modal';
-import { Pagination } from 'features/ui/Pagination';
 import {
   useAppDispatch,
   useAppSelector,
@@ -121,13 +121,13 @@ export const Packs = (): ReactElement => {
       </div>
 
       <div className={styles.controls}>
-        <CheckboxFlatDesign
+        <Checkbox
           disabled={appIsBusy}
           checked={packsOfCurrentUserFilter}
           onChange={flipPacksOfCurrentUserFilter}
         >
           show only my packs
-        </CheckboxFlatDesign>
+        </Checkbox>
         <RangeDoubleSlider
           disabled={appIsBusy}
           onChangeRange={changePacksFilterValues}

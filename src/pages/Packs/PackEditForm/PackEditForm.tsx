@@ -3,9 +3,9 @@ import { PropsWithChildren } from 'react';
 import { useFormik } from 'formik';
 
 import { CreatePackParameterType, PutPackDataType } from 'api/types';
-import { ButtonFlatDesign } from 'features/ui/Button';
-import { CheckboxFlatDesign } from 'features/ui/Checkbox/CheckboxFlatDesign';
-import { TextInput } from 'features/ui/flat-design';
+import { ButtonFlatDesign } from 'components/Button';
+import { Checkbox } from 'components/Checkbox/Checkbox';
+import { TextInput } from 'components/TextInput';
 import { ControlledPromiseType } from 'hooks/useControlledPromise';
 import styles from 'pages/Flashcards/Flashcards.module.scss';
 
@@ -37,13 +37,13 @@ export const PackEditForm = <T extends CreatePackParameterType | PutPackDataType
         value={formik.values.name}
         onChange={formik.handleChange}
       />
-      <CheckboxFlatDesign
+      <Checkbox
         name="private"
         checked={formik.values.private}
         onChange={formik.handleChange}
       >
         Private
-      </CheckboxFlatDesign>
+      </Checkbox>
       <div>
         <ButtonFlatDesign className={styles.button} type="submit">
           Save

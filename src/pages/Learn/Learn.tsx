@@ -5,8 +5,8 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import styles from './Learn.module.scss';
 
 import { FlashcardGradeType, FlashcardType } from 'api/types';
-import { ButtonFlatDesign } from 'features/ui/Button';
-import { RadioGroupFlatDesign } from 'features/ui/Radio/RadioGroupFlatDesign';
+import { ButtonFlatDesign } from 'components/Button';
+import { RadioGroup } from 'components/RadioGroup';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { setFlashcardsData, updateFlashcardGrade } from 'store/asyncActions/flashcards';
 import { appErrorOccurred } from 'store/reducers/app';
@@ -92,7 +92,7 @@ export const Learn = (): ReactElement => {
         {showedCardChecked ? (
           <div>
             <p>{showedCard && showedCard.answer}</p>
-            <RadioGroupFlatDesign
+            <RadioGroup
               className={styles.radios}
               options={grades}
               value={cardGrade || undefined}

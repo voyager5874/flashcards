@@ -10,11 +10,11 @@ import {
   PacksSortParameterType,
   PutPackDataType,
 } from 'api/types';
-import { ButtonFlatDesign } from 'features/ui/Button';
-import { Modal } from 'features/ui/Modal';
-import { PrettyFormattedDate } from 'features/ui/PrettyFormattedDate/PrettyFormattedDate';
-import { SortingTable } from 'features/ui/SortingTable';
-import { TableColumnModifierType } from 'features/ui/SortingTable/types';
+import { ButtonFlatDesign } from 'components/Button';
+import { Modal } from 'components/Modal';
+import { SortingTable } from 'components/SortingTable';
+import { PrettyFormattedDate } from 'components/SortingTable/PrettyFormattedDate/PrettyFormattedDate';
+import { TableColumnModifierType } from 'components/SortingTable/types';
 import { useAppDispatch, useAppSelector, useControlledPromise } from 'hooks';
 import { PackEditForm } from 'pages/Packs/PackEditForm/PackEditForm';
 import { deletePack, setPacksData, updatePack } from 'store/asyncActions/packs';

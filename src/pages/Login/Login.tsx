@@ -6,9 +6,9 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import styles from './Login.module.scss';
 
 import { LoginParameterType } from 'api/types';
-import { ButtonFlatDesign } from 'features/ui/Button';
-import { CheckboxFlatDesign } from 'features/ui/Checkbox/CheckboxFlatDesign';
-import { TextInput } from 'features/ui/flat-design';
+import { ButtonFlatDesign } from 'components/Button';
+import { Checkbox } from 'components/Checkbox/Checkbox';
+import { TextInput } from 'components/TextInput';
 import { useAppDispatch, useAppSelector, useDebouncedValue } from 'hooks';
 import { login } from 'store/asyncActions/login';
 import { createValidationSchema } from 'utils/formsValidationSchema';
@@ -109,13 +109,13 @@ export const Login = (): ReactElement => {
         >
           Forgot password?
         </NavLink>
-        <CheckboxFlatDesign
+        <Checkbox
           name="rememberMe"
           checked={formik.values.rememberMe}
           onChange={formik.handleChange}
         >
           Remember me
-        </CheckboxFlatDesign>
+        </Checkbox>
         <ButtonFlatDesign type="submit" disabled={formik.isSubmitting || !formik.isValid}>
           Login
         </ButtonFlatDesign>

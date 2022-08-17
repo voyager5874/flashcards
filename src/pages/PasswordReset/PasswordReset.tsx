@@ -5,8 +5,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import styles from './PasswordReset.module.scss';
 
-import { ButtonFlatDesign } from 'features/ui/Button';
-import { TextInput } from 'features/ui/flat-design';
+import { ButtonFlatDesign } from 'components/Button';
+import { TextInput } from 'components/TextInput';
 import { useAppDispatch, useDebouncedValue } from 'hooks';
 import { requestPasswordReset } from 'store/asyncActions/password';
 import { createValidationSchema } from 'utils/formsValidationSchema';

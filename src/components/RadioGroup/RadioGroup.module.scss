@@ -1,0 +1,33 @@
+@import '../../styles/flat-design-colors';
+
+//$checkMarkColor: #5E5D58;
+$checkMarkColor: $elementsColorDefault;
+
+.wrapper {
+  font-weight: 700;
+  font-family: 'Josefin Sans', sans-serif;
+
+  input {
+    background: rgba(191, 185, 169, .2);
+    height: 16px;
+    cursor: pointer;
+    width: 16px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .44) inset;
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .44) inset;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .44) inset;
+    vertical-align: middle;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+
+    &:checked {
+      background: $checkMarkColor;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .44);
+      -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .44);
+      -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .44);
+    }
+
+  }
+}
