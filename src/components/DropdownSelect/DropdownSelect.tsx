@@ -20,7 +20,7 @@ import styles from 'components/DropdownSelect/DropdownSelect.module.scss';
 import { STEP_TO_NEXT } from 'const';
 import { useOutsideClickDetect } from 'hooks';
 
-const OPTION_ITEM_HEIGHT = 40; // SSOT? not heard of it
+const OPTION_ITEM_HEIGHT = 40;
 
 // this is radio buttons set actually due to native select element styling problems.
 // Particularly select 'option' look is almost unchangeable
@@ -64,14 +64,15 @@ export const DropdownSelect: FC<DropdownSelectPropsType> = ({
 
   const onChangeCallback = (e: ChangeEvent<HTMLInputElement>): void => {
     if (onChange) onChange(e);
-    if (!onChangeOption) return;
-    onChangeOption(e.currentTarget.value);
+    if (onChangeOption) onChangeOption(e.currentTarget.value);
     hideOptions();
   };
 
   const expandedOptionsBoxStyle: CSSProperties = {
     // unset -> no animation
-    height: `${options && options.length * OPTION_ITEM_HEIGHT}px`,
+    height: options.length
+      ? `${options.length * OPTION_ITEM_HEIGHT}px`
+      : `${OPTION_ITEM_HEIGHT}px`,
   };
 
   const collapsedOptionsBoxStyle: CSSProperties = {
@@ -92,26 +93,25 @@ export const DropdownSelect: FC<DropdownSelectPropsType> = ({
         className={styles.optionsBox}
         style={collapsed ? collapsedOptionsBoxStyle : expandedOptionsBoxStyle}
       >
-        {options
-          ? options.map((option, index) => (
-              <label
-                htmlFor={`${id}-${option}`}
-                key={getUuidByString(`optionLabel${option}`)}
-              >
-                <input
-                  id={`${id}-${option}`}
-                  onChange={onChangeCallback}
-                  name={name}
-                  value={option}
-                  checked={value === option}
-                  {...restProps}
-                  type="radio"
-                />
-                {childrenArray.slice(index, index + STEP_TO_NEXT)}
-                {option}
-              </label>
-            ))
-          : []}
+        {options.length &&
+          options.map((option, index) => (
+            <label
+              htmlFor={`${id}-${name}-${option}`}
+              key={getUuidByString(`optionLabel${option}`)}
+            >
+              <input
+                id={`${id}-${name}-${option}`}
+                onChange={onChangeCallback}
+                name={name}
+                value={option}
+                checked={value === option}
+                {...restProps}
+                type="radio"
+              />
+              {childrenArray[index]}
+              {option}
+            </label>
+          ))}
       </div>
     </div>
   );

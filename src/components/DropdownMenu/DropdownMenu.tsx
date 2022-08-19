@@ -3,6 +3,7 @@ import {
   CSSProperties,
   FC,
   ReactElement,
+  ReactNode,
   useCallback,
   useRef,
   useState,
@@ -10,18 +11,17 @@ import {
 
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NavLink } from 'react-router-dom';
 
 import styles from 'components/DropdownMenu/DropdownMenu.module.scss';
 import { useOutsideClickDetect } from 'hooks';
 
-const OPTION_ITEM_HEIGHT = 38; // SSOT? not heard of it
-const OPTION_BOX_HEIGHT_GUTTER = 50;
+const OPTION_ITEM_HEIGHT = 38;
+const OPTION_BOX_HEIGHT_GUTTER = 10;
 
 type DropdownMenuPropsType = {
   expandOnHover?: boolean;
   placeholder: string;
-  children: Array<ReturnType<typeof NavLink>>;
+  children: ReactNode;
 };
 
 export const DropdownMenu: FC<DropdownMenuPropsType> = ({
@@ -32,6 +32,8 @@ export const DropdownMenu: FC<DropdownMenuPropsType> = ({
   const elementContainerRef = useRef<HTMLDivElement>(null);
 
   const [collapsed, setCollapsed] = useState(true);
+
+  const menuOptionsCount = Children.toArray(children).length;
 
   const hideOptions = useCallback((): void => {
     setCollapsed(true);
@@ -52,9 +54,10 @@ export const DropdownMenu: FC<DropdownMenuPropsType> = ({
   };
 
   const expandedOptionsBoxStyle: CSSProperties = {
-    height: `${
-      children && children.length * OPTION_ITEM_HEIGHT + OPTION_BOX_HEIGHT_GUTTER
-    }px`,
+    height:
+      menuOptionsCount > 1
+        ? `${menuOptionsCount * OPTION_ITEM_HEIGHT + OPTION_BOX_HEIGHT_GUTTER}px`
+        : `${OPTION_ITEM_HEIGHT + OPTION_BOX_HEIGHT_GUTTER}px`,
   };
 
   const collapsedOptionsBoxStyle: CSSProperties = {
@@ -83,16 +86,15 @@ export const DropdownMenu: FC<DropdownMenuPropsType> = ({
           className={styles.optionsBox}
           style={collapsed ? collapsedOptionsBoxStyle : expandedOptionsBoxStyle}
         >
-          {children
-            ? Children.map(children, child => (
-                <li
-                  className={styles.menuItem}
-                  style={{ height: `${OPTION_ITEM_HEIGHT}px` }}
-                >
-                  {child}
-                </li>
-              ))
-            : []}
+          {children &&
+            Children.map(children, child => (
+              <li
+                className={styles.menuItem}
+                style={{ height: `${OPTION_ITEM_HEIGHT}px` }}
+              >
+                {child}
+              </li>
+            ))}
         </ul>
       </div>
     </div>

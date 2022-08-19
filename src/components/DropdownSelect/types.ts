@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
+import { DetailedHTMLProps, InputHTMLAttributes, ReactNode } from 'react';
 
 type DefaultRadioPropsType = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
@@ -8,6 +8,7 @@ type DefaultRadioPropsType = DetailedHTMLProps<
 export type DropdownSelectPropsType = DefaultRadioPropsType & {
   options?: string[];
   onChangeOption?: (option: string) => void;
-  // children?: ReactNode;
+  children: ReactNode;
   buttonText?: string;
+  name: string;
 };

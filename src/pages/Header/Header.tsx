@@ -1,8 +1,5 @@
 import { CSSProperties, FC, ReactElement } from 'react';
 
-import { faBiking } from '@fortawesome/free-solid-svg-icons';
-import { faStar } from '@fortawesome/free-solid-svg-icons/faStar';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink } from 'react-router-dom';
 
 import { DropdownMenu } from 'components/DropdownMenu/DropdownMenu';
@@ -32,15 +29,15 @@ export const Header: FC<HeaderPropsType> = ({ height }): ReactElement => {
       </button>
       <div style={{ display: 'inline-block', width: '250px' }}>
         <DropdownMenu placeholder="navigation">
-          <NavLink to="/login">
-            <FontAwesomeIcon icon={faBiking} color="yellow" /> Login
-          </NavLink>
-          <NavLink to="/register">
-            <FontAwesomeIcon icon={faStar} /> Register
-          </NavLink>
-          <NavLink to="/no-page">NotFound</NavLink>
-          <NavLink to="/password-forgotten">Password forgotten</NavLink>
-          <NavLink to="/password-reset/fake-token777">reset password</NavLink>
+          {/* <NavLink to="/login"> */}
+          {/*  <FontAwesomeIcon icon={faBiking} color="yellow" /> Login */}
+          {/* </NavLink> */}
+          {/* <NavLink to="/register"> */}
+          {/*  <FontAwesomeIcon icon={faStar} /> Register */}
+          {/* </NavLink> */}
+          {/* <NavLink to="/no-page">NotFound</NavLink> */}
+          {/* <NavLink to="/password-forgotten">Password forgotten</NavLink> */}
+          {/* <NavLink to="/password-reset/fake-token777">reset password</NavLink> */}
           <NavLink to="instructions/fake-email">Instructions sent</NavLink>
         </DropdownMenu>
       </div>
