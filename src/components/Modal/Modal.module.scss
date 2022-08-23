@@ -1,6 +1,6 @@
 .wrapper {
   position: fixed;
-  z-index: 9999;
+  z-index: 999;
   top: 0;
   left: 0;
   display: flex;
@@ -24,11 +24,15 @@
     align-items: center;
     gap: 20px;
     min-width: 400px;
-    max-width: 50vw;
+    max-width: 70vw;
     min-height: 200px;
     max-height: 70vh;
     padding: 50px;
     background-color: #0f8ad7;
+
+    img {
+      width: 150px;
+    }
 
     div {
       display: flex;

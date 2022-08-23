@@ -1,0 +1,125 @@
+@use '../../styles/flat-design-colors';
+
+.wrapper {
+  //border: 1px solid;
+  position: relative;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  textarea {
+    padding: 20px;
+    border-radius: 5px;
+    background-color: flat-design-colors.$textColorMain;
+    border: 0;
+    border-bottom: 3px solid flat-design-colors.$normalTextInputBorder;
+    min-height: 100px;
+    max-height: 200px;
+    min-width: 400px;
+    max-width: 600px;
+    font-size: 17px;
+    font-family: "Josefin Sans", sans-serif;
+    font-weight: 700;
+    color: flat-design-colors.$normalTextInputBorder;
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
+
+    &:disabled {
+      background-color: flat-design-colors.$disabledTextInputBackground;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+      outline: none;
+    }
+
+    &::-webkit-input-placeholder {
+      position: absolute;
+      right: 10px;
+      top: 3px;
+      font-size: 15px;
+      font-family: "Josefin Sans", sans-serif;
+      font-weight: 600;
+    }
+
+    &:-moz-placeholder { /* Firefox 18- */
+    }
+
+    &::-moz-placeholder { /* Firefox 19+ */
+    }
+
+    &:-ms-input-placeholder {
+    }
+
+  }
+
+  .errorInput {
+    border-bottom: solid 3px flat-design-colors.$errorTextInputBorder;
+    //background-color: $elementsColorThemeRed;
+    //color: $elementsColorThemeRed;
+    &::-webkit-input-placeholder {
+      color: flat-design-colors.$errorTextInputText;
+      font-size: 15px;
+      font-family: "Josefin Sans", sans-serif;
+      font-weight: 600;
+    }
+
+    &:-moz-placeholder {
+      color: flat-design-colors.$errorTextInputText;
+
+    }
+
+    &::-moz-placeholder {
+      color: flat-design-colors.$errorTextInputText;
+
+    }
+
+    &:-ms-input-placeholder {
+      color: flat-design-colors.$errorTextInputText;
+
+    }
+  }
+
+  .helperText {
+    position: absolute;
+    top: 3px;
+    right: 10px;
+    color: flat-design-colors.$normalTextInputBorder;
+    font-size: 15px;
+    font-family: "Josefin Sans", sans-serif;
+    font-weight: 600;
+  }
+
+  .errorText {
+    color: flat-design-colors.$errorTextInputText;
+
+  }
+
+  .inputControl {
+    background-color: transparent;
+    //background-color: #f44336;
+    color: flat-design-colors.$normalTextInputBorder;
+    border: none;
+    outline: none;
+    position: absolute;
+    right: 10px;
+    top: 0;
+    bottom: 0;
+    z-index: 10;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 40px;
+    cursor: pointer;
+
+    svg {
+      height: 24px;
+    }
+  }
+
+}
+

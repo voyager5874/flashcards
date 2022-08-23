@@ -30,23 +30,6 @@ export const Profile = () => {
     dispatch(setUpdatedProfileData({ name }));
   };
 
-  // useEffect(() => {
-  //   if (profile.avatar) {
-  //     validateImage(profile.avatar).then(res => {
-  //       if (!res) {
-  //         dispatch(
-  //           appErrorOccurred(
-  //             'Trying to break it? Huh? You have something other than image in place of your avatar',
-  //           ),
-  //         );
-  //         setAvatar(invalidAvatar);
-  //       } else {
-  //         setAvatar(profile.avatar!);
-  //       }
-  //     });
-  //   }
-  // }, [profile.avatar]);
-
   useEffect(() => {
     if (!profile.avatar) return;
     setAvatar(profile.avatar);

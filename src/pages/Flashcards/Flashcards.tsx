@@ -92,9 +92,10 @@ export const Flashcards = (): ReactElement => {
     dispatch(
       createFlashcard(
         {
-          cardsPack_id: packId,
-          question: cardData.question,
-          answer: cardData.answer,
+          // cardsPack_id: packId,
+          // question: cardData.question,
+          // answer: cardData.answer,
+          ...cardData,
         },
         packId,
       ),
@@ -107,11 +108,6 @@ export const Flashcards = (): ReactElement => {
     await controlledPromise.promise;
     setAddItemDialogActive(false);
   };
-
-  // useEffect(() => {
-  //   if (!packNameFromPacksSlice) return;
-  //   setPageUrl({ packName: packNameFromPacksSlice }, { replace: true });
-  // }, [packNameFromPacksSlice]);
 
   useEffect(() => {
     dispatch(flashcardsQuestionKeywordsFilterApplied(debouncedQuestionSearchString));
@@ -185,7 +181,13 @@ export const Flashcards = (): ReactElement => {
           <FlashcardEditForm
             promiseToControl={controlledPromise}
             submitCallback={handleAddFlashcard}
-            initialValues={{ answer: '', question: '', cardsPack_id: packId || '' }}
+            initialValues={{
+              answer: '',
+              question: '',
+              cardsPack_id: packId || '',
+              questionImg: '',
+              answerImg: '',
+            }}
           />
         </Modal>
       )}

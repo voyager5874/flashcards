@@ -41,7 +41,7 @@ export const uploadAvatar =
         dispatch(appErrorOccurred('not an image file'));
       }
     } catch (error) {
-      processAsyncActionErrors(error, dispatch, 'error during conversion to base64');
+      processAsyncActionErrors(error, dispatch, 'error during avatar update');
     } finally {
       dispatch(appIsBusy(false));
     }

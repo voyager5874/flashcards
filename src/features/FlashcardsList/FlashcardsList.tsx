@@ -187,6 +187,8 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
                 _id: underActionCard?._id || '',
                 question: underActionCard?.question || '',
                 answer: underActionCard?.answer || '',
+                questionImg: underActionCard?.questionImg,
+                answerImg: underActionCard?.answerImg,
               }}
             />
           </Modal>

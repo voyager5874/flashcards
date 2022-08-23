@@ -58,7 +58,7 @@ export const TextInput: React.FC<TextInputPropsType> = ({
         ref={inputRef}
         placeholder={error ? '' : placeholder}
         onChange={onChangeCallback}
-        onKeyPress={onKeyPressCallback}
+        onKeyDown={onKeyPressCallback}
         className={finalInputStyle}
         {...restProps}
         type={textVisible ? 'text' : 'password'}
