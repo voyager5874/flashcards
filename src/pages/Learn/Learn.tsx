@@ -92,6 +92,7 @@ export const Learn = (): ReactElement => {
         {showedCardChecked ? (
           <div>
             <p>{showedCard && showedCard.answer}</p>
+            <img src={showedCard && showedCard?.answerImg} alt="answer" />
             <RadioGroup
               className={styles.radios}
               options={grades}
@@ -106,6 +107,7 @@ export const Learn = (): ReactElement => {
         ) : (
           <div>
             <p>{showedCard && showedCard.question}</p>
+            <img src={showedCard && showedCard?.questionImg} alt="question" />
             <ButtonFlatDesign onClick={showAnswer}>Show answer</ButtonFlatDesign>
           </div>
         )}

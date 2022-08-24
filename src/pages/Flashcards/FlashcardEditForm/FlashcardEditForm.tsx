@@ -1,4 +1,4 @@
-import { ChangeEvent, PropsWithChildren, useEffect, useId, useState } from 'react';
+import { ChangeEvent, PropsWithChildren, useEffect, useId } from 'react';
 
 import { faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons/faArrowUpFromBracket';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -59,8 +59,20 @@ export const FlashcardEditForm = <
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <input type="text" name="questionImg" hidden value={formik.values.questionImg} />
-      <input type="text" name="answerImg" hidden value={formik.values.answerImg} />
+      <input
+        type="text"
+        name="questionImg"
+        hidden
+        value={formik.values.questionImg}
+        onChange={formik.handleChange}
+      />
+      <input
+        type="text"
+        name="answerImg"
+        hidden
+        value={formik.values.answerImg}
+        onChange={formik.handleChange}
+      />
       <div>
         <p>
           <div className={styles.questionImage}>

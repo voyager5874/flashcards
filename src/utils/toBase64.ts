@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react';
 
-import { FIRST_ITEM_INDEX } from 'const';
+import { FIRST_ITEM_INDEX, IMAGE_MAX_SIZE } from 'const';
 
 export const toBase64 = (event: ChangeEvent<HTMLInputElement>): Promise<string> =>
   new Promise<string>((resolve, reject) => {
@@ -8,7 +8,8 @@ export const toBase64 = (event: ChangeEvent<HTMLInputElement>): Promise<string> 
       reject(new Error('no files received from the input'));
     } else {
       const targetFile = event.target.files[FIRST_ITEM_INDEX];
-      if (targetFile.size > 1000000) reject(new Error('max image file size exceeded'));
+      if (targetFile.size > IMAGE_MAX_SIZE)
+        reject(new Error('max image file size exceeded'));
       const reader = new FileReader();
       // const formData = new FormData();
       // formData.append('base64Representation', targetFile);
@@ -26,17 +27,17 @@ export const toBase64 = (event: ChangeEvent<HTMLInputElement>): Promise<string> 
 
 // https://stackoverflow.com/questions/36280818/how-to-convert-file-to-base64-in-javascript
 
-export function getBase64(file: File) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      let encoded = reader?.result?.toString().replace(/^data:(.*,)?/, '');
-      if (encoded && encoded.length % 4 > 0) {
-        encoded += '='.repeat(4 - (encoded.length % 4));
-      }
-      resolve(encoded);
-    };
-    reader.onerror = error => reject(error);
-  });
-}
+// export function getBase64(file: File) {
+//   return new Promise((resolve, reject) => {
+//     const reader = new FileReader();
+//     reader.readAsDataURL(file);
+//     reader.onload = () => {
+//       let encoded = reader?.result?.toString().replace(/^data:(.*,)?/, '');
+//       if (encoded && encoded.length % 4 > 0) {
+//         encoded += '='.repeat(4 - (encoded.length % 4));
+//       }
+//       resolve(encoded);
+//     };
+//     reader.onerror = error => reject(error);
+//   });
+// }

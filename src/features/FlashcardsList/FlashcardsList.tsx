@@ -12,6 +12,7 @@ import { ButtonFlatDesign } from 'components/Button';
 import { Modal } from 'components/Modal';
 import { SortingTable } from 'components/SortingTable';
 import { FillBar } from 'components/SortingTable/FillBar/FillBar';
+import { Miniature } from 'components/SortingTable/Miniature';
 import { PrettyFormattedDate } from 'components/SortingTable/PrettyFormattedDate/PrettyFormattedDate';
 import { TableColumnModifierType } from 'components/SortingTable/types';
 import { useAppDispatch, useAppSelector, useControlledPromise } from 'hooks';
@@ -23,6 +24,7 @@ import {
 } from 'store/asyncActions/flashcards';
 import { flashcardsSortingApplied } from 'store/reducers/flashcards';
 import { Nullable } from 'types';
+import { getChangedParams } from 'utils/getChangedParams';
 
 type FlashcardsListPropsType = GetFlashcardsParameterType;
 
@@ -116,7 +118,12 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
     };
 
     const handleEditFlashcard = (data: PutFlashcardDataType) => {
-      dispatch(updateFlashcard(data, cardsPack_id));
+      if (!underActionCard) return;
+      const changedValues = getChangedParams(underActionCard, data);
+      if (!Object.keys(changedValues).length) return;
+      dispatch(
+        updateFlashcard({ ...changedValues, _id: underActionCard._id }, cardsPack_id),
+      );
     };
 
     const showEditFlashcardDialog = async (data: FlashcardType) => {
@@ -134,7 +141,9 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
     const flashcardHandlers = [showDeleteDialog, showEditFlashcardDialog];
     const columns: TableColumnModifierType<FlashcardType> = {
       question: { headerName: 'Question' },
+      questionImg: { headerName: 'Picture', cellDataModifier: Miniature },
       answer: { headerName: 'Answer' },
+      answerImg: { headerName: 'Picture', cellDataModifier: Miniature },
       updated: { headerName: 'Last updated', cellDataModifier: PrettyFormattedDate },
       grade: { headerName: 'Acquisition', cellDataModifier: FillBar },
     };

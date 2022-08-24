@@ -1,0 +1,15 @@
+.wrapper {
+  box-sizing: border-box;
+  border: 1px dotted;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  img {
+    width: auto;
+    max-height: 100px;
+    min-font-size: 50px;
+  }
+
+}

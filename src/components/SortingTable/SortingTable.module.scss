@@ -34,6 +34,10 @@
   }
 
   tbody {
+    //img{
+    //  max-width: 80px;
+    //  height: auto;
+    //}
     tr {
       border: 3px solid green;
       background-color: #f44336;
@@ -45,7 +49,7 @@
       }
 
       td {
-        max-height: 100px;
+        //max-height: 100px;
         max-width: 500px;
         text-align: center;
         padding-top: 5px;
