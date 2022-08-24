@@ -1,15 +1,23 @@
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 
 import styles from './Miniature.module.scss';
+
+import invalidImage from 'assets/wrong.png';
 
 type PropsType = {
   questionImg?: string;
   answerImg?: string;
 };
 
-export const Miniature = ({ questionImg, answerImg }: PropsType): ReactElement => (
-  <div className={styles.wrapper}>
-    {questionImg && (<img src={questionImg} alt="miniature" /> || <span>Not set</span>)}
-    {answerImg && (<img src={answerImg} alt="miniature" /> || <span>Not set</span>)}
-  </div>
-);
+export const Miniature = ({ questionImg, answerImg }: PropsType): ReactElement => {
+  const [image, setImage] = useState(questionImg || answerImg);
+  return (
+    <div className={styles.wrapper}>
+      {questionImg || answerImg ? (
+        <img src={image} alt="miniature" onError={() => setImage(invalidImage)} />
+      ) : (
+        <span>Not set</span>
+      )}
+    </div>
+  );
+};
