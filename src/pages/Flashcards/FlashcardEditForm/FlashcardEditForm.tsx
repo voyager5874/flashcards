@@ -87,6 +87,7 @@ export const FlashcardEditForm = <
                 id={`${id}-questionImagePicker`}
                 name="questionImagePicker"
                 type="file"
+                accept="image/*"
                 onChange={onImageSelect}
                 hidden
               />
@@ -113,6 +114,7 @@ export const FlashcardEditForm = <
                 id={`${id}-answerImagePicker`}
                 name="answerImagePicker"
                 type="file"
+                accept="image/*"
                 onChange={onImageSelect}
                 hidden
               />

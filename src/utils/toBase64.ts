@@ -1,6 +1,7 @@
 import { ChangeEvent } from 'react';
 
 import { FIRST_ITEM_INDEX, IMAGE_MAX_SIZE } from 'const';
+import { Nullable } from 'types';
 
 export const toBase64 = (event: ChangeEvent<HTMLInputElement>): Promise<string> =>
   new Promise<string>((resolve, reject) => {
@@ -41,3 +42,19 @@ export const toBase64 = (event: ChangeEvent<HTMLInputElement>): Promise<string> 
 //     reader.onerror = error => reject(error);
 //   });
 // }
+
+export const getBase64String = (event: ChangeEvent<HTMLInputElement>): string | Error => {
+  if (!event?.target?.files?.length) return new Error('no file');
+  const targetFile = event.target.files[FIRST_ITEM_INDEX];
+  if (targetFile.size > IMAGE_MAX_SIZE) return new Error('file size exceeded');
+  const reader = new FileReader();
+  reader.readAsDataURL(targetFile);
+  reader.onloadend = () => {
+    if (reader.result) {
+      return String(reader.result);
+    }
+    return new Error('error converting file');
+  };
+  reader.onerror = error => new Error(error.type);
+  return new Error('something went wrong');
+};
