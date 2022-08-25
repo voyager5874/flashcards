@@ -16,8 +16,6 @@ export const processAsyncActionErrors = (
     const errorMessage = error?.response?.data?.error ?? error.message;
     dispatch(appErrorOccurred(errorMessage));
     if (error.response?.status === STATUS_CODES.Unauthorized) {
-      // eslint-disable-next-line no-debugger
-      debugger;
       dispatch(userLoggedIn(false));
     }
   } else if (defaultMessage) {

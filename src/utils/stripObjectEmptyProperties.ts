@@ -1,4 +1,4 @@
-export const clearObjectEmptyProperties = <T extends object>(obj: T) => {
+export const stripObjectEmptyProperties = <T extends object>(obj: T) => {
   const objCopy: T = { ...obj };
   const keys = Object.keys(obj) as Array<keyof T>;
   keys.forEach(key => {

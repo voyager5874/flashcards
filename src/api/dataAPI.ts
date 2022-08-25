@@ -14,43 +14,43 @@ import {
   PutPackDataResponseType,
   PutPackDataType,
 } from 'api/types';
-import { clearObjectEmptyProperties } from 'utils';
+import { stripObjectEmptyProperties } from 'utils';
 
 export const dataAPI = {
   getPacks(requestParameters: GetPacksParameterType) {
     const cleanParameters: GetPacksParameterType =
-      clearObjectEmptyProperties(requestParameters);
+      stripObjectEmptyProperties(requestParameters);
     return axiosInstance
       .get<PackDataOnServerType>('cards/pack', { params: cleanParameters })
       .then(response => response.data);
   },
-  getFlashcards(requestParameters: GetFlashcardsParameterType) {
+  getFlashcards(getRequestParameters: GetFlashcardsParameterType) {
     const cleanParameters: GetFlashcardsParameterType =
-      clearObjectEmptyProperties(requestParameters);
+      stripObjectEmptyProperties(getRequestParameters);
     return axiosInstance
       .get<FlashcardOnServerDataType>('cards/card', {
         params: cleanParameters,
       })
       .then(response => response.data);
   },
-  postPack(requestParameter: CreatePackParameterType) {
+  postPack(newPackData: CreatePackParameterType) {
+    const cleanData = stripObjectEmptyProperties(newPackData);
     return axiosInstance
-      .post<CreatePackResponseType>('cards/pack', { cardsPack: requestParameter })
+      .post<CreatePackResponseType>('cards/pack', { cardsPack: cleanData })
       .then(response => response.data);
   },
-  postFlashcard(requestParameter: CreateFlashcardParameterType) {
-    return axiosInstance.post('cards/card', { card: requestParameter });
+  postFlashcard(newCardData: CreateFlashcardParameterType) {
+    const cleanData = stripObjectEmptyProperties(newCardData);
+    return axiosInstance.post('cards/card', { card: cleanData });
   },
   putPackData(data: PutPackDataType) {
     return axiosInstance.put<PutPackDataResponseType>(`cards/pack`, {
       cardsPack: data,
-      // cardsPack: { ...data },
     });
   },
   putFlashcardData(data: PutFlashcardDataType) {
     return axiosInstance.put<PutFlashcardDataResponseType>('cards/card', {
       card: data,
-      // card: { ...data },
     });
   },
   putFlashcardGrade(data: PutFlashcardGradeParameterType) {
