@@ -6,3 +6,4 @@ export { validateImage } from './validateImage';
 export { stripObjectEmptyProperties } from 'utils/stripObjectEmptyProperties';
 export { stringExactMatch } from './stringExactMatch';
 export { prettifyDate } from './pretifyDate';
+export { getTypedObjectKeys } from './getTypedObjectKeys';

@@ -1,4 +1,4 @@
-export const stripObjectEmptyProperties = <T extends object>(obj: T) => {
+export const stripObjectEmptyProperties = <T extends object>(obj: T): T => {
   const objCopy: T = { ...obj };
   const keys = Object.keys(obj) as Array<keyof T>;
   keys.forEach(key => {
@@ -8,3 +8,13 @@ export const stripObjectEmptyProperties = <T extends object>(obj: T) => {
   });
   return objCopy;
 };
+
+// export const cleanObjectEmptyProperties = <T extends object>(obj: T): T => {
+//   const res = {} as T;
+//   getTypedObjectKeys(obj).forEach(key => {
+//     if (obj[key]) {
+//       res[key] = obj[key];
+//     }
+//   });
+//   return res;
+// };

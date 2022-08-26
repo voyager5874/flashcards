@@ -11,12 +11,15 @@ export const TextArea: FC<TextAreaPropsType> = ({
   error,
   className,
   placeholder,
+  autoHeight = false,
+  resizeable = 'none',
   ...restProps
 }) => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const id = useId();
 
   useEffect(() => {
+    if (!autoHeight) return;
     if (textAreaRef.current) {
       textAreaRef.current.style.height = '0px';
       const { scrollHeight } = textAreaRef.current;
@@ -47,6 +50,7 @@ export const TextArea: FC<TextAreaPropsType> = ({
         className={finalInputStyle}
         value={value}
         rows={1}
+        style={{ resize: resizeable }}
         {...restProps}
       />
     </label>

@@ -9,4 +9,6 @@ export type TextAreaPropsType = DefaultTextAreaPropsType & {
   onChangeText?: (value: string) => void;
   error?: string;
   onEnter?: () => void;
+  autoHeight?: boolean;
+  resizeable?: 'none' | 'vertical' | 'horizontal' | 'both';
 };

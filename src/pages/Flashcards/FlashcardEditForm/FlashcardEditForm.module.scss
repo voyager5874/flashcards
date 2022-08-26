@@ -1,0 +1,62 @@
+.cardContent {
+  .cardHalf {
+    border: 1px solid black;
+    align-items: center;
+
+    .cardText {
+      border: 1px solid red;
+      flex-direction: column;
+
+      textarea {
+        height: 200px;
+      }
+    }
+  }
+
+  .cardImage {
+    border: 1px solid black;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    width: 200px;
+
+    &:hover {
+      label {
+        height: 40%;
+
+        * {
+          color: white;
+          transition: color 0.3s 0.5s;
+        }
+      }
+    }
+
+    img {
+      position: absolute;
+      top: 0;
+      width: auto;
+      height: 100%;
+    }
+
+    label {
+      z-index: 10;
+      cursor: pointer;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: black;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 0;
+      width: 100%;
+      opacity: 60%;
+      transition: height 0.5s;
+
+      * {
+        color: transparent;
+      }
+    }
+  }
+}

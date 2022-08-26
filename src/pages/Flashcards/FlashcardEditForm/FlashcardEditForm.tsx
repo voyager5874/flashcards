@@ -1,4 +1,4 @@
-import { ChangeEvent, PropsWithChildren, useEffect, useId } from 'react';
+import { ChangeEvent, PropsWithChildren, useEffect, useId, useState } from 'react';
 
 import { faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons/faArrowUpFromBracket';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,11 +7,12 @@ import { useFormik } from 'formik';
 import styles from './FlashcardEditForm.module.scss';
 
 import { CreateFlashcardParameterType, PutFlashcardDataType } from 'api/types';
+import defaultImage from 'assets/image-not-yet-choosen.png';
 import { ButtonFlatDesign } from 'components/Button';
+import { Checkbox } from 'components/Checkbox';
 import { TextArea } from 'components/TextArea/TextArea';
 import { useBase64Picture } from 'hooks';
 import { ControlledPromiseType } from 'hooks/useControlledPromise';
-// import styles from 'pages/Flashcards/Flashcards.module.scss';
 
 type AddFlashcardFormPropsType<T> = {
   promiseToControl: ControlledPromiseType;
@@ -26,28 +27,42 @@ export const FlashcardEditForm = <
   submitCallback,
   initialValues,
 }: PropsWithChildren<AddFlashcardFormPropsType<T>>) => {
-  // const dispatch = useAppDispatch();
-
   const formik = useFormik({
     initialValues,
-    onSubmit: (values, formikHelpers) => {
+    onSubmit: values => {
       submitCallback(values);
       if (promiseToControl.resolve) promiseToControl.resolve(true);
     },
   });
   const id = useId();
+
   const { base64String, setInputEvent, loaderId } = useBase64Picture();
-  // const [questionImagePreview, setQuestionImagePreview] = useState(
-  //   initialValues.questionImg,
-  // );
-  // const [answerImagePreview, setAnswerImagePreview] = useState(initialValues.answerImg);
+
+  const [questionWithImage, setQuestionWithImage] = useState(
+    Boolean(formik.values.questionImg),
+  );
+
+  const [answerWithImage, setAnswerWithImage] = useState(
+    Boolean(formik.values.answerImg),
+  );
 
   const onImageSelect = (event: ChangeEvent<HTMLInputElement>) => {
     setInputEvent(event);
   };
 
+  const toggleQuestionWithImage = () => {
+    if (formik.initialValues.questionImg) return;
+    formik.setFieldValue('questionImg', '', false);
+    setQuestionWithImage(prev => !prev);
+  };
+
+  const toggleAnswerWithImage = () => {
+    if (formik.initialValues.answerImg) return;
+    formik.setFieldValue('answerImg', '', false);
+    setAnswerWithImage(prev => !prev);
+  };
+
   useEffect(() => {
-    console.log(loaderId);
     if (!base64String) return;
     if (loaderId === 'questionImagePicker') {
       formik.setFieldValue('questionImg', base64String, false);
@@ -73,62 +88,80 @@ export const FlashcardEditForm = <
         value={formik.values.answerImg}
         onChange={formik.handleChange}
       />
-      <div>
-        <p>
-          <div className={styles.questionImage}>
-            <label
-              htmlFor={`${id}-questionImagePicker`}
-              className={styles.questionImageLabel}
-            >
-              <span>
-                Add image <FontAwesomeIcon icon={faArrowUpFromBracket} size="1x" />
-              </span>
-              <input
-                id={`${id}-questionImagePicker`}
-                name="questionImagePicker"
-                type="file"
-                accept="image/*"
-                onChange={onImageSelect}
-                hidden
-              />
-            </label>
-            <img src={formik.values.questionImg} alt="question" />
+      <div className={styles.cardContent}>
+        <div className={styles.cardHalf}>
+          <div className={styles.cardText}>
+            <Checkbox checked={questionWithImage} onChange={toggleQuestionWithImage}>
+              add image
+            </Checkbox>
+            <TextArea
+              placeholder="question"
+              name="question"
+              value={formik.values.question}
+              onChange={formik.handleChange}
+            />
           </div>
-          <TextArea
-            placeholder="question"
-            name="question"
-            value={formik.values.question}
-            onChange={formik.handleChange}
-          />
-        </p>
-        <p>
-          <div className={styles.answerImage}>
-            <label
-              htmlFor={`${id}-answerImagePicker`}
-              className={styles.answerImageLabel}
-            >
-              <span>
-                Add image <FontAwesomeIcon icon={faArrowUpFromBracket} size="1x" />
-              </span>
-              <input
-                id={`${id}-answerImagePicker`}
-                name="answerImagePicker"
-                type="file"
-                accept="image/*"
-                onChange={onImageSelect}
-                hidden
-              />
-            </label>
-            <img src={formik.values.answerImg} alt="answer" />
+
+          {questionWithImage && (
+            <div className={styles.cardImage}>
+              <label
+                htmlFor={`${id}-questionImagePicker`}
+                className={styles.chooseCardImagePopup}
+              >
+                <span>
+                  choose image <FontAwesomeIcon icon={faArrowUpFromBracket} size="1x" />
+                </span>
+                <input
+                  id={`${id}-questionImagePicker`}
+                  name="questionImagePicker"
+                  type="file"
+                  onChange={onImageSelect}
+                  hidden
+                  accept="image/*"
+                />
+              </label>
+              <img src={formik.values.questionImg || defaultImage} alt="question" />
+            </div>
+          )}
+        </div>
+
+        <div className={styles.cardHalf}>
+          <div className={styles.cardText}>
+            <Checkbox checked={answerWithImage} onChange={toggleAnswerWithImage}>
+              add image
+            </Checkbox>
+            <TextArea
+              placeholder="answer"
+              name="answer"
+              value={formik.values.answer}
+              onChange={formik.handleChange}
+            />
           </div>
-          <TextArea
-            name="answer"
-            placeholder="answer"
-            value={formik.values.answer}
-            onChange={formik.handleChange}
-          />
-        </p>
+
+          {answerWithImage && (
+            <div className={styles.cardImage}>
+              <label
+                htmlFor={`${id}-answerImagePicker`}
+                className={styles.chooseCardImagePopup}
+              >
+                <span>
+                  choose image <FontAwesomeIcon icon={faArrowUpFromBracket} size="1x" />
+                </span>
+                <input
+                  id={`${id}-answerImagePicker`}
+                  name="answerImagePicker"
+                  type="file"
+                  onChange={onImageSelect}
+                  hidden
+                  accept="image/*"
+                />
+              </label>
+              <img src={formik.values.answerImg || defaultImage} alt="answer" />
+            </div>
+          )}
+        </div>
       </div>
+
       <div style={{ justifyContent: 'center' }}>
         <ButtonFlatDesign className={styles.button} type="submit">
           Save

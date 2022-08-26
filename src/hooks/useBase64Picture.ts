@@ -59,7 +59,7 @@ export const useBase64Picture = () => {
       if (reader && reader.readyState === FILE_READER_STATUS.Loading) {
         reader.abort();
       }
-      setBase64String(null);
+      setBase64String(null); // this should only happen for inputEvent change? - setState before unmounting would cause unnecessary render pass?
       setLoaderId(null);
     };
   }, [inputEvent]);
