@@ -106,8 +106,8 @@ export const Packs = (): ReactElement => {
 
   return (
     <div className={styles.wrapper}>
+      <h1>Packs page</h1>
       <div className={styles.form}>
-        <h1>Packs page</h1>
         <TextInput
           disabled={appIsBusy}
           placeholder="enter a pack name"

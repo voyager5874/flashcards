@@ -22,6 +22,7 @@ import {
   setFlashcardsData,
   updateFlashcard,
 } from 'store/asyncActions/flashcards';
+import { appErrorOccurred } from 'store/reducers/app';
 import { flashcardsSortingApplied } from 'store/reducers/flashcards';
 import { Nullable } from 'types';
 import { getChangedParams } from 'utils/getChangedParams';
@@ -76,6 +77,7 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
       dispatch(deleteFlashcard(id, cardsPack_id));
     };
 
+    // this is ESLint, I wrote it with if else
     const isEmpty =
       min === minGrade &&
       max &&
@@ -120,7 +122,10 @@ export const FlashcardsList: FC<FlashcardsListPropsType> = memo(
     const handleEditFlashcard = (data: PutFlashcardDataType) => {
       if (!underActionCard) return;
       const changedValues = getChangedParams(underActionCard, data);
-      if (!Object.keys(changedValues).length) return;
+      if (!Object.keys(changedValues).length) {
+        dispatch(appErrorOccurred('there was no changes made'));
+        return;
+      }
       dispatch(
         updateFlashcard({ ...changedValues, _id: underActionCard._id }, cardsPack_id),
       );

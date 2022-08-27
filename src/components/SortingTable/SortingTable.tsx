@@ -37,7 +37,6 @@ type TableHeadPropsType<T> = {
   tableColumns: {
     [Property in keyof T]?: {
       headerName: string;
-      // cellDataModifier?: FC<any>;
       cellDataModifier?: FC<{ [Key in Property]: T[Property] }>;
     };
   };
@@ -107,7 +106,6 @@ type TableRowPropsType<T> = {
   tableColumns: {
     [Property in keyof T]?: {
       headerName: string;
-      // cellDataModifier?: FC<any>;
       cellDataModifier?: FC<{ [Key in Property]: T[Property] }>;
     };
   };
@@ -154,7 +152,6 @@ type TableBodyPropsType<T> = {
   tableColumns: {
     [Property in keyof T]?: {
       headerName: string;
-      // cellDataModifier?: FC<any>;
       cellDataModifier?: FC<{ [Key in Property]: T[Property] }>;
     };
   };

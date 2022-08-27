@@ -2,7 +2,7 @@ import { ChangeEvent, ReactElement, useEffect, useState } from 'react';
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons/faChevronLeft';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import { CreateFlashcardParameterType } from 'api/types';
 import { ButtonFlatDesign } from 'components/Button';
@@ -33,6 +33,8 @@ import {
 export const Flashcards = (): ReactElement => {
   const dispatch = useAppDispatch();
 
+  const navigate = useNavigate();
+
   const { packId } = useParams();
 
   const [pageUrl] = useSearchParams();
@@ -41,10 +43,6 @@ export const Flashcards = (): ReactElement => {
   const { controlledPromise, resetControlledPromise } = useControlledPromise();
 
   const appIsBusy = useAppSelector(state => state.appReducer.isBusy);
-
-  // const packNameFromPacksSlice = useAppSelector(
-  //   state => selectPackById(state, packId).name,
-  // );
 
   const {
     page,
@@ -106,6 +104,10 @@ export const Flashcards = (): ReactElement => {
     setAddItemDialogActive(false);
   };
 
+  const navigateBack = () => {
+    navigate(-1);
+  };
+
   useEffect(() => {
     dispatch(flashcardsQuestionKeywordsFilterApplied(debouncedQuestionSearchString));
   }, [debouncedQuestionSearchString]);
@@ -123,7 +125,11 @@ export const Flashcards = (): ReactElement => {
     <div className={styles.wrapper}>
       <div className={styles.form}>
         <h2>
-          <FontAwesomeIcon icon={faChevronLeft} />
+          <FontAwesomeIcon
+            icon={faChevronLeft}
+            onClick={navigateBack}
+            style={{ cursor: 'pointer' }}
+          />
           <span>{pageUrl.get('packName')}</span>
         </h2>
         <TextInput

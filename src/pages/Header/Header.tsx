@@ -27,20 +27,20 @@ export const Header: FC<HeaderPropsType> = ({ height }): ReactElement => {
       <button type="button" onClick={handleLogout}>
         logout
       </button>
-      <div style={{ display: 'inline-block', width: '250px' }}>
-        <DropdownMenu placeholder="navigation">
-          {/* <NavLink to="/login"> */}
-          {/*  <FontAwesomeIcon icon={faBiking} color="yellow" /> Login */}
-          {/* </NavLink> */}
-          {/* <NavLink to="/register"> */}
-          {/*  <FontAwesomeIcon icon={faStar} /> Register */}
-          {/* </NavLink> */}
-          {/* <NavLink to="/no-page">NotFound</NavLink> */}
-          {/* <NavLink to="/password-forgotten">Password forgotten</NavLink> */}
-          {/* <NavLink to="/password-reset/fake-token777">reset password</NavLink> */}
-          <NavLink to="instructions/fake-email">Instructions sent</NavLink>
-        </DropdownMenu>
-      </div>
+      {/* <div style={{ display: 'inline-block', width: '250px' }}> */}
+      {/*  <DropdownMenu placeholder="navigation"> */}
+      {/* <NavLink to="/login"> */}
+      {/*  <FontAwesomeIcon icon={faBiking} color="yellow" /> Login */}
+      {/* </NavLink> */}
+      {/* <NavLink to="/register"> */}
+      {/*  <FontAwesomeIcon icon={faStar} /> Register */}
+      {/* </NavLink> */}
+      {/* <NavLink to="/no-page">NotFound</NavLink> */}
+      {/* <NavLink to="/password-forgotten">Password forgotten</NavLink> */}
+      {/* <NavLink to="/password-reset/fake-token777">reset password</NavLink> */}
+      {/* <NavLink to="instructions/fake-email">Instructions sent</NavLink> */}
+      {/* </DropdownMenu> */}
+      {/* </div> */}
       {/* <div style={{ marginLeft: '20px', display: 'inline-block', width: '250px' }} /> */}
     </div>
   );
