@@ -1,10 +1,11 @@
-@import '../../styles/flat-design-colors';
+@use '../../styles/flat-design-colors';
 
-$menuButtonColor: $elementsColorDefault;
-$optionsBoxColor: $elementsBorderColorDefault;
+$menuButtonColor: flat-design-colors.$elementsColorDefault;
+$optionsBoxColor: flat-design-colors.$elementsBorderColorDefault;
 
-$optionHoverColor: $elementsColorDefault;
-$menuButtonHoverColor: $elementsColorDefault;
+$optionHoverColor: flat-design-colors.$elementsColorDefault;
+$menuButtonHoverColor: flat-design-colors.$elementsColorDefault;
+$menuButtonBorderColor: flat-design-colors.$normalButtonBorder;
 
 $arrowIconColor: white;
 
@@ -16,6 +17,7 @@ $optionHoverTextColor: #f1e8e6;
 $menuButtonHoverTextColor: #f1e8e6;
 
 $collapsedHeight: 50px;
+$compactStyleWidth: 220px;
 
 .wrapper {
   display: inline-block;
@@ -34,24 +36,21 @@ $collapsedHeight: 50px;
   .menuButton {
     position: relative;
     text-align: left;
-    //height: $collapsedHeight;
     background-color: $menuButtonColor;
     width: 100%;
-    //line-height: 10px;
-    border: none;
     color: white;
     text-transform: uppercase;
     text-decoration: none;
     padding: 20px 50px;
     border-radius: 5px;
     margin: 5px;
-    border-bottom-style: solid;
-    border-bottom-width: 3px;
-    border-color: #384B64;
+    border: none;
+    border-bottom: 3px solid $menuButtonBorderColor;
     transition: text-shadow 0.3s ease;
     font-size: 18px;
     font-weight: 700;
     font-family: 'Josefin Sans', sans-serif;
+
 
     span {
       position: absolute;
@@ -66,15 +65,9 @@ $collapsedHeight: 50px;
       display: flex;
       align-items: center;
       border-radius: 0 5px 0 0;
-
-      //svg {
-      //  transition: all 0.5s;
-      //}
     }
 
     &:hover {
-      //background-color: $menuButtonHoverColor;
-      //color: $menuButtonHoverTextColor;
       text-shadow: 2px 2px 0 rgba(0, 0, 0, .3);
 
       svg {
@@ -83,6 +76,11 @@ $collapsedHeight: 50px;
         }
       }
     }
+  }
+
+  .menuButtonCompact {
+    padding: 10px 20px;
+    width: $compactStyleWidth;
   }
 
   .menuExpanded {
@@ -101,7 +99,6 @@ $collapsedHeight: 50px;
   .optionsBox {
     position: absolute;
     top: calc(95%);
-    //bottom: calc(-100%);
     left: 5px;
     z-index: 100;
     overflow: hidden;
@@ -121,10 +118,8 @@ $collapsedHeight: 50px;
       position: relative;
       cursor: pointer;
       padding: 7px 7px 7px 20px;
-      //display: flex;
-      //justify-content: flex-start;
-      //gap: 40px;
-      svg{
+
+      svg {
         display: inline-block;
         min-width: 20px;
         margin-right: 20px;

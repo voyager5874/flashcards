@@ -66,9 +66,9 @@ const TableHead = <T,>({
     (header: string) => {
       if (sorting.slice(SECOND_ITEM_INDEX) === (header as string)) {
         if (sorting[FIRST_ITEM_INDEX] === '0')
-          return <FontAwesomeIcon icon={faChevronDown} />;
+          return <FontAwesomeIcon icon={faChevronDown} style={{ marginLeft: '10px' }} />;
         if (sorting[FIRST_ITEM_INDEX] === '1')
-          return <FontAwesomeIcon icon={faChevronUp} />;
+          return <FontAwesomeIcon icon={faChevronUp} style={{ marginLeft: '10px' }} />;
       }
       return <span />;
     },

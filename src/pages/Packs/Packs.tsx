@@ -121,23 +121,26 @@ export const Packs = (): ReactElement => {
       </div>
 
       <div className={styles.controls}>
-        <Checkbox
-          disabled={appIsBusy}
-          checked={packsOfCurrentUserFilter}
-          onChange={flipPacksOfCurrentUserFilter}
-        >
-          show only my packs
-        </Checkbox>
-        <RangeDoubleSlider
-          disabled={appIsBusy}
-          onChangeRange={changePacksFilterValues}
-          lowerValue={minCardsCountFilter || DEFAULT_MIN}
-          upperValue={maxCardsCountFilter || DEFAULT_MAX_ITEMS_FILTER_VALUE}
-          gap={1}
-          step={1}
-          max={maxCardsCount || SERVER_MAX_ITEMS_PER_REQUEST}
-          min={minCardsCount || DEFAULT_MIN}
-        />
+        <div className={styles.filters}>
+          <Checkbox
+            disabled={appIsBusy}
+            checked={packsOfCurrentUserFilter}
+            onChange={flipPacksOfCurrentUserFilter}
+          >
+            show only my packs
+          </Checkbox>
+          <RangeDoubleSlider
+            disabled={appIsBusy}
+            onChangeRange={changePacksFilterValues}
+            lowerValue={minCardsCountFilter || DEFAULT_MIN}
+            upperValue={maxCardsCountFilter || DEFAULT_MAX_ITEMS_FILTER_VALUE}
+            gap={1}
+            step={1}
+            max={maxCardsCount || SERVER_MAX_ITEMS_PER_REQUEST}
+            min={minCardsCount || DEFAULT_MIN}
+          />
+        </div>
+
         <Pagination
           name="packs-page-pagination"
           currentPage={page}

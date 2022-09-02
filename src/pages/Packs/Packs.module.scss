@@ -21,13 +21,23 @@
   }
 
   .controls {
+    //border: 2px solid rebeccapurple;
+    padding-top: 20px;
+    padding-bottom: 20px;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    //flex-direction: column;
     gap: 20px;
+    .filters{
+      //border: 2px solid forestgreen;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
   }
 
   .form {
-    border: 1px solid;
+    //border: 1px solid;
     display: flex;
     flex-direction: row;
     //justify-content: flex-end;

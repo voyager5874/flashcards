@@ -1,7 +1,5 @@
 import { FC, ReactElement } from 'react';
 
-// import { faHiking } from '@fortawesome/free-solid-svg-icons';
-// import { faBookOpen } from '@fortawesome/free-solid-svg-icons/faBookOpen';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons/faChevronLeft';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons/faChevronRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -51,18 +49,27 @@ export const Pagination: FC<PaginationPropsType> = ({
 
   return (
     <div className={styles.wrapper}>
-      <ButtonFlatDesign onClick={changePagePrevious} disabled={disabled}>
+      <ButtonFlatDesign
+        onClick={changePagePrevious}
+        disabled={disabled}
+        className={styles.button}
+      >
         <FontAwesomeIcon icon={faChevronLeft} />
       </ButtonFlatDesign>
       <div className={styles.page}>
         {currentPage} of {pagesCount}
       </div>
-      <ButtonFlatDesign onClick={changePageNext} disabled={disabled}>
+      <ButtonFlatDesign
+        onClick={changePageNext}
+        disabled={disabled}
+        className={styles.button}
+      >
         <FontAwesomeIcon icon={faChevronRight} />
       </ButtonFlatDesign>
       <div style={{ width: '250px' }}>
         <DropdownSelect
           options={pageCountOptions}
+          compact
           name={name}
           onChangeOption={onItemsPerPageChange}
           value={currentItemsPerPageValue}

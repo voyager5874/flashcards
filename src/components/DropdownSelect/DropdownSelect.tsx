@@ -32,6 +32,7 @@ export const DropdownSelect: FC<DropdownSelectPropsType> = ({
   value,
   children,
   placeholder,
+  compact = false,
   ...restProps
 }): ReactElement => {
   const id = useId();
@@ -79,7 +80,9 @@ export const DropdownSelect: FC<DropdownSelectPropsType> = ({
     height: `0`,
   };
 
-  const buttonClassName = `${styles.menuButton} ${collapsed ? '' : styles.menuExpanded}`;
+  const buttonClassName = `${styles.menuButton} ${
+    compact ? styles.menuButtonCompact : ''
+  } ${collapsed ? '' : styles.menuExpanded} `;
 
   return (
     <div className={styles.wrapper} ref={elementContainerRef}>

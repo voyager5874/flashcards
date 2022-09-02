@@ -7,6 +7,7 @@ type DefaultRadioPropsType = DetailedHTMLProps<
 
 export type DropdownSelectPropsType = DefaultRadioPropsType & {
   options?: string[];
+  compact?: boolean;
   onChangeOption?: (option: string) => void;
   children: ReactNode;
   buttonText?: string;

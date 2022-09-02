@@ -1,5 +1,8 @@
 import { CSSProperties, FC, ReactElement } from 'react';
 
+import { faStackOverflow } from '@fortawesome/free-brands-svg-icons/faStackOverflow';
+import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink } from 'react-router-dom';
 
 import { DropdownMenu } from 'components/DropdownMenu/DropdownMenu';
@@ -22,8 +25,23 @@ export const Header: FC<HeaderPropsType> = ({ height }): ReactElement => {
 
   return (
     <div className={styles.wrapper} style={dynamicStyle}>
-      <NavLink to="/profile">Profile</NavLink>
-      <NavLink to="/packs">Packs</NavLink>
+      {/* <div> */}
+      <NavLink
+        to="/profile"
+        className={({ isActive }) => (isActive ? styles.activeLink : '')}
+      >
+        <FontAwesomeIcon icon={faUser} style={{ marginRight: '10px' }} />
+        Profile
+      </NavLink>
+      <NavLink
+        to="/packs"
+        className={({ isActive }) => (isActive ? styles.activeLink : '')}
+      >
+        <FontAwesomeIcon icon={faStackOverflow} style={{ marginRight: '10px' }} />
+        Packs
+      </NavLink>
+      {/* </div> */}
+
       <button type="button" onClick={handleLogout}>
         logout
       </button>

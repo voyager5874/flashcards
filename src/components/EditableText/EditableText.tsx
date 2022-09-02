@@ -50,7 +50,7 @@ export const EditableText: FC<EditableTextPropsType> = ({
           value={newText}
           onChange={handleEditText}
           onBlur={handleUpdatingText}
-          onKeyPress={handleEnterPress}
+          onKeyDown={handleEnterPress}
           className={textStyle}
         />
       ) : (

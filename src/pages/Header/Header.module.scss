@@ -2,14 +2,19 @@
 @use '../../styles/flat-design-colors';
 
 .wrapper {
+  position: relative;
   background-color: flat-design-colors.$mainColor;
   height: layout-variables.$headerHeight;
   margin: 0;
   padding: 0 50px;
   display: flex;
   align-items: center;
+  justify-content: center;
 
   button{
+    position: absolute;
+    right: 40px;
+    //top: 20px;
     background-color: transparent;
     margin: 0;
     //margin-left: 40px;
@@ -28,4 +33,8 @@
     text-decoration: none;
     margin-right: 20px;
   }
+}
+
+.activeLink{
+  border-bottom: 3px solid white;
 }
