@@ -5,11 +5,14 @@ import { ButtonPropsType } from 'components/Button/types';
 
 export const ButtonFlatDesign: FC<ButtonPropsType> = ({
   color = 'normal',
+  compact = false,
   className,
   children,
   ...restProps
 }): ReactElement => {
-  const elementStyle = `${styles.button} ${styles[color]} ${className}`;
+  const elementStyle = `${styles.button} ${styles[color]} ${className} ${
+    compact ? styles.compactButton : ''
+  }`;
 
   return (
     <div className={styles.wrapper}>

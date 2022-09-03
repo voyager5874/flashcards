@@ -19,10 +19,7 @@ type PaginationPropsType = {
   disabled: boolean;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
-// const pageCountOptions = [5, 10, 20, 50, 100];
 const pageCountOptions = ['5', '10', '20', '50', '100'];
-// options={['five', 'ten', 'twelve', 'fifty', 'hundred']}
 
 export const Pagination: FC<PaginationPropsType> = ({
   name,
@@ -49,24 +46,16 @@ export const Pagination: FC<PaginationPropsType> = ({
 
   return (
     <div className={styles.wrapper}>
-      <ButtonFlatDesign
-        onClick={changePagePrevious}
-        disabled={disabled}
-        className={styles.button}
-      >
+      <ButtonFlatDesign onClick={changePagePrevious} disabled={disabled} compact>
         <FontAwesomeIcon icon={faChevronLeft} />
       </ButtonFlatDesign>
       <div className={styles.page}>
         {currentPage} of {pagesCount}
       </div>
-      <ButtonFlatDesign
-        onClick={changePageNext}
-        disabled={disabled}
-        className={styles.button}
-      >
+      <ButtonFlatDesign onClick={changePageNext} disabled={disabled} compact>
         <FontAwesomeIcon icon={faChevronRight} />
       </ButtonFlatDesign>
-      <div style={{ width: '250px' }}>
+      <div className={styles.dropdownWrapper}>
         <DropdownSelect
           options={pageCountOptions}
           compact

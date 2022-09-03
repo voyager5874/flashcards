@@ -106,7 +106,7 @@ export const Packs = (): ReactElement => {
 
   return (
     <div className={styles.wrapper}>
-      <h1>Packs page</h1>
+      {/* <h1>Packs page</h1> */}
       <div className={styles.form}>
         <TextInput
           disabled={appIsBusy}

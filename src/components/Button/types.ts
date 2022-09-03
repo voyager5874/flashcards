@@ -7,4 +7,5 @@ type DefaultButtonPropsType = DetailedHTMLProps<
 
 export type ButtonPropsType = DefaultButtonPropsType & {
   color?: 'danger' | 'normal' | 'green' | 'salmon';
+  compact?: boolean;
 };

@@ -1,17 +1,15 @@
 .wrapper {
-  //border: 2px solid #f44336;
+  //background-color: rebeccapurple;
   margin: 0;
   padding: 0;
   display: flex;
-  //flex-direction: row;
-  //max-width: 500px;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 5px;
-  width: 500px;
+  //width: 500px;
 
-  .button {
-    padding: 10px;
+  button {
+  margin-right: 0;
   }
 
   * {
@@ -24,5 +22,8 @@
     padding-left: 20px;
     text-align: center;
     font-size: 26px;
+  }
+  .dropdownWrapper{
+    width: 200px;
   }
 }

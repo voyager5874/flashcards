@@ -11,14 +11,32 @@
   font-family: "Josefin Sans", sans-serif;
   font-weight: 700;
 
+  .backButton {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin-bottom: 20px;
+    svg{
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    span {
+      font-size: 24px;
+      margin-left: 20px;
+    }
+  }
+
   * {
     box-sizing: border-box;
-    //border: 1px solid red;
   }
 
   .controls {
     display: flex;
-    flex-direction: column;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    align-items: center;
+    justify-content: space-between;
     gap: 20px;
   }
 
@@ -26,7 +44,7 @@
     //border: 1px solid;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: flex-start;
     align-items: center;
     gap: 50px;
 
@@ -35,13 +53,6 @@
       min-width: 300px;
 
     }
-    h2{
-      font-size: 20px;
-      //font-weight: 700;
-      background-color: #4b7bec;
-      span{
-        margin-left: 20px;
-      }
-    }
+
   }
 }

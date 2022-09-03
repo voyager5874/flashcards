@@ -123,15 +123,11 @@ export const Flashcards = (): ReactElement => {
 
   return (
     <div className={styles.wrapper}>
+      <button onClick={navigateBack} type="button" className={styles.backButton}>
+        <FontAwesomeIcon icon={faChevronLeft} />
+        <span>{pageUrl.get('packName')}</span>
+      </button>
       <div className={styles.form}>
-        <h2>
-          <FontAwesomeIcon
-            icon={faChevronLeft}
-            onClick={navigateBack}
-            style={{ cursor: 'pointer' }}
-          />
-          <span>{pageUrl.get('packName')}</span>
-        </h2>
         <TextInput
           disabled={appIsBusy}
           placeholder="enter some key words to search for"
