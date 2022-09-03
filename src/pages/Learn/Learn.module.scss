@@ -6,14 +6,12 @@
 .wrapper {
   @extend .container;
   min-height: 50vh;
+  word-break: break-word;
+
 
   .form {
     @extend .form;
-    width: 600px;
-    p{
-      word-break: break-word;
-
-    }
+    max-width: 80vw;
 
     img {
       height: auto;

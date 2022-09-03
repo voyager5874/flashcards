@@ -91,7 +91,7 @@ export const Learn = (): ReactElement => {
         <h1>{packData.get('packName')}</h1>
         {showedCardChecked ? (
           <div>
-            <p>{showedCard && showedCard.answer}</p>
+            <p className={styles.textContent}>{showedCard && showedCard.answer}</p>
             {showedCard?.answerImg && (
               <img src={showedCard && showedCard?.answerImg} alt="answer" />
             )}
@@ -108,7 +108,7 @@ export const Learn = (): ReactElement => {
           </div>
         ) : (
           <div>
-            <p>{showedCard && showedCard.question}</p>
+            <p className={styles.textContent}>{showedCard && showedCard.question}</p>
             {showedCard?.questionImg && (
               <img src={showedCard && showedCard?.questionImg} alt="question" />
             )}
