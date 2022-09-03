@@ -5,6 +5,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import styles from './Learn.module.scss';
 
 import { FlashcardGradeType, FlashcardType } from 'api/types';
+import notAnImage from 'assets/wrong.png';
 import { ButtonFlatDesign } from 'components/Button';
 import { RadioGroup } from 'components/RadioGroup';
 import { useAppDispatch, useAppSelector } from 'hooks';
@@ -41,6 +42,7 @@ export const Learn = (): ReactElement => {
 
   const [showedCardChecked, setShowedCardChecked] = useState(false);
   const [showedCard, setShowedCard] = useState<FlashcardType>();
+  const [badImage, setBadImage] = useState<Nullable<string>>(null);
   const [cardGrade, setCardGrade] = useState<Nullable<string>>(null);
 
   const { cards, cardsTotalCount } = useAppSelector(state => state.flashcards);
@@ -93,7 +95,11 @@ export const Learn = (): ReactElement => {
           <div>
             <p className={styles.textContent}>{showedCard && showedCard.answer}</p>
             {showedCard?.answerImg && (
-              <img src={showedCard && showedCard?.answerImg} alt="answer" />
+              <img
+                src={badImage || showedCard?.answerImg}
+                alt="answer"
+                onError={() => setBadImage(notAnImage)}
+              />
             )}
             <RadioGroup
               className={styles.radios}
@@ -110,7 +116,11 @@ export const Learn = (): ReactElement => {
           <div>
             <p className={styles.textContent}>{showedCard && showedCard.question}</p>
             {showedCard?.questionImg && (
-              <img src={showedCard && showedCard?.questionImg} alt="question" />
+              <img
+                src={badImage || showedCard?.questionImg}
+                alt="question"
+                onError={() => setBadImage(notAnImage)}
+              />
             )}
             <ButtonFlatDesign onClick={showAnswer}>Show answer</ButtonFlatDesign>
           </div>
