@@ -6,12 +6,20 @@
 .wrapper {
   @extend .container;
   min-height: 50vh;
-  word-break: break-word;
-
 
   .form {
     @extend .form;
     max-width: 80vw;
+
+    h1 {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    p {
+      word-break: break-word;
+    }
 
     img {
       height: auto;
