@@ -25,7 +25,6 @@ export const Header: FC<HeaderPropsType> = ({ height }): ReactElement => {
 
   return (
     <div className={styles.wrapper} style={dynamicStyle}>
-      {/* <div> */}
       <NavLink
         to="/profile"
         className={({ isActive }) => (isActive ? styles.activeLink : '')}
@@ -40,26 +39,28 @@ export const Header: FC<HeaderPropsType> = ({ height }): ReactElement => {
         <FontAwesomeIcon icon={faStackOverflow} style={{ marginRight: '10px' }} />
         Packs
       </NavLink>
-      {/* </div> */}
+      <div className={styles.headerMenu}>
+        <DropdownMenu placeholder="menu" width={150} compact>
+          <button type="button" onClick={handleLogout}>
+            logout
+          </button>
+        </DropdownMenu>
+      </div>
 
-      <button type="button" onClick={handleLogout}>
-        logout
-      </button>
-      {/* <div style={{ display: 'inline-block', width: '250px' }}> */}
-      {/*  <DropdownMenu placeholder="navigation"> */}
-      {/* <NavLink to="/login"> */}
-      {/*  <FontAwesomeIcon icon={faBiking} color="yellow" /> Login */}
-      {/* </NavLink> */}
-      {/* <NavLink to="/register"> */}
-      {/*  <FontAwesomeIcon icon={faStar} /> Register */}
-      {/* </NavLink> */}
-      {/* <NavLink to="/no-page">NotFound</NavLink> */}
-      {/* <NavLink to="/password-forgotten">Password forgotten</NavLink> */}
-      {/* <NavLink to="/password-reset/fake-token777">reset password</NavLink> */}
-      {/* <NavLink to="instructions/fake-email">Instructions sent</NavLink> */}
-      {/* </DropdownMenu> */}
+      {/* <div style={{ position: 'absolute', left: '40px' }}> */}
+      {/*  <DropdownMenu placeholder="navigation" width={200} compact> */}
+      {/*    <NavLink to="/login"> */}
+      {/*      <FontAwesomeIcon icon={faUser} color="yellow" /> Login */}
+      {/*    </NavLink> */}
+      {/*    <NavLink to="/register"> */}
+      {/*      <FontAwesomeIcon icon={faUser} /> Register */}
+      {/*    </NavLink> */}
+      {/*    <NavLink to="/no-page">NotFound</NavLink> */}
+      {/*    <NavLink to="/password-forgotten">Password forgotten</NavLink> */}
+      {/*    <NavLink to="/password-reset/fake-token777">reset password</NavLink> */}
+      {/*    <NavLink to="instructions/fake-email">Instructions sent</NavLink> */}
+      {/*  </DropdownMenu> */}
       {/* </div> */}
-      {/* <div style={{ marginLeft: '20px', display: 'inline-block', width: '250px' }} /> */}
     </div>
   );
 };

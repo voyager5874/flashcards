@@ -3,7 +3,6 @@ import {
   CSSProperties,
   FC,
   ReactElement,
-  ReactNode,
   useCallback,
   useRef,
   useState,
@@ -13,19 +12,16 @@ import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import styles from 'components/DropdownMenu/DropdownMenu.module.scss';
+import { DropdownMenuPropsType } from 'components/DropdownMenu/types';
 import { useOutsideClickDetect } from 'hooks';
 
 const OPTION_ITEM_HEIGHT = 38;
 const OPTION_BOX_HEIGHT_GUTTER = 10;
 
-type DropdownMenuPropsType = {
-  expandOnHover?: boolean;
-  placeholder: string;
-  children: ReactNode;
-};
-
 export const DropdownMenu: FC<DropdownMenuPropsType> = ({
   expandOnHover = false,
+  compact = false,
+  width,
   children,
   placeholder,
 }): ReactElement => {
@@ -64,11 +60,17 @@ export const DropdownMenu: FC<DropdownMenuPropsType> = ({
     height: `0`,
   };
 
-  const buttonClassName = `${styles.menuButton} ${collapsed ? '' : styles.menuExpanded}`;
+  const buttonClassName = `${styles.menuButton} ${collapsed ? '' : styles.menuExpanded} ${
+    compact ? styles.compactMenuButton : ''
+  }`;
   return (
-    <div className={styles.wrapper} ref={elementContainerRef}>
+    <div
+      className={styles.wrapper}
+      ref={elementContainerRef}
+      style={{ width: `${width}px` }}
+    >
       <div
-        onKeyPress={toggleShowOptions}
+        onKeyDown={toggleShowOptions}
         tabIndex={0}
         role="button"
         className={buttonClassName}

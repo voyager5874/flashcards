@@ -1,12 +1,14 @@
-@import '../../styles/flat-design-colors';
+@use '../../styles/flat-design-colors';
 
-$menuButtonColor: $elementsColorDefault;
-$optionsBoxColor: $elementsBorderColorDefault;
+$menuButtonColor: flat-design-colors.$elementsColorDefault;
+$menuButtonBorderColor: flat-design-colors.$normalButtonBorder;
+$optionsBoxColor: flat-design-colors.$dropdownBackground;
 
-$optionHoverColor: $elementsColorDefault;
-$menuButtonHoverColor: $elementsColorDefault;
+$optionHoverColor: flat-design-colors.$elementsColorDefault;
+$menuButtonHoverColor: flat-design-colors.$elementsColorDefault;
 
 $arrowIconColor: white;
+$arrowBackgroundColor: flat-design-colors.$dropdownBackground;
 
 $menuButtonTextColor: white;
 $optionTextColor: white;
@@ -21,7 +23,7 @@ $collapsedHeight: 50px;
   display: inline-block;
   box-sizing: border-box;
   position: relative;
-  width: 100%;
+  //width: 100%;
   padding: 0;
   margin: 0;
 
@@ -38,7 +40,6 @@ $collapsedHeight: 50px;
     text-align: left;
     background-color: $menuButtonColor;
     width: 100%;
-    border: none;
     color: white;
     text-transform: uppercase;
     text-decoration: none;
@@ -47,7 +48,7 @@ $collapsedHeight: 50px;
     margin: 5px;
     border-bottom-style: solid;
     border-bottom-width: 3px;
-    border-color: #384B64;
+    border-color: $menuButtonBorderColor;
     transition: text-shadow 0.3s ease;
     font-size: 18px;
     font-weight: 700;
@@ -59,7 +60,7 @@ $collapsedHeight: 50px;
       right: 0;
       top: 0;
       bottom: 0;
-      background-color: #2f7796;
+      background-color: $arrowBackgroundColor;
       font-size: 26px;
       font-weight: 900;
       padding-right: 20px;
@@ -78,6 +79,10 @@ $collapsedHeight: 50px;
         }
       }
     }
+  }
+
+  .compactMenuButton {
+    padding: 10px 20px;
   }
 
   .menuExpanded {
@@ -130,8 +135,6 @@ $collapsedHeight: 50px;
         font-size: 14px;
         margin: 0;
         padding: 0 0 0 20px;
-        //border: 1px solid green;
-        //display: inline-block;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -151,7 +154,6 @@ $collapsedHeight: 50px;
 
         svg {
           font-size: 1.3em;
-          //border: 1px solid;
           display: inline-block;
           min-width: 20px;
           margin: 0 20px 0 0;
